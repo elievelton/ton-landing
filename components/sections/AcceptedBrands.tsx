@@ -1,11 +1,10 @@
 "use client"
 
-import { motion } from "framer-motion"
+import Image from "next/image"
 
 import { Container } from "@/components/shared/Container"
 import { FadeIn } from "@/components/shared/FadeIn"
 import { acceptedBrands } from "@/config/brands"
-import Image from "next/image"
 
 const carouselBrands = [
   ...acceptedBrands,
@@ -36,44 +35,35 @@ export function AcceptedBrands() {
 
       {/* Esteira de bandeiras */}
       <FadeIn delay={0.15}>
-        <div className="relative mt-12">
-          {/* Degradês laterais */}
+        <div className="relative mt-12 overflow-hidden">
+          {/* Degradê esquerdo */}
           <div
             className="pointer-events-none absolute inset-y-0 left-0 z-10 w-20 bg-linear-to-r from-white to-transparent sm:w-40"
             aria-hidden="true"
           />
 
+          {/* Degradê direito */}
           <div
             className="pointer-events-none absolute inset-y-0 right-0 z-10 w-20 bg-linear-to-l from-white to-transparent sm:w-40"
             aria-hidden="true"
           />
 
-          <motion.div
-            className="flex w-max gap-4"
-            animate={{
-              x: ["0%", "-50%"],
-            }}
-            transition={{
-              duration: 30,
-              ease: "linear",
-              repeat: Infinity,
-            }}
-          >
+          <div className="brands-marquee flex w-max gap-3">
             {carouselBrands.map((brand, index) => (
               <div
                 key={`${brand.id}-${index}`}
-                className="flex h-20 w-40 shrink-0 items-center justify-center rounded-2xl border border-border bg-white px-5 shadow-sm"
+                className="flex h-14 w-28 shrink-0 items-center justify-center rounded-xl border border-border bg-white px-3 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-md"
               >
                 <Image
-  src={brand.image}
-  alt={`Bandeira ${brand.name}`}
-  width={100}
-  height={48}
-  className="h-10 w-auto object-contain"
-/>
+                  src={brand.image}
+                  alt={`Bandeira ${brand.name}`}
+                  width={78}
+height={34}
+className="h-7 w-auto max-w-[78px] object-contain"
+                />
               </div>
             ))}
-          </motion.div>
+          </div>
         </div>
       </FadeIn>
 

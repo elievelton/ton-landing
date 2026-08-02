@@ -136,3 +136,20 @@ html{
 
 }
 
+@keyframes brands-marquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.brands-marquee {
+  animation: brands-marquee 30s linear infinite;
+}
+
+.brands-marquee:hover {
+  animation-play-state: paused;
+}
