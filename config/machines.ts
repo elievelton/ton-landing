@@ -5,6 +5,11 @@ export type Machine = {
   image: string
   features: string[]
   featured: boolean
+
+  // Destaques comerciais opcionais
+  bestSeller?: boolean
+  discount?: string
+  badge?: string
 }
 
 export const machines: Machine[] = [
@@ -21,7 +26,11 @@ export const machines: Machine[] = [
       "Conexão Wi-Fi e chip",
     ],
     featured: true,
+    bestSeller: true,
+    discount: "Até 71% OFF",
+    badge: "Mais vendida",
   },
+
   {
     id: "t3",
     name: "T3",
@@ -36,6 +45,7 @@ export const machines: Machine[] = [
     ],
     featured: true,
   },
+
   {
     id: "t2",
     name: "T2",
@@ -50,6 +60,7 @@ export const machines: Machine[] = [
     ],
     featured: false,
   },
+
   {
     id: "t1",
     name: "T1",

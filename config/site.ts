@@ -1,44 +1,37 @@
 export const siteConfig = {
-  name: "Máquinas Ton com Desconto",
+  name: "Ton Landing",
 
   description:
-    "Escolha a máquina Ton ideal para o seu negócio utilizando meu cupom exclusivo.",
+    "Encontre a maquininha Ton ideal para o seu negócio.",
 
-  author: "Elievelto Silva",
-
-  partner: "Parceiro Autorizado Ton",
+  author: "Elievelto",
 
   coupon: "ELIEVELTOSILVAVC",
-
-  url: "https://seudominio.com.br",
+  
+  partner: "Parceiro Ton",
 
   links: {
     catalog:
-      "https://ton.com.br/catalogo/?coupon=ELIEVELTOSILVAVC&userAnticipation=0&utm_medium=invite_share&utm_source=revendedor",
+      "https://www.ton.com.br/catalogo?coupon=ELIEVELTOSILVAVC&userAnticipation=0&utm_medium=invite_share&utm_source=revendedor",
 
-    whatsapp: "",
+    machines: {
+      t3Smart:
+        "https://ton.com.br/checkout/cart/?coupon=ELIEVELTOSILVAVC&productId=TONMEGA_TIER_SMART_POS&userAnticipation=0&userTag=tonmega_tier&utm_medium=invite_share&utm_source=revendedor",
 
-    instagram: "",
+      t3:
+        "https://ton.com.br/checkout/cart/?coupon=ELIEVELTOSILVAVC&productId=TONMEGA_TIER_S920&userAnticipation=0&userTag=tonmega_tier&utm_medium=invite_share&utm_source=revendedor",
 
-    facebook: "",
+      t2:
+        "https://ton.com.br/checkout/cart/?coupon=ELIEVELTOSILVAVC&productId=TONMEGA_TIER_D195&userAnticipation=0&userTag=tonmega_tier&utm_medium=invite_share&utm_source=revendedor",
 
-    youtube: "",
+      t1:
+        "https://ton.com.br/checkout/cart/?coupon=ELIEVELTOSILVAVC&productId=TONMEGA_TIER_D150&userAnticipation=0&userTag=tonmega_tier&utm_medium=invite_share&utm_source=revendedor",
+    },
   },
 
-  contact: {
-    email: "",
-  },
-
-  seo: {
-    keywords: [
-      "Máquina Ton",
-      "Ton T3",
-      "Ton T2",
-      "Ton T1",
-      "Máquina de cartão",
-      "Maquininha Ton",
-      "Cupom Ton",
-      "Desconto Ton",
-    ],
-  },
-} as const
+  whatsapp: "",
+  instagram: "",
+  facebook: "",
+  youtube: "",
+  email: "",
+}

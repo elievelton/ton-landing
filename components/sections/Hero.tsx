@@ -1,3 +1,5 @@
+import Image from "next/image"
+
 import {
   ArrowRight,
   BadgeCheck,
@@ -97,25 +99,99 @@ export function Hero() {
 
           {/* Área visual */}
           <FadeIn direction="left" delay={0.15}>
-            <div className="relative flex min-h-[420px] items-center justify-center lg:min-h-[560px]">
-              <div className="absolute size-[360px] rounded-full bg-primary/10 blur-3xl sm:size-[460px]" />
+            <div className="relative flex min-h-[380px] items-center justify-center lg:min-h-[480px]">
+              {/* Glow externo */}
+              <div
+                className="pointer-events-none absolute size-[300px] rounded-full bg-primary/15 blur-3xl sm:size-[360px]"
+                aria-hidden="true"
+              />
 
-              <div className="relative w-full max-w-lg rounded-[2rem] border border-border bg-white/70 p-8 shadow-premium backdrop-blur-xl">
-                <div className="flex min-h-[380px] flex-col items-center justify-center rounded-[1.5rem] border border-dashed border-primary/30 bg-primary/5 p-8 text-center">
-                  <CreditCard className="mb-6 size-16 text-primary" />
+              {/* Card T3 Smart */}
+              <div className="group relative w-full max-w-sm overflow-hidden rounded-[2rem] border border-orange-500/50 bg-white/80 p-5 shadow-[0_25px_70px_rgba(34,197,94,0.15)] backdrop-blur-xl transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_30px_80px_rgba(34,197,94,0.22)] sm:p-6">
+                {/* Glows internos */}
+                <div
+                  className="pointer-events-none absolute -right-20 -top-20 size-48 rounded-full bg-primary/15 blur-3xl transition-all duration-700 group-hover:bg-primary/25"
+                  aria-hidden="true"
+                />
 
-                  <p className="text-lg font-semibold text-foreground">
-                    Máquinas Ton
-                  </p>
+                <div
+                  className="pointer-events-none absolute -bottom-20 -left-20 size-44 rounded-full bg-orange-500/10 blur-3xl"
+                  aria-hidden="true"
+                />
 
-                  <p className="mt-2 max-w-xs text-sm leading-6 text-muted">
-                    Aqui entraremos com a composição visual das máquinas quando
-                    adicionarmos os assets oficiais.
-                  </p>
-
-                  <div className="mt-6 rounded-full bg-primary px-4 py-2 text-sm font-semibold text-white">
-                    Cupom: {siteConfig.coupon}
+                {/* Badges */}
+                <div className="relative z-10 flex items-center justify-between gap-2">
+                  <div className="inline-flex items-center gap-1.5 rounded-full bg-orange-500 px-3 py-1.5 text-[11px] font-bold uppercase tracking-wide text-white shadow-lg shadow-orange-500/20">
+                    🔥 Mais vendida
                   </div>
+
+                  <div className="relative">
+                    <span className="absolute inset-0 animate-ping rounded-full bg-primary/20" />
+
+                    <span className="relative inline-flex rounded-full border border-primary/20 bg-primary/10 px-3 py-1.5 text-[11px] font-extrabold text-primary">
+                      Até 71% OFF
+                    </span>
+                  </div>
+                </div>
+
+                {/* Máquina */}
+                <div className="relative mt-3 flex min-h-[180px] items-center justify-center">
+                  <div
+                    className="pointer-events-none absolute size-44 rounded-full bg-primary/15 blur-3xl transition-transform duration-700 group-hover:scale-125"
+                    aria-hidden="true"
+                  />
+
+                  <Image
+                    src="/images/machines/t3-smart.webp"
+                    alt="Maquininha Ton T3 Smart"
+                    width={320}
+                    height={320}
+                    priority
+                    className="relative z-10 h-[165px] w-auto object-contain drop-shadow-2xl transition-all duration-700 group-hover:-translate-y-1 group-hover:scale-105 sm:h-[190px]"
+                  />
+                </div>
+
+                {/* Oferta */}
+                <div className="relative z-10 text-center">
+                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">
+                    T3 Smart
+                  </p>
+
+                  <h2 className="mt-1.5 text-xl font-bold tracking-tight text-foreground sm:text-2xl">
+                    A máquina completa para o seu negócio
+                  </h2>
+
+                  <p className="mx-auto mt-2 max-w-xs text-sm leading-5 text-muted">
+                    Aproveite a oferta especial utilizando meu cupom exclusivo.
+                  </p>
+
+                  {/* Cupom */}
+                  <div className="mx-auto mt-4 inline-flex items-center gap-2 rounded-xl border border-dashed border-primary/40 bg-primary/5 px-4 py-2.5">
+                    <span className="text-[11px] font-medium uppercase tracking-wide text-muted">
+                      Cupom
+                    </span>
+
+                    <span className="text-sm font-bold tracking-wide text-primary">
+                      {siteConfig.coupon}
+                    </span>
+                  </div>
+
+                  {/* CTA específico da T3 Smart */}
+                  <a
+                    href={siteConfig.links.machines.t3Smart}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-4 block"
+                  >
+                    <Button
+                      size="lg"
+                      className="h-11 w-full gap-2 text-sm shadow-lg shadow-primary/20 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-primary/30"
+                    >
+                      Ver oferta da T3 Smart
+
+                      <ArrowRight className="size-4" />
+                    </Button>
+                  </a>
                 </div>
               </div>
             </div>
