@@ -11,6 +11,7 @@ import { Container } from "@/components/shared/Container"
 import { FadeIn } from "@/components/shared/FadeIn"
 import { Button } from "@/components/ui/button"
 import { siteConfig } from "@/config/site"
+import { CouponCopy } from "@/components/shared/CouponCopy"
 
 export function Hero() {
   return (
@@ -43,6 +44,14 @@ export function Hero() {
                   menos taxas
                 </span>
               </h1>
+              <p className="mt-5 max-w-2xl text-lg font-semibold leading-7 sm:text-xl">
+  <span className="text-orange-500">
+    Fuja hoje mesmo dos calotes,
+  </span>{" "}
+  <span className="text-primary">
+    venda parcelado, mas receba à vista.
+  </span>
+</p>
 
               <p className="mt-6 max-w-2xl text-lg leading-8 text-muted sm:text-xl">
                 Escolha a máquina Ton ideal para o seu negócio e aproveite
@@ -166,15 +175,13 @@ export function Hero() {
                   </p>
 
                   {/* Cupom */}
-                  <div className="mx-auto mt-4 inline-flex items-center gap-2 rounded-xl border border-dashed border-primary/40 bg-primary/5 px-4 py-2.5">
-                    <span className="text-[11px] font-medium uppercase tracking-wide text-muted">
-                      Cupom
-                    </span>
+<div className="mt-4 flex flex-col items-center gap-2">
+  <span className="text-[11px] font-medium uppercase tracking-wide text-muted">
+    Clique para copiar o cupom
+  </span>
 
-                    <span className="text-sm font-bold tracking-wide text-primary">
-                      {siteConfig.coupon}
-                    </span>
-                  </div>
+  <CouponCopy />
+</div>
 
                   {/* CTA específico da T3 Smart */}
                   <a

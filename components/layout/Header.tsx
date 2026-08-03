@@ -32,9 +32,26 @@ export function Header() {
             className="flex items-center gap-2"
             aria-label="Página inicial"
           >
-            <span className="text-2xl font-black tracking-tight text-primary">
-              Representante Ton
-            </span>
+            <div className="group inline-flex items-center gap-2">
+  <span className="relative font-[family-name:var(--font-manrope)] text-2xl font-extrabold tracking-[-0.05em] sm:text-3xl">
+    <span className="text-foreground">
+      Consultor
+    </span>{" "}
+    <span className="relative text-primary">
+      Ton
+
+      <span
+        className="absolute -bottom-1 left-0 h-[3px] w-full origin-left rounded-full bg-orange-500 transition-transform duration-300 group-hover:scale-x-75"
+        aria-hidden="true"
+      />
+    </span>
+  </span>
+
+  <span className="relative flex size-2.5">
+    <span className="absolute inline-flex size-full animate-ping rounded-full bg-primary opacity-40" />
+    <span className="relative inline-flex size-2.5 rounded-full bg-primary" />
+  </span>
+</div>
           </Link>
 
           {/* Navegação desktop */}
