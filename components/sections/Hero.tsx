@@ -8,10 +8,11 @@ import {
 } from "lucide-react"
 
 import { Container } from "@/components/shared/Container"
+import { CouponCopy } from "@/components/shared/CouponCopy"
 import { FadeIn } from "@/components/shared/FadeIn"
+import { TrackedLink } from "@/components/shared/TrackedLink"
 import { Button } from "@/components/ui/button"
 import { siteConfig } from "@/config/site"
-import { CouponCopy } from "@/components/shared/CouponCopy"
 
 export function Hero() {
   return (
@@ -39,19 +40,20 @@ export function Hero() {
               </div>
 
               <h1 className="max-w-3xl text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl xl:text-7xl">
-                Venda mais pagando{" "}
+                Maquininha Ton para{" "}
                 <span className="gradient-text">
-                  menos taxas
+                  vender mais pagando menos taxas
                 </span>
               </h1>
+
               <p className="mt-5 max-w-2xl text-lg font-semibold leading-7 sm:text-xl">
-  <span className="text-orange-500">
-    Fuja hoje mesmo dos calotes,
-  </span>{" "}
-  <span className="text-primary">
-    venda parcelado, mas receba à vista.
-  </span>
-</p>
+                <span className="text-orange-500">
+                  Fuja hoje mesmo dos calotes,
+                </span>{" "}
+                <span className="text-primary">
+                  venda parcelado, mas receba à vista.
+                </span>
+              </p>
 
               <p className="mt-6 max-w-2xl text-lg leading-8 text-muted sm:text-xl">
                 Escolha a máquina Ton ideal para o seu negócio e aproveite
@@ -60,10 +62,16 @@ export function Hero() {
 
               {/* CTA */}
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <a
+                <TrackedLink
                   href={siteConfig.links.catalog}
                   target="_blank"
                   rel="noopener noreferrer"
+                  tracking={{
+                    event: "cta_click",
+                    location: "hero",
+                    destination: "catalog",
+                    label: "Ver máquinas com desconto",
+                  }}
                 >
                   <Button
                     size="lg"
@@ -73,7 +81,7 @@ export function Hero() {
 
                     <ArrowRight className="size-4" />
                   </Button>
-                </a>
+                </TrackedLink>
 
                 <a href="#maquinas">
                   <Button
@@ -175,20 +183,27 @@ export function Hero() {
                   </p>
 
                   {/* Cupom */}
-<div className="mt-4 flex flex-col items-center gap-2">
-  <span className="text-[11px] font-medium uppercase tracking-wide text-muted">
-    Clique para copiar o cupom
-  </span>
+                  <div className="mt-4 flex flex-col items-center gap-2">
+                    <span className="text-[11px] font-medium uppercase tracking-wide text-muted">
+                      Clique para copiar o cupom
+                    </span>
 
-  <CouponCopy />
-</div>
+                    <CouponCopy location="hero" />
+                  </div>
 
                   {/* CTA específico da T3 Smart */}
-                  <a
+                  <TrackedLink
                     href={siteConfig.links.machines.t3Smart}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="mt-4 block"
+                    tracking={{
+                      event: "machine_click",
+                      location: "hero",
+                      destination: "checkout",
+                      label: "Ver oferta da T3 Smart",
+                      product: "t3_smart",
+                    }}
                   >
                     <Button
                       size="lg"
@@ -198,7 +213,7 @@ export function Hero() {
 
                       <ArrowRight className="size-4" />
                     </Button>
-                  </a>
+                  </TrackedLink>
                 </div>
               </div>
             </div>

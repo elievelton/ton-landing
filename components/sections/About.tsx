@@ -51,7 +51,7 @@ export function About() {
       <div className="relative overflow-hidden rounded-[2rem] border border-border bg-zinc-100 shadow-premium">
         <Image
   src="/images/about/consultor.jpg"
-  alt="Consultor Ton"
+  alt="Elievelto, consultor de maquininhas Ton"
   width={2736}
   height={4104}
   sizes="(max-width: 640px) 90vw, (max-width: 1024px) 420px, 440px"

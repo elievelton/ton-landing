@@ -8,11 +8,19 @@ import { siteConfig } from "@/config/site"
 type CouponCopyProps = {
   variant?: "default" | "orange" | "light"
   className?: string
+  location?: string
+}
+
+declare global {
+  interface Window {
+    dataLayer?: Record<string, unknown>[]
+  }
 }
 
 export function CouponCopy({
   variant = "default",
   className = "",
+  location = "unknown",
 }: CouponCopyProps) {
   const [copied, setCopied] = useState(false)
 
@@ -20,12 +28,25 @@ export function CouponCopy({
     try {
       await navigator.clipboard.writeText(siteConfig.coupon)
 
+      
+
+      window.dataLayer = window.dataLayer || []
+
+      window.dataLayer.push({
+        event: "coupon_copy",
+        event_location: location,
+        coupon: siteConfig.coupon,
+      })
+
+      
+
       setCopied(true)
 
       window.setTimeout(() => {
         setCopied(false)
       }, 2000)
-    } catch {
+    } catch (error) {
+      console.error("Erro ao copiar cupom:", error)
       setCopied(false)
     }
   }

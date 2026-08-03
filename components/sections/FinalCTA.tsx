@@ -9,6 +9,7 @@ import {
 import { Container } from "@/components/shared/Container"
 import { CouponCopy } from "@/components/shared/CouponCopy"
 import { FadeIn } from "@/components/shared/FadeIn"
+import { TrackedLink } from "@/components/shared/TrackedLink"
 import { Button } from "@/components/ui/button"
 import { siteConfig } from "@/config/site"
 
@@ -86,40 +87,56 @@ export function FinalCTA() {
                   Clique abaixo para copiar seu cupom
                 </p>
 
-                <CouponCopy variant="light" />
+                <CouponCopy
+  variant="light"
+  location="final_cta"
+/>
               </div>
 
               {/* Botões */}
-              <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-                <a
-                  href={siteConfig.links.catalog}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Button
-                    size="lg"
-                    className="h-12 w-full gap-2 px-6 text-base font-bold shadow-lg shadow-primary/20 sm:w-auto"
-                  >
-                    Ver máquinas com desconto
+              {/* Botões */}
+<div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+  <TrackedLink
+    href={siteConfig.links.catalog}
+    target="_blank"
+    rel="noopener noreferrer"
+    tracking={{
+      event: "cta_click",
+      location: "final_cta",
+      destination: "catalog",
+      label: "Ver máquinas com desconto",
+    }}
+  >
+    <Button
+      size="lg"
+      className="h-12 w-full gap-2 px-6 text-base font-bold shadow-lg shadow-primary/20 sm:w-auto"
+    >
+      Ver máquinas com desconto
 
-                    <ArrowRight className="size-4" />
-                  </Button>
-                </a>
+      <ArrowRight className="size-4" />
+    </Button>
+  </TrackedLink>
 
-                <a
-                  href={siteConfig.links.plansAndRates}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Button
-                    variant="outline"
-                    size="lg"
-className="h-12 w-full border-white/20 bg-white/5 px-6 text-base text-white hover:border-white/30 hover:bg-white/10 hover:text-white sm:w-auto"
-                  >
-                    Ver planos e taxas
-                  </Button>
-                </a>
-              </div>
+  <TrackedLink
+    href={siteConfig.links.plansAndRates}
+    target="_blank"
+    rel="noopener noreferrer"
+    tracking={{
+      event: "rates_click",
+      location: "final_cta",
+      destination: "plans_and_rates",
+      label: "Ver planos e taxas",
+    }}
+  >
+    <Button
+      variant="outline"
+      size="lg"
+      className="h-12 w-full border-white/20 bg-white/5 px-6 text-base text-white hover:border-white/30 hover:bg-white/10 hover:text-white sm:w-auto"
+    >
+      Ver planos e taxas
+    </Button>
+  </TrackedLink>
+</div>
 
               {/* Segurança */}
               <p className="mx-auto mt-6 max-w-xl text-xs leading-5 text-white/50">

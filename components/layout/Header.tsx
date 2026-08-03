@@ -4,6 +4,7 @@ import Link from "next/link"
 import { Menu } from "lucide-react"
 
 import { Container } from "@/components/shared/Container"
+import { TrackedLink } from "@/components/shared/TrackedLink"
 import { Button } from "@/components/ui/button"
 import {
   Sheet,
@@ -75,15 +76,21 @@ export function Header() {
 
           {/* CTA desktop */}
           <div className="hidden lg:block">
-            <a
+            <TrackedLink
               href={siteConfig.links.catalog}
               target="_blank"
               rel="noopener noreferrer"
+              tracking={{
+                event: "cta_click",
+                location: "header_desktop",
+                destination: "catalog",
+                label: "Comprar com desconto",
+              }}
             >
               <Button size="lg">
                 Comprar com desconto
               </Button>
-            </a>
+            </TrackedLink>
           </div>
 
           {/* Menu mobile */}
@@ -120,11 +127,17 @@ export function Header() {
                     </Link>
                   ))}
 
-                  <a
+                  <TrackedLink
                     href={siteConfig.links.catalog}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="mt-4"
+                    tracking={{
+                      event: "cta_click",
+                      location: "header_mobile",
+                      destination: "catalog",
+                      label: "Comprar com desconto",
+                    }}
                   >
                     <Button
                       size="lg"
@@ -132,7 +145,7 @@ export function Header() {
                     >
                       Comprar com desconto
                     </Button>
-                  </a>
+                  </TrackedLink>
                 </nav>
               </SheetContent>
             </Sheet>

@@ -202,7 +202,10 @@ export function FAQ() {
     Clique para copiar
   </span>
 
-  <CouponCopy variant="orange" />
+  <CouponCopy
+  variant="orange"
+  location="faq_coupon"
+/>
 </div>
           </div>
         </FadeIn>
@@ -300,7 +303,10 @@ function CouponTutorial() {
       </p>
     </div>
 
-    <CouponCopy variant="orange" />
+    <CouponCopy
+  variant="orange"
+  location="faq_activation"
+/>
   </div>
 </div>
 

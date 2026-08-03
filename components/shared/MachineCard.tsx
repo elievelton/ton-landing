@@ -1,10 +1,10 @@
 import Image from "next/image"
 import { Check, Flame, Sparkles } from "lucide-react"
 
+import { TrackedLink } from "@/components/shared/TrackedLink"
+import { Button } from "@/components/ui/button"
 import type { Machine } from "@/config/machines"
 import { siteConfig } from "@/config/site"
-
-import { Button } from "@/components/ui/button"
 
 type MachineCardProps = {
   machine: Machine
@@ -12,15 +12,16 @@ type MachineCardProps = {
 
 export function MachineCard({ machine }: MachineCardProps) {
   const isBestSeller = machine.bestSeller === true
-  const machineLinks = {
-  "t3-smart": siteConfig.links.machines.t3Smart,
-  t3: siteConfig.links.machines.t3,
-  t2: siteConfig.links.machines.t2,
-  t1: siteConfig.links.machines.t1,
-}
 
-const machineUrl =
-  machineLinks[machine.id as keyof typeof machineLinks]
+  const machineLinks = {
+    "t3-smart": siteConfig.links.machines.t3Smart,
+    t3: siteConfig.links.machines.t3,
+    t2: siteConfig.links.machines.t2,
+    t1: siteConfig.links.machines.t1,
+  }
+
+  const machineUrl =
+    machineLinks[machine.id as keyof typeof machineLinks]
 
   return (
     <article
@@ -28,7 +29,7 @@ const machineUrl =
         "group relative flex h-full flex-col overflow-hidden rounded-[2rem] border bg-white p-6 transition-all duration-500",
 
         isBestSeller
-          ? "border-orange-500  shadow-[0_20px_60px_rgba(34,197,94,0.18)] hover:-translate-y-2 hover:shadow-[0_25px_70px_rgba(34,197,94,0.28)]"
+          ? "border-orange-500 shadow-[0_20px_60px_rgba(34,197,94,0.18)] hover:-translate-y-2 hover:shadow-[0_25px_70px_rgba(34,197,94,0.28)]"
           : machine.featured
             ? "border-primary/30 shadow-premium hover:-translate-y-1"
             : "border-border shadow-sm hover:-translate-y-1 hover:shadow-lg",
@@ -166,35 +167,44 @@ const machineUrl =
         </ul>
 
         {/* CTA */}
-<div className="mt-auto pt-8">
-  <a
-    href={machineUrl}
-    target="_blank"
-    rel="noopener noreferrer"
-    className="block"
-  >
-    <Button
-      variant={machine.featured ? "default" : "outline"}
-      size="lg"
-      className={[
-        "h-11 w-full transition-all duration-300",
-        isBestSeller
-          ? "shadow-lg shadow-primary/20 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-primary/30"
-          : "",
-      ].join(" ")}
-    >
-      {isBestSeller
-        ? "Ver oferta da T3 Smart"
-        : `Ver opções da ${machine.name}`}
-    </Button>
-  </a>
+        <div className="mt-auto pt-8">
+          <TrackedLink
+            href={machineUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block"
+            tracking={{
+              event: "machine_click",
+              location: "machines",
+              destination: "checkout",
+              label: isBestSeller
+                ? "Ver oferta da T3 Smart"
+                : `Ver opções da ${machine.name}`,
+              product: machine.id,
+            }}
+          >
+            <Button
+              variant={machine.featured ? "default" : "outline"}
+              size="lg"
+              className={[
+                "h-11 w-full transition-all duration-300",
+                isBestSeller
+                  ? "shadow-lg shadow-primary/20 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-primary/30"
+                  : "",
+              ].join(" ")}
+            >
+              {isBestSeller
+                ? "Ver oferta da T3 Smart"
+                : `Ver opções da ${machine.name}`}
+            </Button>
+          </TrackedLink>
 
-  {isBestSeller && (
-    <p className="mt-3 text-center text-xs font-medium text-primary">
-      Oferta em destaque
-    </p>
-  )}
-</div>
+          {isBestSeller && (
+            <p className="mt-3 text-center text-xs font-medium text-primary">
+              Oferta em destaque
+            </p>
+          )}
+        </div>
       </div>
     </article>
   )

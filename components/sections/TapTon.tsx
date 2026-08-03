@@ -9,6 +9,7 @@ import {
 
 import { Container } from "@/components/shared/Container"
 import { FadeIn } from "@/components/shared/FadeIn"
+import { TrackedLink } from "@/components/shared/TrackedLink"
 import { Button } from "@/components/ui/button"
 import { siteConfig } from "@/config/site"
 
@@ -96,21 +97,29 @@ export function TapTon() {
                 </div>
 
                 {/* CTA */}
-                <a
-                  href={siteConfig.links.tapTon}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-8 inline-block"
-                >
-                  <Button
-                    size="lg"
-                    className="h-12 gap-2 px-6 text-base shadow-lg shadow-primary/20"
-                  >
-                    Quero vender pelo celular
+{/* CTA */}
+<TrackedLink
+  href={siteConfig.links.tapTon}
+  target="_blank"
+  rel="noopener noreferrer"
+  className="mt-8 inline-block"
+  tracking={{
+    event: "tapton_click",
+    location: "tapton",
+    destination: "tapton",
+    label: "Quero vender pelo celular",
+    product: "tapton",
+  }}
+>
+  <Button
+    size="lg"
+    className="h-12 gap-2 px-6 text-base shadow-lg shadow-primary/20"
+  >
+    Quero vender pelo celular
 
-                    <ArrowRight className="size-4" />
-                  </Button>
-                </a>
+    <ArrowRight className="size-4" />
+  </Button>
+</TrackedLink>
 
                 <p className="mt-3 text-xs leading-5 text-muted">
                   Disponibilidade sujeita à compatibilidade do aparelho com a

@@ -9,6 +9,7 @@ import {
 
 import { Container } from "@/components/shared/Container"
 import { FadeIn } from "@/components/shared/FadeIn"
+import { TrackedLink } from "@/components/shared/TrackedLink"
 import { Button } from "@/components/ui/button"
 import { siteConfig } from "@/config/site"
 import { CouponCopy } from "@/components/shared/CouponCopy"
@@ -110,7 +111,7 @@ export function Consultant() {
   </p>
 
   <div className="mt-3">
-    <CouponCopy />
+    <CouponCopy location="consultant" />
   </div>
 </div>
                 </div>
@@ -133,8 +134,51 @@ export function Consultant() {
                 </div>
               </div>
 
-              {/* CTA */}
               {/* CTAs */}
+<div className="mt-8 flex flex-col gap-3 sm:flex-row">
+  <TrackedLink
+    href={siteConfig.links.catalog}
+    target="_blank"
+    rel="noopener noreferrer"
+    tracking={{
+      event: "cta_click",
+      location: "consultant",
+      destination: "catalog",
+      label: "Quero aproveitar os descontos",
+    }}
+  >
+    <Button
+      size="lg"
+      className="h-12 w-full gap-2 px-6 text-base shadow-lg shadow-primary/20 sm:w-auto"
+    >
+      Quero aproveitar os descontos
+
+      <ArrowRight className="size-4" />
+    </Button>
+  </TrackedLink>
+
+  <TrackedLink
+    href={siteConfig.links.plansAndRates}
+    target="_blank"
+    rel="noopener noreferrer"
+    tracking={{
+      event: "rates_click",
+      location: "consultant",
+      destination: "plans_and_rates",
+      label: "Ver planos e taxas",
+    }}
+  >
+    <Button
+      variant="outline"
+      size="lg"
+      className="h-12 w-full gap-2 px-6 text-base sm:w-auto"
+    >
+      Ver planos e taxas
+
+      <ArrowRight className="size-4" />
+    </Button>
+  </TrackedLink>
+</div>
 <div className="mt-8 flex flex-col gap-3 sm:flex-row">
   <a
     href={siteConfig.links.catalog}
