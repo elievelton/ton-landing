@@ -1,8 +1,10 @@
 import type { Metadata } from "next"
 import { Geist, Geist_Mono, Manrope } from "next/font/google"
 
+import { Footer } from "@/components/layout/Footer"
 import { Header } from "@/components/layout/Header"
 import { siteConfig } from "@/config/site"
+import { BackToTop } from "@/components/shared/BackToTop"
 
 import "./globals.css"
 
@@ -48,6 +50,9 @@ export default function RootLayout({
         <main className="flex-1">
           {children}
         </main>
+
+        <Footer />
+        <BackToTop />
       </body>
     </html>
   )

@@ -16,9 +16,11 @@ import { siteConfig } from "@/config/site"
 
 const navigation = [
   { label: "Máquinas", href: "#maquinas" },
-  { label: "Benefícios", href: "#beneficios" },
-  { label: "Como funciona", href: "#como-funciona" },
-  { label: "FAQ", href: "#faq" },
+  { label: "Planos e Taxas", href: "#planos" },
+  { label: "TapTon", href: "#tapton" },
+  { label: "Por que comigo?", href: "#consultor" },
+  { label: "Sobre mim", href: "#quem-somos" },
+  { label: "FAQ", href: "#duvidas" },
 ]
 
 export function Header() {
@@ -33,37 +35,38 @@ export function Header() {
             aria-label="Página inicial"
           >
             <div className="group inline-flex items-center gap-2">
-  <span className="relative font-[family-name:var(--font-manrope)] text-2xl font-extrabold tracking-[-0.05em] sm:text-3xl">
-    <span className="text-foreground">
-      Consultor
-    </span>{" "}
-    <span className="relative text-primary">
-      Ton
+              <span className="relative font-[family-name:var(--font-manrope)] text-2xl font-extrabold tracking-[-0.05em] sm:text-3xl">
+                <span className="text-foreground">
+                  Consultor
+                </span>{" "}
 
-      <span
-        className="absolute -bottom-1 left-0 h-[3px] w-full origin-left rounded-full bg-orange-500 transition-transform duration-300 group-hover:scale-x-75"
-        aria-hidden="true"
-      />
-    </span>
-  </span>
+                <span className="relative text-primary">
+                  Ton
 
-  <span className="relative flex size-2.5">
-    <span className="absolute inline-flex size-full animate-ping rounded-full bg-primary opacity-40" />
-    <span className="relative inline-flex size-2.5 rounded-full bg-primary" />
-  </span>
-</div>
+                  <span
+                    className="absolute -bottom-1 left-0 h-[3px] w-full origin-left rounded-full bg-orange-500 transition-transform duration-300 group-hover:scale-x-75"
+                    aria-hidden="true"
+                  />
+                </span>
+              </span>
+
+              <span className="relative flex size-2.5">
+                <span className="absolute inline-flex size-full animate-ping rounded-full bg-primary opacity-40" />
+                <span className="relative inline-flex size-2.5 rounded-full bg-primary" />
+              </span>
+            </div>
           </Link>
 
           {/* Navegação desktop */}
           <nav
-            className="hidden items-center gap-8 lg:flex"
+            className="hidden items-center gap-5 lg:flex"
             aria-label="Navegação principal"
           >
             {navigation.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className="text-sm font-medium text-foreground/70 transition-colors hover:text-primary"
+                className="whitespace-nowrap text-sm font-medium text-foreground/70 transition-colors hover:text-primary"
               >
                 {item.label}
               </Link>

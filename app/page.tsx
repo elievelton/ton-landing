@@ -7,6 +7,7 @@ import { TapTon } from "@/components/sections/TapTon"
 import { Consultant } from "@/components/sections/Consultant"
 import { About } from "@/components/sections/About"
 import { FAQ } from "@/components/sections/FAQ"
+import { FinalCTA } from "@/components/sections/FinalCTA"
 
 export default function Home() {
   return (
@@ -20,6 +21,7 @@ export default function Home() {
       <Consultant />
       <About />
       <FAQ />
+      <FinalCTA />
     </>
   )
 }

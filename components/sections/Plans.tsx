@@ -115,78 +115,93 @@ export function Plans() {
                     {plan.description}
                   </p>
                 </div>
-                  {/* Taxas */}
-<div className="relative z-10 mt-7">
-  <div
-    className={[
-      "grid grid-cols-3 overflow-hidden rounded-2xl border",
-      plan.recommended
-        ? "border-primary/20 bg-primary/5"
-        : "border-border bg-zinc-50",
-    ].join(" ")}
-  >
-    <div className="px-3 py-4 text-center">
-      <p
-        className={[
-          "text-2xl font-extrabold tracking-tight sm:text-3xl",
-          plan.recommended ? "text-primary" : "text-foreground",
-        ].join(" ")}
-      >
-        {plan.rates.debit}
-      </p>
 
-      <p className="mt-1 text-xs font-medium text-muted">
-        Débito
-      </p>
-    </div>
+                {/* Taxas */}
+                <div className="relative z-10 mt-7">
+                  <div
+                    className={[
+                      "grid grid-cols-3 overflow-hidden rounded-2xl border",
 
-    <div className="border-x border-border/70 px-3 py-4 text-center">
-      <p
-        className={[
-          "text-2xl font-extrabold tracking-tight sm:text-3xl",
-          plan.recommended ? "text-primary" : "text-foreground",
-        ].join(" ")}
-      >
-        {plan.rates.credit}
-      </p>
+                      plan.recommended
+                        ? "border-primary/20 bg-primary/5"
+                        : "border-border bg-zinc-50",
+                    ].join(" ")}
+                  >
+                    {/* Débito */}
+                    <div className="px-3 py-4 text-center">
+                      <p
+                        className={[
+                          "text-2xl font-extrabold tracking-tight sm:text-3xl",
 
-      <p className="mt-1 text-xs font-medium text-muted">
-        Crédito
-      </p>
-    </div>
+                          plan.recommended
+                            ? "text-primary"
+                            : "text-foreground",
+                        ].join(" ")}
+                      >
+                        {plan.rates.debit}
+                      </p>
 
-    <div className="px-3 py-4 text-center">
-      <p
-        className={[
-          "text-2xl font-extrabold tracking-tight sm:text-3xl",
-          plan.recommended ? "text-primary" : "text-foreground",
-        ].join(" ")}
-      >
-        {plan.rates.credit12x}
-      </p>
+                      <p className="mt-1 text-xs font-medium text-muted">
+                        Débito
+                      </p>
+                    </div>
 
-      <p className="mt-1 text-xs font-medium text-muted">
-        Crédito 12x
-      </p>
-    </div>
-  </div>
+                    {/* Crédito */}
+                    <div className="border-x border-border/70 px-3 py-4 text-center">
+                      <p
+                        className={[
+                          "text-2xl font-extrabold tracking-tight sm:text-3xl",
 
-  {/* Destaque da taxa */}
-  {plan.rateHighlight && (
-    <div className="mt-3 flex justify-center">
-      <span className="rounded-full bg-orange-500/10 px-4 py-2 text-center text-xs font-bold text-orange-600">
-        🔥 {plan.rateHighlight}
-      </span>
-    </div>
-  )}
+                          plan.recommended
+                            ? "text-primary"
+                            : "text-foreground",
+                        ].join(" ")}
+                      >
+                        {plan.rates.credit}
+                      </p>
 
-  {/* Condições */}
-  {plan.rateNote && (
-    <p className="mx-auto mt-3 max-w-md text-center text-xs leading-5 text-muted">
-      * {plan.rateNote}
-    </p>
-  )}
-</div>
+                      <p className="mt-1 text-xs font-medium text-muted">
+                        Crédito
+                      </p>
+                    </div>
+
+                    {/* Crédito 12x */}
+                    <div className="px-3 py-4 text-center">
+                      <p
+                        className={[
+                          "text-2xl font-extrabold tracking-tight sm:text-3xl",
+
+                          plan.recommended
+                            ? "text-primary"
+                            : "text-foreground",
+                        ].join(" ")}
+                      >
+                        {plan.rates.credit12x}
+                      </p>
+
+                      <p className="mt-1 text-xs font-medium text-muted">
+                        Crédito 12x
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Destaque da taxa */}
+                  {plan.rateHighlight && (
+                    <div className="mt-3 flex justify-center">
+                      <span className="rounded-full bg-orange-500/10 px-4 py-2 text-center text-xs font-bold text-orange-600">
+                        🔥 {plan.rateHighlight}
+                      </span>
+                    </div>
+                  )}
+
+                  {/* Condições */}
+                  {plan.rateNote && (
+                    <p className="mx-auto mt-3 max-w-md text-center text-xs leading-5 text-muted">
+                      * {plan.rateNote}
+                    </p>
+                  )}
+                </div>
+
                 {/* Benefícios */}
                 <ul className="relative z-10 mt-7 space-y-4">
                   {plan.benefits.map((benefit) => (
@@ -213,6 +228,14 @@ export function Plans() {
 
                 {/* CTA */}
                 <div className="relative z-10 mt-auto pt-8">
+                  {/* Recomendação Mega+ */}
+                  {plan.recommended && (
+                    <p className="mb-3 text-center text-xs font-medium text-primary">
+                      Plano que recomendamos para a maioria dos negócios
+                    </p>
+                  )}
+
+                  {/* Botão principal */}
                   <a
                     href={siteConfig.links.catalog}
                     target="_blank"
@@ -238,11 +261,17 @@ export function Plans() {
                     </Button>
                   </a>
 
-                  {plan.recommended && (
-                    <p className="mt-3 text-center text-xs font-medium text-primary">
-                      Plano que recomendamos para a maioria dos negócios
-                    </p>
-                  )}
+                  {/* Detalhamento das taxas */}
+                  <a
+                    href={siteConfig.links.plansAndRates}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-3 flex h-11 w-full items-center justify-center gap-2 rounded-xl border border-primary/20 bg-primary/5 px-4 text-sm font-semibold text-primary transition-all duration-300 hover:border-primary/30 hover:bg-primary/10"
+                  >
+                    Ver todas as taxas e condições
+
+                    <ArrowRight className="size-4" />
+                  </a>
                 </div>
               </article>
             </FadeIn>
