@@ -8,11 +8,11 @@ import {
 } from "lucide-react"
 
 import { Container } from "@/components/shared/Container"
+import { CouponCopy } from "@/components/shared/CouponCopy"
 import { FadeIn } from "@/components/shared/FadeIn"
 import { TrackedLink } from "@/components/shared/TrackedLink"
 import { Button } from "@/components/ui/button"
 import { siteConfig } from "@/config/site"
-import { CouponCopy } from "@/components/shared/CouponCopy"
 
 export function Consultant() {
   return (
@@ -101,19 +101,19 @@ export function Consultant() {
                   </span>
 
                   <div>
-  <p className="font-semibold text-foreground">
-    Mais 20% de desconto
-  </p>
+                    <p className="font-semibold text-foreground">
+                      Mais 20% de desconto
+                    </p>
 
-  <p className="mt-1 text-sm leading-6 text-muted">
-    Utilize meu cupom para obter o desconto adicional nas
-    condições aplicáveis.
-  </p>
+                    <p className="mt-1 text-sm leading-6 text-muted">
+                      Utilize meu cupom para obter o desconto adicional nas
+                      condições aplicáveis.
+                    </p>
 
-  <div className="mt-3">
-    <CouponCopy location="consultant" />
-  </div>
-</div>
+                    <div className="mt-3">
+                      <CouponCopy location="consultant" />
+                    </div>
+                  </div>
                 </div>
 
                 <div className="flex items-start gap-3">
@@ -135,232 +135,199 @@ export function Consultant() {
               </div>
 
               {/* CTAs */}
-<div className="mt-8 flex flex-col gap-3 sm:flex-row">
-  <TrackedLink
-    href={siteConfig.links.catalog}
-    target="_blank"
-    rel="noopener noreferrer"
-    tracking={{
-      event: "cta_click",
-      location: "consultant",
-      destination: "catalog",
-      label: "Quero aproveitar os descontos",
-    }}
-  >
-    <Button
-      size="lg"
-      className="h-12 w-full gap-2 px-6 text-base shadow-lg shadow-primary/20 sm:w-auto"
-    >
-      Quero aproveitar os descontos
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                <TrackedLink
+                  href={siteConfig.links.catalog}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  tracking={{
+                    event: "cta_click",
+                    location: "consultant",
+                    destination: "catalog",
+                    label: "Quero aproveitar os descontos",
+                  }}
+                >
+                  <Button
+                    size="lg"
+                    className="h-12 w-full gap-2 px-6 text-base shadow-lg shadow-primary/20 sm:w-auto"
+                  >
+                    Quero aproveitar os descontos
 
-      <ArrowRight className="size-4" />
-    </Button>
-  </TrackedLink>
+                    <ArrowRight className="size-4" />
+                  </Button>
+                </TrackedLink>
 
-  <TrackedLink
-    href={siteConfig.links.plansAndRates}
-    target="_blank"
-    rel="noopener noreferrer"
-    tracking={{
-      event: "rates_click",
-      location: "consultant",
-      destination: "plans_and_rates",
-      label: "Ver planos e taxas",
-    }}
-  >
-    <Button
-      variant="outline"
-      size="lg"
-      className="h-12 w-full gap-2 px-6 text-base sm:w-auto"
-    >
-      Ver planos e taxas
+                <TrackedLink
+                  href={siteConfig.links.plansAndRates}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  tracking={{
+                    event: "rates_click",
+                    location: "consultant",
+                    destination: "plans_and_rates",
+                    label: "Ver planos e taxas",
+                  }}
+                >
+                  <Button
+                    variant="outline"
+                    size="lg"
+                    className="h-12 w-full gap-2 px-6 text-base sm:w-auto"
+                  >
+                    Ver planos e taxas
 
-      <ArrowRight className="size-4" />
-    </Button>
-  </TrackedLink>
-</div>
-<div className="mt-8 flex flex-col gap-3 sm:flex-row">
-  <a
-    href={siteConfig.links.catalog}
-    target="_blank"
-    rel="noopener noreferrer"
-  >
-    <Button
-      size="lg"
-      className="h-12 w-full gap-2 px-6 text-base shadow-lg shadow-primary/20 sm:w-auto"
-    >
-      Quero aproveitar os descontos
-
-      <ArrowRight className="size-4" />
-    </Button>
-  </a>
-
-  <a
-    href={siteConfig.links.plansAndRates}
-    target="_blank"
-    rel="noopener noreferrer"
-  >
-    <Button
-      variant="outline"
-      size="lg"
-      className="h-12 w-full gap-2 px-6 text-base sm:w-auto"
-    >
-      Ver planos e taxas
-
-      <ArrowRight className="size-4" />
-    </Button>
-  </a>
-</div>
+                    <ArrowRight className="size-4" />
+                  </Button>
+                </TrackedLink>
+              </div>
             </div>
           </FadeIn>
 
           {/* Exemplo visual */}
-<FadeIn direction="left" delay={0.15}>
-  <div className="relative">
-    <div className="rounded-[2rem] border border-primary/20 bg-white p-6 shadow-premium sm:p-8">
-      {/* Cabeçalho */}
-      <div className="flex items-center justify-between gap-4">
-        <div>
-          <span className="text-sm font-semibold text-primary">
-            Veja como funciona
-          </span>
+          <FadeIn direction="left" delay={0.15}>
+            <div className="relative">
+              <div className="rounded-[2rem] border border-primary/20 bg-white p-6 shadow-premium sm:p-8">
+                {/* Cabeçalho */}
+                <div className="flex items-center justify-between gap-4">
+                  <div>
+                    <span className="text-sm font-semibold text-primary">
+                      Veja como funciona
+                    </span>
 
-          <h3 className="mt-1 text-2xl font-bold text-foreground">
-            Exemplo com a T3 Smart
-          </h3>
-        </div>
+                    <h3 className="mt-1 text-2xl font-bold text-foreground">
+                      Exemplo com a T3 Smart
+                    </h3>
+                  </div>
 
-        <div className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-orange-500 text-white shadow-lg shadow-orange-500/20">
-          <Sparkles className="size-6" />
-        </div>
-      </div>
+                  <div className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-orange-500 text-white shadow-lg shadow-orange-500/20">
+                    <Sparkles className="size-6" />
+                  </div>
+                </div>
 
-      {/* Preço original */}
-      <div className="mt-6 flex items-center justify-between rounded-2xl border border-border bg-zinc-50 px-5 py-4">
-        <div>
-          <p className="text-xs font-semibold uppercase tracking-wider text-muted">
-            Preço original
-          </p>
+                {/* Preço original */}
+                <div className="mt-6 flex items-center justify-between rounded-2xl border border-border bg-zinc-50 px-5 py-4">
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-wider text-muted">
+                      Preço original
+                    </p>
 
-          <p className="mt-1 text-2xl font-extrabold tracking-tight text-foreground">
-            R$ 671,43
-          </p>
-        </div>
+                    <p className="mt-1 text-2xl font-extrabold tracking-tight text-foreground">
+                      R$ 671,43
+                    </p>
+                  </div>
 
-        <ArrowRight className="size-5 text-muted" />
-      </div>
+                  <ArrowRight className="size-5 text-muted" />
+                </div>
 
-      {/* Descontos */}
-      <div className="mt-4 grid gap-4 sm:grid-cols-2">
-        {/* Ton */}
-        <div className="rounded-2xl border border-primary/20 bg-primary/5 p-5">
-          <div className="flex items-center justify-between">
-            <p className="text-xs font-semibold uppercase tracking-wider text-muted">
-              Desconto Ton
-            </p>
+                {/* Descontos */}
+                <div className="mt-4 grid gap-4 sm:grid-cols-2">
+                  {/* Ton */}
+                  <div className="rounded-2xl border border-primary/20 bg-primary/5 p-5">
+                    <div className="flex items-center justify-between">
+                      <p className="text-xs font-semibold uppercase tracking-wider text-muted">
+                        Desconto Ton
+                      </p>
 
-            <BadgePercent className="size-5 text-primary" />
-          </div>
+                      <BadgePercent className="size-5 text-primary" />
+                    </div>
 
-          <p className="mt-2 text-3xl font-extrabold text-primary">
-            -71%
-          </p>
+                    <p className="mt-2 text-3xl font-extrabold text-primary">
+                      -71%
+                    </p>
 
-          <div className="mt-3 border-t border-primary/10 pt-3">
-            <p className="text-xs text-muted">
-              Valor após o desconto
-            </p>
+                    <div className="mt-3 border-t border-primary/10 pt-3">
+                      <p className="text-xs text-muted">
+                        Valor após o desconto
+                      </p>
 
-            <p className="mt-1 text-xl font-bold text-foreground">
-              R$ 194,71
-            </p>
-          </div>
-        </div>
+                      <p className="mt-1 text-xl font-bold text-foreground">
+                        R$ 194,71
+                      </p>
+                    </div>
+                  </div>
 
-        {/* Consultor */}
-        <div className="rounded-2xl border border-orange-500/30 bg-orange-500/5 p-5">
-          <div className="flex items-center justify-between">
-            <p className="text-xs font-semibold uppercase tracking-wider text-muted">
-              Meu cupom
-            </p>
+                  {/* Consultor */}
+                  <div className="rounded-2xl border border-orange-500/30 bg-orange-500/5 p-5">
+                    <div className="flex items-center justify-between">
+                      <p className="text-xs font-semibold uppercase tracking-wider text-muted">
+                        Meu cupom
+                      </p>
 
-            <BadgePercent className="size-5 text-orange-500" />
-          </div>
+                      <BadgePercent className="size-5 text-orange-500" />
+                    </div>
 
-          <p className="mt-2 text-3xl font-extrabold text-orange-500">
-            -20%
-          </p>
+                    <p className="mt-2 text-3xl font-extrabold text-orange-500">
+                      -20%
+                    </p>
 
-          <div className="mt-3 border-t border-orange-500/10 pt-3">
-            <p className="text-xs text-muted">
-              Sobre R$ 194,71
-            </p>
+                    <div className="mt-3 border-t border-orange-500/10 pt-3">
+                      <p className="text-xs text-muted">
+                        Sobre R$ 194,71
+                      </p>
 
-            <p className="mt-1 text-xl font-bold text-orange-600">
-              - R$ 38,94
-            </p>
-          </div>
-        </div>
-      </div>
+                      <p className="mt-1 text-xl font-bold text-orange-600">
+                        - R$ 38,94
+                      </p>
+                    </div>
+                  </div>
+                </div>
 
-      {/* Resultado */}
-      {/* Resultado */}
-<div className="mt-4 space-y-4">
-  {/* Preço final */}
-  <div className="relative overflow-hidden rounded-2xl bg-primary p-6 text-center text-white">
-    <div
-      className="pointer-events-none absolute -right-10 -top-10 size-32 rounded-full bg-white/10 blur-2xl"
-      aria-hidden="true"
-    />
+                {/* Resultado */}
+                <div className="mt-4 space-y-4">
+                  {/* Preço final */}
+                  <div className="relative overflow-hidden rounded-2xl bg-primary p-6 text-center text-white">
+                    <div
+                      className="pointer-events-none absolute -right-10 -top-10 size-32 rounded-full bg-white/10 blur-2xl"
+                      aria-hidden="true"
+                    />
 
-    <p className="relative text-sm font-medium text-white/80">
-      Você pagaria no exemplo
-    </p>
+                    <p className="relative text-sm font-medium text-white/80">
+                      Você pagaria no exemplo
+                    </p>
 
-    <p className="relative mt-2 text-4xl font-extrabold tracking-tight sm:text-5xl">
-      R$ 155,77
-    </p>
+                    <p className="relative mt-2 text-4xl font-extrabold tracking-tight sm:text-5xl">
+                      R$ 155,77
+                    </p>
 
-    <p className="relative mt-2 text-xs font-medium text-white/80">
-      Promoção Ton + desconto adicional do consultor
-    </p>
-  </div>
+                    <p className="relative mt-2 text-xs font-medium text-white/80">
+                      Promoção Ton + desconto adicional do consultor
+                    </p>
+                  </div>
 
-  {/* Economia total */}
-  <div className="rounded-2xl border border-orange-500/20 bg-orange-500/5 p-5 text-center">
-    <p className="text-xs font-semibold uppercase tracking-wider text-muted">
-      Economia total neste exemplo
-    </p>
+                  {/* Economia total */}
+                  <div className="rounded-2xl border border-orange-500/20 bg-orange-500/5 p-5 text-center">
+                    <p className="text-xs font-semibold uppercase tracking-wider text-muted">
+                      Economia total neste exemplo
+                    </p>
 
-    <p className="mt-2 text-3xl font-extrabold text-orange-600">
-      R$ 515,66
-    </p>
+                    <p className="mt-2 text-3xl font-extrabold text-orange-600">
+                      R$ 515,66
+                    </p>
 
-    <p className="mt-2 text-xs leading-5 text-muted">
-      De R$ 671,43 por apenas R$ 155,77 no exemplo apresentado.
-    </p>
-  </div>
-</div>
+                    <p className="mt-2 text-xs leading-5 text-muted">
+                      De R$ 671,43 por apenas R$ 155,77 no exemplo apresentado.
+                    </p>
+                  </div>
+                </div>
 
-      {/* Explicação */}
-      <div className="mt-5 rounded-xl bg-zinc-50 px-4 py-3 text-center">
-        <p className="text-sm font-semibold text-foreground">
-          Primeiro a Ton dá o desconto.{" "}
-          <span className="text-primary">
-            Depois você economiza mais 20%.
-          </span>
-        </p>
-      </div>
+                {/* Explicação */}
+                <div className="mt-5 rounded-xl bg-zinc-50 px-4 py-3 text-center">
+                  <p className="text-sm font-semibold text-foreground">
+                    Primeiro a Ton dá o desconto.{" "}
+                    <span className="text-primary">
+                      Depois você economiza mais 20%.
+                    </span>
+                  </p>
+                </div>
 
-      {/* Aviso */}
-      <p className="mt-3 text-center text-[10px] leading-4 text-muted">
-        * Exemplo ilustrativo considerando desconto promocional de 71% e,
-        em seguida, desconto adicional de 20%. Preços, percentuais e condições
-        promocionais podem sofrer alterações.
-      </p>
-    </div>
-  </div>
-</FadeIn>
+                {/* Aviso */}
+                <p className="mt-3 text-center text-[10px] leading-4 text-muted">
+                  * Exemplo ilustrativo considerando desconto promocional de
+                  71% e, em seguida, desconto adicional de 20%. Preços,
+                  percentuais e condições promocionais podem sofrer alterações.
+                </p>
+              </div>
+            </div>
+          </FadeIn>
         </div>
       </Container>
     </section>
