@@ -7,8 +7,6 @@ import {
   BadgePercent,
   ChevronDown,
   CircleHelp,
-  Copy,
-  Tag,
 } from "lucide-react"
 
 import { Container } from "@/components/shared/Container"

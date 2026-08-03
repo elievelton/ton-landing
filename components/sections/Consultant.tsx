@@ -1,5 +1,4 @@
 import {
-  ArrowDown,
   ArrowRight,
   BadgePercent,
   Check,
