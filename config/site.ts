@@ -1,6 +1,6 @@
 export const siteConfig = {
   name: "Parceiro Ton",
-  
+
   url: "https://maquininhacomcupom.com.br",
 
   title:
@@ -60,5 +60,5 @@ export const siteConfig = {
   instagram: "",
   facebook: "",
   youtube: "",
-  email: "elievelton@gmail.com",
+  email: "contato@maquininhacomcupom.com.br",
 }

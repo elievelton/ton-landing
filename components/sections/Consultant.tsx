@@ -67,14 +67,20 @@ export function Consultant() {
               </p>
 
               {/* Frase de destaque */}
-              <div className="mt-6 rounded-2xl border border-primary/20 bg-primary/5 p-5">
-                <p className="text-base font-bold leading-7 text-foreground sm:text-lg">
-                  Primeiro entra o desconto da Ton.{" "}
-                  <span className="text-primary">
-                    Depois, aplicamos mais 20% de desconto.
-                  </span>
-                </p>
-              </div>
+              {/* Frase de destaque */}
+<div className="mt-6 rounded-2xl border border-primary/20 bg-primary/5 p-5">
+  <p className="text-base font-bold leading-7 text-foreground sm:text-lg">
+    O desconto da Ton vem primeiro.{" "}
+    <span className="text-primary">
+      Com meu cupom, você ganha mais 20% de desconto
+    </span>{" "}
+    e pode chegar a aproximadamente{" "}
+    <span className="text-xl font-black text-orange-500 sm:text-2xl">
+      78% OFF
+    </span>{" "}
+    no valor da maquininha.
+  </p>
+</div>
 
               {/* Benefícios */}
               <div className="mt-8 space-y-4">
