@@ -5,8 +5,13 @@ import { Container } from "@/components/shared/Container"
 
 export const metadata: Metadata = {
   title: "Política de Privacidade",
+
   description:
     "Conheça a Política de Privacidade do Maquininha com Cupom e saiba como tratamos dados pessoais, cookies e informações de navegação.",
+
+  alternates: {
+    canonical: "/politica-de-privacidade",
+  },
 }
 
 export default function PoliticaDePrivacidadePage() {

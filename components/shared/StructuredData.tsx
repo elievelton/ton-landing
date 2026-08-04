@@ -1,23 +1,30 @@
 import { siteConfig } from "@/config/site"
 
 export function StructuredData() {
+  const websiteId = `${siteConfig.url}/#website`
+  const webpageId = `${siteConfig.url}/#webpage`
+  const consultantId = `${siteConfig.url}/#consultor`
+
   const structuredData = {
     "@context": "https://schema.org",
     "@graph": [
       {
         "@type": "WebSite",
-        "@id": "#website",
-        name: siteConfig.name,
+        "@id": websiteId,
+        url: siteConfig.url,
+        name: "Maquininha com Cupom",
         description: siteConfig.description,
         inLanguage: "pt-BR",
       },
+
       {
         "@type": "WebPage",
-        "@id": "#webpage",
+        "@id": webpageId,
+        url: siteConfig.url,
         name: siteConfig.title,
         description: siteConfig.description,
         isPartOf: {
-          "@id": "#website",
+          "@id": websiteId,
         },
         inLanguage: "pt-BR",
         about: [
@@ -39,12 +46,14 @@ export function StructuredData() {
           },
         ],
       },
+
       {
         "@type": "Person",
-        "@id": "#consultor",
+        "@id": consultantId,
         name: siteConfig.author,
+        url: siteConfig.url,
         description:
-          "Consultor de maquininhas de cartão com experiência no mercado de meios de pagamento.",
+          "Consultor independente de maquininhas de cartão e soluções de pagamento.",
         knowsAbout: [
           "Maquininhas de cartão",
           "Meios de pagamento",

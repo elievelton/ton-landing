@@ -8,11 +8,11 @@ import {
 
 import { Footer } from "@/components/layout/Footer"
 import { Header } from "@/components/layout/Header"
-import { siteConfig } from "@/config/site"
 import { BackToTop } from "@/components/shared/BackToTop"
-import { StructuredData } from "@/components/shared/StructuredData"
-import { SocialProofToast } from "@/components/shared/SocialProofToast"
 import { CookieConsent } from "@/components/shared/CookieConsent"
+import { SocialProofToast } from "@/components/shared/SocialProofToast"
+import { StructuredData } from "@/components/shared/StructuredData"
+import { siteConfig } from "@/config/site"
 
 import "./globals.css"
 
@@ -39,6 +39,8 @@ const archivoBlack = Archivo_Black({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteConfig.url),
+
   title: {
     default: siteConfig.title,
     template: `%s | ${siteConfig.name}`,
@@ -61,9 +63,14 @@ export const metadata: Metadata = {
 
   category: "finance",
 
+  alternates: {
+    canonical: "/",
+  },
+
   robots: {
     index: true,
     follow: true,
+
     googleBot: {
       index: true,
       follow: true,
@@ -76,15 +83,32 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "pt_BR",
+    url: "/",
+
     title: siteConfig.title,
     description: siteConfig.description,
-    siteName: siteConfig.name,
+
+    siteName: "Maquininha com Cupom",
+
+    images: [
+      {
+        url: "/images/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Maquininhas Ton com cupom de desconto",
+      },
+    ],
   },
 
   twitter: {
     card: "summary_large_image",
+
     title: siteConfig.title,
     description: siteConfig.description,
+
+    images: [
+      "/images/og-image.png",
+    ],
   },
 }
 
@@ -100,6 +124,7 @@ export default function RootLayout({
     >
       <body className="flex min-h-full flex-col">
         <StructuredData />
+
         <Header />
 
         <main className="flex-1">
@@ -107,6 +132,7 @@ export default function RootLayout({
         </main>
 
         <Footer />
+
         <BackToTop />
         <SocialProofToast />
         <CookieConsent />

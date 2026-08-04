@@ -5,8 +5,13 @@ import { Container } from "@/components/shared/Container"
 
 export const metadata: Metadata = {
   title: "Termos de Uso",
+
   description:
     "Consulte os Termos de Uso do Maquininha com Cupom e entenda as condições de utilização do site, ofertas, cupons e links de parceiros.",
+
+  alternates: {
+    canonical: "/termos-de-uso",
+  },
 }
 
 export default function TermosDeUsoPage() {
