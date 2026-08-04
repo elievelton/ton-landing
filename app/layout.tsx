@@ -13,6 +13,7 @@ import { CookieConsent } from "@/components/shared/CookieConsent"
 import { SocialProofToast } from "@/components/shared/SocialProofToast"
 import { StructuredData } from "@/components/shared/StructuredData"
 import { siteConfig } from "@/config/site"
+import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics"
 
 import "./globals.css"
 
@@ -123,6 +124,7 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} ${manrope.variable} ${archivoBlack.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">
+        <GoogleAnalytics />
         <StructuredData />
 
         <Header />

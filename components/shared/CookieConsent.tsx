@@ -11,6 +11,25 @@ type ConsentPreferences = {
   advertising: boolean
 }
 
+type GoogleConsentValue = "granted" | "denied"
+
+type GoogleConsentUpdate = {
+  analytics_storage: GoogleConsentValue
+  ad_storage: GoogleConsentValue
+  ad_user_data: GoogleConsentValue
+  ad_personalization: GoogleConsentValue
+}
+
+declare global {
+  interface Window {
+    gtag?: (
+      command: "consent",
+      action: "update",
+      parameters: GoogleConsentUpdate
+    ) => void
+  }
+}
+
 const ACCEPT_ALL: ConsentPreferences = {
   necessary: true,
   analytics: true,
@@ -23,6 +42,30 @@ const REJECT_OPTIONAL: ConsentPreferences = {
   advertising: false,
 }
 
+function updateGoogleConsent(preferences: ConsentPreferences) {
+  if (!window.gtag) {
+    return
+  }
+
+  window.gtag("consent", "update", {
+    analytics_storage: preferences.analytics
+      ? "granted"
+      : "denied",
+
+    ad_storage: preferences.advertising
+      ? "granted"
+      : "denied",
+
+    ad_user_data: preferences.advertising
+      ? "granted"
+      : "denied",
+
+    ad_personalization: preferences.advertising
+      ? "granted"
+      : "denied",
+  })
+}
+
 export function CookieConsent() {
   const [visible, setVisible] = useState(false)
   const [settingsOpen, setSettingsOpen] = useState(false)
@@ -31,7 +74,8 @@ export function CookieConsent() {
   const [advertising, setAdvertising] = useState(false)
 
   useEffect(() => {
-    const storedConsent = window.localStorage.getItem(STORAGE_KEY)
+    const storedConsent =
+      window.localStorage.getItem(STORAGE_KEY)
 
     if (!storedConsent) {
       setVisible(true)
@@ -43,6 +87,8 @@ export function CookieConsent() {
 
         setAnalytics(preferences.analytics)
         setAdvertising(preferences.advertising)
+
+        updateGoogleConsent(preferences)
       } catch {
         window.localStorage.removeItem(STORAGE_KEY)
         setVisible(true)
@@ -83,7 +129,9 @@ export function CookieConsent() {
     }
   }, [])
 
-  function savePreferences(preferences: ConsentPreferences) {
+  function savePreferences(
+    preferences: ConsentPreferences
+  ) {
     window.localStorage.setItem(
       STORAGE_KEY,
       JSON.stringify(preferences)
@@ -91,6 +139,8 @@ export function CookieConsent() {
 
     setAnalytics(preferences.analytics)
     setAdvertising(preferences.advertising)
+
+    updateGoogleConsent(preferences)
 
     window.dispatchEvent(
       new CustomEvent("cookie-consent-updated", {
