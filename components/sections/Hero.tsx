@@ -200,29 +200,29 @@ export function Hero() {
                   </div>
 
                   {/* CTA específico da T3 Smart */}
-                  <TrackedLink
-                    href={siteConfig.links.machines.t3Smart}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-4 block"
-                    tracking={{
-                      event: "machine_click",
-                      location: "hero",
-                      destination: "checkout",
-                      label: "Ver oferta da T3 Smart",
-                      product: "t3_smart",
-                      conversionStrength: "strong",
-                    }}
-                  >
-                    <Button
-                      size="lg"
-                      className="h-11 w-full gap-2 text-sm shadow-lg shadow-primary/20 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-primary/30"
-                    >
-                      Quero meu desconto de 20%
+<TrackedLink
+  href={siteConfig.links.machines.t3Smart}
+  target="_blank"
+  rel="noopener noreferrer"
+  className="mt-4 block"
+  tracking={{
+    event: "machine_click",
+    location: "hero",
+    destination: "checkout",
+    label: "Adicionar T3 Smart ao carrinho com 20% OFF",
+    product: "t3_smart",
+    conversionStrength: "strong",
+  }}
+>
+  <Button
+    size="lg"
+    className="h-11 w-full gap-2 text-sm shadow-lg shadow-primary/20 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-primary/30"
+  >
+    Adicionar ao carrinho com 20% OFF
 
-                      <ArrowRight className="size-4" />
-                    </Button>
-                  </TrackedLink>
+    <ArrowRight className="size-4" />
+  </Button>
+</TrackedLink>
                 </div>
               </div>
             </div>

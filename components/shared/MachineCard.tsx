@@ -168,37 +168,33 @@ export function MachineCard({ machine }: MachineCardProps) {
 
         {/* CTA */}
         <div className="mt-auto pt-8">
-          <TrackedLink
-            href={machineUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="block"
-            tracking={{
-              event: "machine_click",
-              location: "machines",
-              destination: "checkout",
-              label: isBestSeller
-                ? "Ver oferta da T3 Smart"
-                : `Ver opções da ${machine.name}`,
-              product: machine.id,
-              conversionStrength: "strong",
-            }}
-          >
-            <Button
-              variant={machine.featured ? "default" : "outline"}
-              size="lg"
-              className={[
-                "h-11 w-full transition-all duration-300",
-                isBestSeller
-                  ? "shadow-lg shadow-primary/20 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-primary/30"
-                  : "",
-              ].join(" ")}
-            >
-              {isBestSeller
-                ? "Ver oferta da T3 Smart"
-                : `Ver opções da ${machine.name}`}
-            </Button>
-          </TrackedLink>
+<TrackedLink
+  href={machineUrl}
+  target="_blank"
+  rel="noopener noreferrer"
+  className="block"
+  tracking={{
+    event: "machine_click",
+    location: "machines",
+    destination: "checkout",
+    label: `Adicionar ${machine.name} ao carrinho`,
+    product: machine.id,
+    conversionStrength: "strong",
+  }}
+>
+  <Button
+    variant={machine.featured ? "default" : "outline"}
+    size="lg"
+    className={[
+      "h-11 w-full transition-all duration-300",
+      isBestSeller
+        ? "shadow-lg shadow-primary/20 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-primary/30"
+        : "",
+    ].join(" ")}
+  >
+    Adicionar ao carrinho
+  </Button>
+</TrackedLink>
 
           {isBestSeller && (
             <p className="mt-3 text-center text-xs font-medium text-primary">
