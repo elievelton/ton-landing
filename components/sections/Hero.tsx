@@ -72,6 +72,7 @@ export function Hero() {
                     location: "hero",
                     destination: "catalog",
                     label: "Ver máquinas com desconto",
+                    conversionStrength: "medium",
                   }}
                 >
                   <Button
@@ -210,6 +211,7 @@ export function Hero() {
                       destination: "checkout",
                       label: "Ver oferta da T3 Smart",
                       product: "t3_smart",
+                      conversionStrength: "strong",
                     }}
                   >
                     <Button

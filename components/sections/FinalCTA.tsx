@@ -105,6 +105,7 @@ export function FinalCTA() {
       location: "final_cta",
       destination: "catalog",
       label: "Ver máquinas com desconto",
+      conversionStrength: "medium",
     }}
   >
     <Button
@@ -126,6 +127,7 @@ export function FinalCTA() {
       location: "final_cta",
       destination: "plans_and_rates",
       label: "Ver planos e taxas",
+      conversionStrength: "weak",
     }}
   >
     <Button

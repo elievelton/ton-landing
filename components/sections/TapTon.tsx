@@ -109,6 +109,7 @@ export function TapTon() {
     destination: "tapton",
     label: "Quero vender pelo celular",
     product: "tapton",
+    conversionStrength: "weak",
   }}
 >
   <Button

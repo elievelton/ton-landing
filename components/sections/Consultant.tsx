@@ -151,6 +151,7 @@ export function Consultant() {
                     location: "consultant",
                     destination: "catalog",
                     label: "Quero aproveitar os descontos",
+                    conversionStrength: "medium",
                   }}
                 >
                   <Button
@@ -172,6 +173,7 @@ export function Consultant() {
                     location: "consultant",
                     destination: "plans_and_rates",
                     label: "Ver planos e taxas",
+                    conversionStrength: "weak",
                   }}
                 >
                   <Button

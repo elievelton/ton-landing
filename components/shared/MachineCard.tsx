@@ -181,6 +181,7 @@ export function MachineCard({ machine }: MachineCardProps) {
                 ? "Ver oferta da T3 Smart"
                 : `Ver opções da ${machine.name}`,
               product: machine.id,
+              conversionStrength: "strong",
             }}
           >
             <Button

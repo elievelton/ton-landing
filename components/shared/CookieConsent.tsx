@@ -13,22 +13,13 @@ type ConsentPreferences = {
 
 type GoogleConsentValue = "granted" | "denied"
 
-type GoogleConsentUpdate = {
+type GoogleConsentUpdate = Record<string, GoogleConsentValue> & {
   analytics_storage: GoogleConsentValue
   ad_storage: GoogleConsentValue
   ad_user_data: GoogleConsentValue
   ad_personalization: GoogleConsentValue
 }
 
-declare global {
-  interface Window {
-    gtag?: (
-      command: "consent",
-      action: "update",
-      parameters: GoogleConsentUpdate
-    ) => void
-  }
-}
 
 const ACCEPT_ALL: ConsentPreferences = {
   necessary: true,
@@ -47,7 +38,7 @@ function updateGoogleConsent(preferences: ConsentPreferences) {
     return
   }
 
-  window.gtag("consent", "update", {
+  const consentUpdate: GoogleConsentUpdate = {
     analytics_storage: preferences.analytics
       ? "granted"
       : "denied",
@@ -63,7 +54,13 @@ function updateGoogleConsent(preferences: ConsentPreferences) {
     ad_personalization: preferences.advertising
       ? "granted"
       : "denied",
-  })
+  }
+
+  window.gtag(
+    "consent",
+    "update",
+    consentUpdate
+  )
 }
 
 export function CookieConsent() {

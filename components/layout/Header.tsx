@@ -89,6 +89,7 @@ export function Header() {
                 location: "header_desktop",
                 destination: "catalog",
                 label: "Comprar com desconto",
+                conversionStrength: "medium",
               }}
             >
               <Button size="lg">
@@ -185,6 +186,7 @@ export function Header() {
                         location: "header_mobile",
                         destination: "catalog",
                         label: "Comprar com desconto",
+                        conversionStrength: "medium",
                       }}
                     >
                       <Button

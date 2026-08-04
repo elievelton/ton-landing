@@ -251,6 +251,7 @@ export function Plans() {
         ? "Quero conhecer o Mega+"
         : "Conhecer o Ton Black",
       product: plan.id,
+      conversionStrength: "medium",
     }}
   >
     <Button
@@ -284,6 +285,7 @@ export function Plans() {
       destination: "plans_and_rates",
       label: "Ver todas as taxas e condições",
       product: plan.id,
+      conversionStrength: "weak",
     }}
   >
     Ver todas as taxas e condições
