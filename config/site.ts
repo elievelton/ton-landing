@@ -1,11 +1,11 @@
 export const siteConfig = {
-  name: "Consultor Ton",
+  name: "Parceiro Ton",
 
   title:
-    "Maquininha Ton com Desconto | Taxas, Planos e Cupom",
+    "Maquininha Ton com Cupom de Desconto | Taxas, Planos e Cupom",
 
   description:
-    "Compare maquininhas Ton, planos e taxas, conheça o TapTon e aproveite condições especiais com cupom de desconto. Encontre a melhor opção para o seu negócio.",
+  "Compre maquininhas Ton com cupom de desconto. Compare modelos, planos e taxas, conheça o TapTon e encontre a melhor opção para o seu negócio.",
 
   author: "Elievelto",
 
@@ -18,6 +18,7 @@ export const siteConfig = {
     "máquina Ton",
     "maquininha de cartão",
     "maquininha Ton com desconto",
+    "comprar máquina de cartão",
     "cupom Ton",
     "cupom maquininha Ton",
     "taxas Ton",

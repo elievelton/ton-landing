@@ -4,6 +4,8 @@ const nextConfig: NextConfig = {
   images: {
     qualities: [90],
   },
+
+  devIndicators: false,
 }
 
 export default nextConfig

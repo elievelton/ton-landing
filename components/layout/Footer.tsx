@@ -1,6 +1,8 @@
+import Link from "next/link"
 import { Mail } from "lucide-react"
 
 import { Container } from "@/components/shared/Container"
+import { CookieSettingsButton } from "@/components/shared/CookieSettingsButton"
 import { siteConfig } from "@/config/site"
 
 export function Footer() {
@@ -10,15 +12,16 @@ export function Footer() {
         <div className="grid gap-10 py-12 md:grid-cols-[1.4fr_1fr_1fr]">
           {/* Marca */}
           <div>
-            <a href="#" className="inline-flex flex-col">
-              <span className="text-xl font-black tracking-tight text-primary">
-                Consultor Ton
+            <Link href="/" className="inline-flex flex-col">
+              <span className="font-[family-name:var(--font-archivo-black)] text-xl tracking-tight">
+                <span className="text-foreground">Parceiro</span>{" "}
+                <span className="text-primary">Ton</span>
               </span>
 
               <span className="mt-1 text-xs font-medium uppercase tracking-[0.18em] text-muted">
                 Máquinas & soluções
               </span>
-            </a>
+            </Link>
 
             <p className="mt-4 max-w-sm text-sm leading-6 text-muted">
               Informação, experiência e condições especiais para ajudar você
@@ -37,40 +40,40 @@ export function Footer() {
             </p>
 
             <nav className="mt-4 flex flex-col items-start gap-3 text-sm text-muted">
-              <a
-                href="#maquinas"
+              <Link
+                href="/#maquinas"
                 className="transition-colors hover:text-primary"
               >
                 Máquinas
-              </a>
+              </Link>
 
-              <a
-                href="#planos"
+              <Link
+                href="/#planos"
                 className="transition-colors hover:text-primary"
               >
                 Planos e taxas
-              </a>
+              </Link>
 
-              <a
-                href="#consultor"
+              <Link
+                href="/#consultor"
                 className="transition-colors hover:text-primary"
               >
                 Por que comprar comigo?
-              </a>
+              </Link>
 
-              <a
-                href="#quem-somos"
+              <Link
+                href="/#quem-somos"
                 className="transition-colors hover:text-primary"
               >
                 Quem somos
-              </a>
+              </Link>
 
-              <a
-                href="#duvidas"
+              <Link
+                href="/#duvidas"
                 className="transition-colors hover:text-primary"
               >
                 Perguntas frequentes
-              </a>
+              </Link>
             </nav>
           </div>
 
@@ -96,26 +99,49 @@ export function Footer() {
           </div>
         </div>
 
+        {/* Links legais */}
+        <div className="flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-border py-4 text-xs font-medium text-muted">
+          <Link
+            href="/politica-de-privacidade"
+            className="transition-colors hover:text-primary"
+          >
+            Política de Privacidade
+          </Link>
+
+          <span aria-hidden="true">•</span>
+
+          <Link
+            href="/termos-de-uso"
+            className="transition-colors hover:text-primary"
+          >
+            Termos de Uso
+          </Link>
+
+          <span aria-hidden="true">•</span>
+
+          <CookieSettingsButton />
+        </div>
+
         {/* Rodapé inferior */}
         <div className="flex flex-col gap-4 border-t border-border py-6 text-xs leading-5 text-muted sm:flex-row sm:items-center sm:justify-between">
           <div className="flex flex-col gap-1">
-  <p>
-    © {new Date().getFullYear()} Consultor Ton. Todos os direitos
-    reservados.
-  </p>
+            <p>
+              © {new Date().getFullYear()} Maquininha com Cupom. Todos os
+              direitos reservados.
+            </p>
 
-  <p>
-    Desenvolvido por{" "}
-    <a
-      href="https://elievelto.dev/"
-      target="_blank"
-      rel="noopener noreferrer"
-      className="font-semibold text-primary transition-opacity hover:opacity-70"
-    >
-      Elievelto
-    </a>
-  </p>
-</div>
+            <p>
+              Desenvolvido por{" "}
+              <a
+                href="https://elievelto.dev/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold text-primary transition-opacity hover:opacity-70"
+              >
+                Elievelto
+              </a>
+            </p>
+          </div>
 
           <p className="max-w-xl sm:text-right">
             Esta é uma página de consultor independente. Preços, taxas,

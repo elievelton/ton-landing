@@ -36,9 +36,9 @@ export function Header() {
             aria-label="Página inicial"
           >
             <div className="group inline-flex items-center gap-2">
-              <span className="relative font-[family-name:var(--font-manrope)] text-2xl font-extrabold tracking-[-0.05em] sm:text-3xl">
+              <span className="relative font-[family-name:var(--font-archivo-black)] text-2xl tracking-[-0.05em] sm:text-3xl">
                 <span className="text-foreground">
-                  Consultor
+                  Parceiro
                 </span>{" "}
 
                 <span className="relative text-primary">

@@ -13,6 +13,7 @@ import { FadeIn } from "@/components/shared/FadeIn"
 import { TrackedLink } from "@/components/shared/TrackedLink"
 import { Button } from "@/components/ui/button"
 import { siteConfig } from "@/config/site"
+import { OfferCountdown } from "@/components/shared/OfferCountdown"
 
 export function Hero() {
   return (
@@ -146,7 +147,7 @@ export function Hero() {
                     <span className="absolute inset-0 animate-ping rounded-full bg-primary/20" />
 
                     <span className="relative inline-flex rounded-full border border-primary/20 bg-primary/10 px-3 py-1.5 text-[11px] font-extrabold text-primary">
-                      Até 71% OFF
+                      Até 77% OFF
                     </span>
                   </div>
                 </div>
@@ -175,12 +176,18 @@ export function Hero() {
                   </p>
 
                   <h2 className="mt-1.5 text-xl font-bold tracking-tight text-foreground sm:text-2xl">
-                    A máquina completa para o seu negócio
+                    A máquina completa para o seu negócio com 20% de Desconto
                   </h2>
 
                   <p className="mx-auto mt-2 max-w-xs text-sm leading-5 text-muted">
-                    Aproveite a oferta especial utilizando meu cupom exclusivo.
-                  </p>
+  Até <strong className="text-foreground">71% OFF na Ton</strong>
+  {" "}+{" "}
+  <strong className="text-primary">
+    20% de desconto extra
+  </strong>{" "}
+  com meu cupom exclusivo.
+</p>
+                  <OfferCountdown />
 
                   {/* Cupom */}
                   <div className="mt-4 flex flex-col items-center gap-2">
@@ -209,7 +216,7 @@ export function Hero() {
                       size="lg"
                       className="h-11 w-full gap-2 text-sm shadow-lg shadow-primary/20 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-primary/30"
                     >
-                      Ver oferta da T3 Smart
+                      Quero meu desconto de 20%
 
                       <ArrowRight className="size-4" />
                     </Button>

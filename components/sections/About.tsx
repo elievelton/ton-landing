@@ -51,7 +51,7 @@ export function About() {
       <div className="relative overflow-hidden rounded-[2rem] border border-border bg-zinc-100 shadow-premium">
         <Image
   src="/images/about/consultor.jpg"
-  alt="Elievelto, consultor de maquininhas Ton"
+  alt="Elievelto, Parceiro Ton"
   width={2736}
   height={4104}
   sizes="(max-width: 640px) 90vw, (max-width: 1024px) 420px, 440px"
@@ -62,7 +62,7 @@ export function About() {
         {/* Identificação */}
         <div className="absolute inset-x-3 bottom-3 rounded-2xl border border-white/20 bg-black/65 p-4 text-white shadow-lg backdrop-blur-md">
           <p className="text-lg font-bold">
-            Consultor Ton
+            Parceiro Ton
           </p>
 
           <p className="mt-1 text-sm text-white/80">

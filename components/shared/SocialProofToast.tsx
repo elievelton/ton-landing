@@ -7,7 +7,9 @@ type SocialProofDetail = {
   message: string
 }
 
-const STORAGE_KEY = "ton_activity_count"
+type ActivityResponse = {
+  count: number
+}
 
 export function SocialProofToast() {
   const [message, setMessage] = useState<string | null>(null)
@@ -15,16 +17,49 @@ export function SocialProofToast() {
   const [count, setCount] = useState(0)
 
   useEffect(() => {
-    const storedCount = Number(
-      window.localStorage.getItem(STORAGE_KEY) ?? "0"
-    )
-
-    if (Number.isFinite(storedCount)) {
-      setCount(storedCount)
-    }
-
     let hideTimer: ReturnType<typeof setTimeout> | undefined
     let removeTimer: ReturnType<typeof setTimeout> | undefined
+
+    async function loadActivityCount() {
+      try {
+        const response = await fetch("/api/activity", {
+          method: "GET",
+          cache: "no-store",
+        })
+
+        if (!response.ok) {
+          return
+        }
+
+        const data = (await response.json()) as ActivityResponse
+
+        if (Number.isFinite(data.count)) {
+          setCount(data.count)
+        }
+      } catch (error) {
+        console.error("Erro ao carregar contador de atividades:", error)
+      }
+    }
+
+    async function incrementActivityCount() {
+      try {
+        const response = await fetch("/api/activity", {
+          method: "POST",
+        })
+
+        if (!response.ok) {
+          return
+        }
+
+        const data = (await response.json()) as ActivityResponse
+
+        if (Number.isFinite(data.count)) {
+          setCount(data.count)
+        }
+      } catch (error) {
+        console.error("Erro ao incrementar contador de atividades:", error)
+      }
+    }
 
     function handleSocialProof(event: Event) {
       const customEvent = event as CustomEvent<SocialProofDetail>
@@ -41,16 +76,7 @@ export function SocialProofToast() {
         clearTimeout(removeTimer)
       }
 
-      setCount((currentCount) => {
-        const newCount = currentCount + 1
-
-        window.localStorage.setItem(
-          STORAGE_KEY,
-          String(newCount)
-        )
-
-        return newCount
-      })
+      void incrementActivityCount()
 
       setMessage(customEvent.detail.message)
       setVisible(true)
@@ -61,8 +87,10 @@ export function SocialProofToast() {
         removeTimer = setTimeout(() => {
           setMessage(null)
         }, 400)
-      }, 4500)
+      }, 7000)
     }
+
+    void loadActivityCount()
 
     window.addEventListener("social-proof", handleSocialProof)
 
@@ -115,9 +143,7 @@ export function SocialProofToast() {
             </p>
 
             <div className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted">
-              <span>
-                Agora mesmo
-              </span>
+              <span>Agora mesmo</span>
 
               <span
                 className="text-border"
@@ -131,8 +157,8 @@ export function SocialProofToast() {
 
                 {count}{" "}
                 {count === 1
-                  ? "oferta conferida por você"
-                  : "ofertas conferidas por você"}
+                  ? "oferta já foi conferida"
+                  : "ofertas já foram conferidas"}
               </span>
             </div>
           </div>
