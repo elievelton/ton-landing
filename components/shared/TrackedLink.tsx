@@ -118,6 +118,22 @@ export function TrackedLink({
         }
       )
     }
+    if (
+  tracking.conversionStrength === "strong" &&
+  window.uetq
+) {
+  window.uetq.push(
+    "event",
+    "add_to_cart_intent",
+    {
+      event_category: "conversion",
+      event_label:
+        tracking.product ??
+        tracking.label ??
+        "maquininha_ton",
+    }
+  )
+}
 
     /*
      * Dispara a prova social.
