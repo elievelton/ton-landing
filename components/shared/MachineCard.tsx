@@ -56,33 +56,36 @@ export function MachineCard({ machine }: MachineCardProps) {
       )}
 
       {/* Badges */}
-      <div className="relative z-10 mb-5 flex min-h-8 items-center justify-between gap-3">
-        {isBestSeller ? (
-          <>
-            <div className="inline-flex items-center gap-1.5 rounded-full bg-orange-500 px-3 py-1.5 text-xs font-bold text-white shadow-md shadow-orange-500/20">
-              <Flame className="size-3.5" />
-              {machine.badge}
-            </div>
-
-            {machine.discount && (
-              <div className="relative">
-                <span className="absolute inset-0 animate-ping rounded-full bg-primary/20" />
-
-                <span className="relative inline-flex rounded-full border border-primary/20 bg-primary/10 px-3 py-1.5 text-xs font-extrabold text-primary">
-                  {machine.discount}
-                </span>
-              </div>
-            )}
-          </>
-        ) : machine.featured ? (
-          <div className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1.5 text-xs font-semibold text-primary">
-            <Sparkles className="size-3.5" />
-            Destaque
-          </div>
-        ) : (
-          <div />
-        )}
+      {/* Badges */}
+<div className="relative z-10 mb-5 flex min-h-8 items-center justify-between gap-3">
+  <div>
+    {isBestSeller ? (
+      <div className="inline-flex items-center gap-1.5 rounded-full bg-orange-500 px-3 py-1.5 text-xs font-bold text-white shadow-md shadow-orange-500/20">
+        <Flame className="size-3.5" />
+        {machine.badge}
       </div>
+    ) : machine.featured ? (
+      <div className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1.5 text-xs font-semibold text-primary">
+        <Sparkles className="size-3.5" />
+        Destaque
+      </div>
+    ) : (
+      <div />
+    )}
+  </div>
+
+  {machine.discount && (
+    <div className="relative">
+      {isBestSeller && (
+        <span className="absolute inset-0 animate-ping rounded-full bg-primary/20" />
+      )}
+
+      <span className="relative inline-flex whitespace-nowrap rounded-full border border-primary/20 bg-primary/10 px-3 py-1.5 text-xs font-extrabold text-primary">
+        {machine.discount}
+      </span>
+    </div>
+  )}
+</div>
 
       {/* Imagem da máquina */}
       <div
