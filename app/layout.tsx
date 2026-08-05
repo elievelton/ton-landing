@@ -14,6 +14,7 @@ import { SocialProofToast } from "@/components/shared/SocialProofToast"
 import { StructuredData } from "@/components/shared/StructuredData"
 import { siteConfig } from "@/config/site"
 import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics"
+import { MicrosoftUET } from "@/components/analytics/MicrosoftUET"
 
 import "./globals.css"
 
@@ -125,6 +126,7 @@ export default function RootLayout({
     >
       <body className="flex min-h-full flex-col">
         <GoogleAnalytics />
+        <MicrosoftUET />
         <StructuredData />
 
         <Header />
