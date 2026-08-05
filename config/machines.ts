@@ -26,7 +26,8 @@ export const machines: Machine[] = [
       "Conexão Wi-Fi e chip",
       "Internet grátis",
       "Frete grátis",
-      "Seu Diferencial é o toque na tela",
+      "Garantia Vitalícia, quebrou trocou!",
+      "Bateria de Longa Duração",
     ],
     featured: true,
     bestSeller: true,
@@ -51,6 +52,7 @@ export const machines: Machine[] = [
       "Faz tudo que a Smart faz, mas sem touchscreen ",
     ],
     featured: true,
+    discount: "Até 72% OFF",
   },
 
   {
@@ -70,6 +72,7 @@ export const machines: Machine[] = [
       "Seu Diferencia é ser Portatil"
     ],
     featured: false,
+    discount: "Até 72% OFF",
   },
 
   {
@@ -88,5 +91,6 @@ export const machines: Machine[] = [
       "Ideal para começar, baixo investimento",
     ],
     featured: false,
+    discount: "Até 70% OFF",
   },
 ]
