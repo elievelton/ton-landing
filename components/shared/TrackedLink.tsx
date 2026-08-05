@@ -6,6 +6,8 @@ import type {
   ReactNode,
 } from "react"
 
+import confetti from "canvas-confetti"
+
 /*
  * Nível de intenção comercial do clique:
  *
@@ -21,10 +23,6 @@ import type {
  *          cliques que levam diretamente ao carrinho/checkout
  *          de uma maquininha específica, indicando alta
  *          intenção de compra.
- *
- * Importante:
- * "strong" representa intenção de compra e não significa
- * que a venda foi efetivamente concluída.
  */
 
 type ConversionStrength = "weak" | "medium" | "strong"
@@ -41,6 +39,7 @@ type TrackingParams = {
 type TrackedLinkProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
   children: ReactNode
   tracking: TrackingParams
+  celebration?: boolean
 }
 
 const socialProofMessages = [
@@ -51,17 +50,19 @@ const socialProofMessages = [
 ]
 
 function getSocialProofMessage() {
-  const randomIndex = Math.floor(
-    Math.random() * socialProofMessages.length
-  )
-
-  return socialProofMessages[randomIndex]
+  return socialProofMessages[
+    Math.floor(Math.random() * socialProofMessages.length)
+  ]
 }
 
 export function TrackedLink({
   children,
   tracking,
+  celebration = false,
   onClick,
+  href,
+  target,
+  rel,
   ...props
 }: TrackedLinkProps) {
   function handleClick(event: MouseEvent<HTMLAnchorElement>) {
@@ -73,10 +74,6 @@ export function TrackedLink({
       conversion_strength: tracking.conversionStrength,
     }
 
-    /*
-     * Mantém o evento disponível no dataLayer
-     * para futura integração com GTM / Google Ads.
-     */
     window.dataLayer = window.dataLayer || []
 
     window.dataLayer.push({
@@ -84,24 +81,12 @@ export function TrackedLink({
       ...eventData,
     })
 
-    /*
-     * Envia o evento diretamente para o GA4.
-     */
     window.gtag?.(
       "event",
       tracking.event,
       eventData
     )
 
-    /*
-     * Envia a conversão forte para o Microsoft Ads.
-     *
-     * Só dispara quando o clique representa intenção
-     * de compra de uma maquininha específica.
-     *
-     * O evento utilizado no Microsoft Ads será:
-     * add_to_cart_intent
-     */
     if (
       tracking.conversionStrength === "strong" &&
       window.uetq
@@ -118,26 +103,7 @@ export function TrackedLink({
         }
       )
     }
-    if (
-  tracking.conversionStrength === "strong" &&
-  window.uetq
-) {
-  window.uetq.push(
-    "event",
-    "add_to_cart_intent",
-    {
-      event_category: "conversion",
-      event_label:
-        tracking.product ??
-        tracking.label ??
-        "maquininha_ton",
-    }
-  )
-}
 
-    /*
-     * Dispara a prova social.
-     */
     window.dispatchEvent(
       new CustomEvent("social-proof", {
         detail: {
@@ -146,16 +112,48 @@ export function TrackedLink({
       })
     )
 
-    /*
-     * Preserva qualquer onClick recebido
-     * pelo componente.
-     */
     onClick?.(event)
+
+    if (celebration && href) {
+      event.preventDefault()
+
+      confetti({
+        particleCount: 35,
+        spread: 55,
+        startVelocity: 28,
+        origin: {
+          y: 0.75,
+        },
+        colors: [
+          "#00C853",
+          "#22C55E",
+          "#DCFCE7",
+          "#FFFFFF",
+        ],
+      })
+
+      setTimeout(() => {
+        if (target === "_blank") {
+          window.open(
+            href.toString(),
+            "_blank",
+            "noopener,noreferrer"
+          )
+        } else {
+          window.location.href = href.toString()
+        }
+      }, 2000)
+
+      return
+    }
   }
 
   return (
     <a
       {...props}
+      href={href}
+      target={target}
+      rel={rel}
       onClick={handleClick}
     >
       {children}
