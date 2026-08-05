@@ -94,6 +94,32 @@ export function TrackedLink({
     )
 
     /*
+     * Envia a conversão forte para o Microsoft Ads.
+     *
+     * Só dispara quando o clique representa intenção
+     * de compra de uma maquininha específica.
+     *
+     * O evento utilizado no Microsoft Ads será:
+     * add_to_cart_intent
+     */
+    if (
+      tracking.conversionStrength === "strong" &&
+      window.uetq
+    ) {
+      window.uetq.push(
+        "event",
+        "add_to_cart_intent",
+        {
+          event_category: "conversion",
+          event_label:
+            tracking.product ??
+            tracking.label ??
+            "maquininha_ton",
+        }
+      )
+    }
+
+    /*
      * Dispara a prova social.
      */
     window.dispatchEvent(

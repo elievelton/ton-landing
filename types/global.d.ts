@@ -9,5 +9,9 @@ declare global {
       action: string,
       parameters?: Record<string, unknown>
     ) => void
+
+    uetq?: {
+      push: (...args: unknown[]) => void
+    }
   }
 }
