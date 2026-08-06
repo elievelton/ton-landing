@@ -68,7 +68,7 @@ export function Hero() {
   <strong className="font-semibold text-foreground">
     preços finais com o desconto
   </strong>{" "}
-  de forma segura diretamente no catálogo oficial da Ton.
+  de forma segura diretamente no catálogo oficial da Ton usando os botões abaixo.
 </p>
 
               {/* CTA */}
@@ -166,7 +166,7 @@ export function Hero() {
                 {/* Badges */}
                 <div className="relative z-10 flex items-center justify-between gap-2">
                   <div className="inline-flex items-center gap-1.5 rounded-full bg-orange-500 px-3 py-1.5 text-[11px] font-bold uppercase tracking-wide text-white shadow-lg shadow-orange-500/20">
-                    🔥 Mais vendida
+                    🔥 Essa Imprime Comprovante!
                   </div>
 
                   <div className="relative">
@@ -220,7 +220,7 @@ export function Hero() {
                   {/* Explicação curta do desconto */}
                   <p className="mx-auto mt-2 max-w-xs text-[11px] leading-4 text-muted">
                     O desconto adicional de 20% é aplicado sobre o valor já
-                    promocional da maquininha.
+                    promocional da maquininha. Primeiro a Ton aplica desconto, depois você ganha mais 20% de desconto usando nosso cupom.
                   </p>
 
                   <OfferCountdown />
