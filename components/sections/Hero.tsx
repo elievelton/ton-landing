@@ -55,8 +55,13 @@ export function Hero() {
   <span className="text-orange-500">
     Não pague mais caro pela sua Ton:
   </span>{" "}
-  <span className="text-primary">
+
+
+  <span className="text-foreground">
     primeiro, a Ton aplica o desconto promocional disponível.
+  </span>{" "}
+
+  <span className="text-primary">
     Depois, você economiza mais 20% sobre esse valor usando
     meu cupom exclusivo.
   </span>
