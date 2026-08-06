@@ -20,7 +20,7 @@ const navigation = [
   { label: "Máquinas", href: "#maquinas" },
   { label: "Planos e Taxas", href: "#planos" },
   { label: "TapTon", href: "#tapton" },
-  { label: "Por que comigo?", href: "#consultor" },
+  { label: "Como ganhar 20% OFF", href: "#consultor" },
   { label: "Sobre mim", href: "#quem-somos" },
   { label: "FAQ", href: "#duvidas" },
 ]
@@ -92,9 +92,12 @@ export function Header() {
                 conversionStrength: "medium",
               }}
             >
-              <Button size="lg">
-                Comprar com desconto
-              </Button>
+              <Button 
+  size="lg"
+  className="relative overflow-hidden bg-orange-500 font-bold text-white shadow-lg shadow-orange-500/30 transition-all duration-300 hover:bg-orange-600 hover:scale-105 animate-[bounce_2s_infinite]"
+>
+  🔥 Pegar Meu Desconto
+</Button>
             </TrackedLink>
           </div>
 

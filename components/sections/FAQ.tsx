@@ -16,14 +16,27 @@ import { CouponCopy } from "@/components/shared/CouponCopy"
 
 const faqs = [
   {
+    question: "É seguro comprar nesse site?",
+    answer: "Sim, é 100% seguro. Este site é uma página oficial de indicação de um Parceiro Autorizado Ton.\nFunciona assim: nós apenas distribuímos cupons com 20% de desconto extra para a sua compra sair bem mais barata. Nada relacionado a pagamentos acontece neste site, e nós não solicitamos nem armazenamos seus dados financeiros.\nAo clicar em qualquer botão com desconto deste site, você será redirecionado automaticamente para o site oficial da Ton. O cupom de desconto é aplicado de forma automática, e toda a parte de pagamento, emissão de nota fiscal, garantia de fábrica e envio é feita diretamente pela Ton (do Grupo Stone).\nVocê garante o seu desconto exclusivo aqui, mas conclui a sua compra com total segurança dentro do ambiente oficial da Ton!",
+  },
+  {
     question: "Preciso ter CNPJ para comprar uma maquininha Ton?",
     answer:
       "Não. Existem opções para quem vende como pessoa física e também para quem possui CNPJ. Algumas bandeiras e benefícios específicos podem depender do tipo de cadastro.",
   },
   {
+    question: "Estou com nome sujo posso comprar uma maquininha?",
+    answer:
+      "Sim, a empresa Ton não faz consulta para saber o estado do seu nome, pode comprar com tranquilidade "
+    },
+    {
+    question: "Preciso ter conta para comprar uma maquininha?",
+    answer:"Não. Ao adquirir uma maquininha Ton, você recebe automaticamente uma conta digital no aplicativo Ton. Suas vendas caem diretamente nela, sem a necessidade de vincular outro banco. Pelo app, você pode transferir dinheiro, investir e aproveitar todo o ecossistema completo da Ton."
+    },
+  {
     question: "As maquininhas Ton têm mensalidade?",
     answer:
-      "As condições dependem do plano e da oferta vigente. Antes de finalizar a compra, você pode consultar todos os valores e condições diretamente na página oficial da Ton.",
+      "Não, as maquininhas Ton são sem mensalidades, você só vai pagar quando ultilizar ela e pequenas taxas de acordo com o plano que escolheu no ato da compra",
   },
   {
     question: "Como funciona o desconto adicional de 20%?",
@@ -47,7 +60,7 @@ const faqs = [
   {
     question: "Quando recebo o dinheiro das minhas vendas?",
     answer:
-      "O prazo de recebimento depende do plano, da modalidade da venda e das condições escolhidas na Ton. Você pode consultar as taxas e os prazos antes de decidir qual plano é mais adequado para o seu negócio.",
+      "Vai depender do plano que você escolher no ato da compra, mas em regra você recebe seus pagamento com 1 dia útil, mesmo que você parcele em 12x o dinheiro cai em sua conta em 1 dia útil",
   },
   {
     question: "Qual maquininha Ton é melhor para o meu negócio?",

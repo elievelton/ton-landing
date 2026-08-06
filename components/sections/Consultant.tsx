@@ -5,6 +5,7 @@ import {
   Handshake,
   MessageCircle,
   Sparkles,
+  ShieldCheck,
 } from "lucide-react"
 
 import { Container } from "@/components/shared/Container"
@@ -38,13 +39,13 @@ export function Consultant() {
             <div>
               <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-sm font-bold text-primary">
                 <Handshake className="size-4" />
-                Vantagem de comprar comigo
+                Vantagem de comprar Com o Cupom de 20%
               </div>
 
               <h2 className="mt-6 max-w-xl text-3xl font-bold tracking-tight text-foreground sm:text-4xl lg:text-5xl">
-                Por que comprar com um{" "}
+                Como garantir o preço da Ton {" "}
                 <span className="text-primary">
-                  Parceiro Ton?
+                  + 20% de desconto extra
                 </span>
               </h2>
 
@@ -66,7 +67,6 @@ export function Consultant() {
                 com meu cupom, nas condições aplicáveis.
               </p>
 
-              {/* Frase de destaque */}
               {/* Frase de destaque */}
 <div className="mt-6 rounded-2xl border border-primary/20 bg-primary/5 p-5">
   <p className="text-base font-bold leading-7 text-foreground sm:text-lg">
@@ -186,9 +186,21 @@ export function Consultant() {
                     <ArrowRight className="size-4" />
                   </Button>
                 </TrackedLink>
+
               </div>
+              
             </div>
+                      {/* Aviso de Segurança e Direcionamento Oficial */}
+<div className="mt-4 flex items-center justify-center gap-2 text-xs text-muted">
+  <ShieldCheck className="size-4 text-primary shrink-0" />
+  <span>
+    Ambiente 100% seguro. Você será redirecionado para o site oficial da{" "}
+    <strong className="text-foreground">Ton (Grupo Stone)</strong> para finalizar a compra com garantia de fábrica e frete grátis.
+  </span>
+</div>
+            
           </FadeIn>
+
 
           {/* Exemplo visual */}
           <FadeIn direction="left" delay={0.15}>
@@ -315,6 +327,7 @@ export function Consultant() {
                       De R$ 671,43 por apenas R$ 155,77 no exemplo apresentado.
                     </p>
                   </div>
+                  
                 </div>
 
                 {/* Explicação */}

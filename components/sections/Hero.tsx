@@ -10,10 +10,10 @@ import {
 import { Container } from "@/components/shared/Container"
 import { CouponCopy } from "@/components/shared/CouponCopy"
 import { FadeIn } from "@/components/shared/FadeIn"
+import { OfferCountdown } from "@/components/shared/OfferCountdown"
 import { TrackedLink } from "@/components/shared/TrackedLink"
 import { Button } from "@/components/ui/button"
 import { siteConfig } from "@/config/site"
-import { OfferCountdown } from "@/components/shared/OfferCountdown"
 
 export function Hero() {
   return (
@@ -34,31 +34,41 @@ export function Hero() {
           {/* Conteúdo */}
           <FadeIn direction="right">
             <div className="relative z-10">
+              {/* Badge principal */}
               <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-2 text-sm font-medium text-primary">
                 <BadgeCheck className="size-4" />
 
-                {siteConfig.partner}
+                🔥 +20% OFF com meu cupom exclusivo
               </div>
 
+              {/* Título */}
               <h1 className="max-w-3xl text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl xl:text-7xl">
-                Maquininha Ton para{" "}
+                Maquininha Ton com{" "}
                 <span className="gradient-text">
-                  vender mais pagando menos taxas
-                </span>
+                  +20% de desconto
+                </span>{" "}
+                sobre o preço promocional
               </h1>
 
+              {/* Destaque comercial */}
               <p className="mt-5 max-w-2xl text-lg font-semibold leading-7 sm:text-xl">
                 <span className="text-orange-500">
-                  Fuja hoje mesmo dos calotes,
+                  Não compre sua Ton sem aplicar o cupom:
                 </span>{" "}
                 <span className="text-primary">
-                  venda parcelado, mas receba à vista.
+                  além do preço promocional disponível, você recebe mais 20% OFF
+                  usando meu cupom.
                 </span>
               </p>
 
+              {/* Explicação */}
               <p className="mt-6 max-w-2xl text-lg leading-8 text-muted sm:text-xl">
-                Escolha a máquina Ton ideal para o seu negócio e aproveite
-                condições especiais utilizando meu cupom exclusivo.
+                Escolha a maquininha ideal para o seu negócio e acesse o
+                catálogo da Ton com meu cupom de{" "}
+                <strong className="font-semibold text-foreground">
+                  20% de desconto adicional
+                </strong>{" "}
+                aplicado.
               </p>
 
               {/* CTA */}
@@ -71,7 +81,7 @@ export function Hero() {
                     event: "cta_click",
                     location: "hero",
                     destination: "catalog",
-                    label: "Ver máquinas com desconto",
+                    label: "Ativar 20% de desconto e ver modelos",
                     conversionStrength: "medium",
                   }}
                 >
@@ -79,7 +89,7 @@ export function Hero() {
                     size="lg"
                     className="h-12 w-full gap-2 px-6 text-base sm:w-auto"
                   >
-                    Ver máquinas com desconto
+                    Ativar +20% OFF e ver modelos
 
                     <ArrowRight className="size-4" />
                   </Button>
@@ -96,6 +106,21 @@ export function Hero() {
                 </a>
               </div>
 
+              {/* Aviso de segurança */}
+              <div className="mt-4 flex items-start gap-2 text-xs leading-5 text-muted">
+                <ShieldCheck className="mt-0.5 size-4 shrink-0 text-primary" />
+
+                <span>
+                  Ambiente seguro. Você será redirecionado para o site oficial
+                  da{" "}
+                  <strong className="text-foreground">
+                    Ton (Grupo Stone)
+                  </strong>{" "}
+                  para finalizar a compra com garantia de fábrica e frete
+                  grátis.
+                </span>
+              </div>
+
               {/* Benefícios rápidos */}
               <div className="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-sm text-muted">
                 <div className="flex items-center gap-2">
@@ -110,7 +135,7 @@ export function Hero() {
 
                 <div className="flex items-center gap-2">
                   <BadgeCheck className="size-4 text-primary" />
-                  Cupom exclusivo
+                  +20% OFF com cupom
                 </div>
               </div>
             </div>
@@ -177,17 +202,27 @@ export function Hero() {
                   </p>
 
                   <h2 className="mt-1.5 text-xl font-bold tracking-tight text-foreground sm:text-2xl">
-                    A máquina completa para o seu negócio com 20% de Desconto
+                    T3 Smart com +20% OFF usando meu cupom
                   </h2>
 
                   <p className="mx-auto mt-2 max-w-xs text-sm leading-5 text-muted">
-  Até <strong className="text-foreground">71% OFF na Ton</strong>
-  {" "}+{" "}
-  <strong className="text-primary">
-    20% de desconto extra
-  </strong>{" "}
-  com meu cupom exclusivo.
-</p>
+                    Até{" "}
+                    <strong className="text-foreground">
+                      71% OFF na oferta da Ton
+                    </strong>
+                    {" "}+{" "}
+                    <strong className="text-primary">
+                      mais 20% OFF sobre o preço promocional
+                    </strong>{" "}
+                    usando meu cupom.
+                  </p>
+
+                  {/* Explicação curta do desconto */}
+                  <p className="mx-auto mt-2 max-w-xs text-[11px] leading-4 text-muted">
+                    O desconto adicional de 20% é aplicado sobre o valor já
+                    promocional da maquininha.
+                  </p>
+
                   <OfferCountdown />
 
                   {/* Cupom */}
@@ -200,29 +235,29 @@ export function Hero() {
                   </div>
 
                   {/* CTA específico da T3 Smart */}
-<TrackedLink
-  href={siteConfig.links.machines.t3Smart}
-  target="_blank"
-  rel="noopener noreferrer"
-  className="mt-4 block"
-  tracking={{
-    event: "machine_click",
-    location: "hero",
-    destination: "checkout",
-    label: "Adicionar T3 Smart ao carrinho com 20% OFF",
-    product: "t3_smart",
-    conversionStrength: "strong",
-  }}
->
-  <Button
-    size="lg"
-    className="h-11 w-full gap-2 text-sm shadow-lg shadow-primary/20 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-primary/30"
-  >
-    Adicionar ao carrinho com 20% OFF
+                  <TrackedLink
+                    href={siteConfig.links.machines.t3Smart}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-4 block"
+                    tracking={{
+                      event: "machine_click",
+                      location: "hero",
+                      destination: "checkout",
+                      label: "Adicionar T3 Smart ao carrinho com 20% OFF",
+                      product: "t3_smart",
+                      conversionStrength: "strong",
+                    }}
+                  >
+                    <Button
+                      size="lg"
+                      className="h-11 w-full gap-2 text-sm shadow-lg shadow-primary/20 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-primary/30"
+                    >
+                      Adicionar ao carrinho com +20% OFF
 
-    <ArrowRight className="size-4" />
-  </Button>
-</TrackedLink>
+                      <ArrowRight className="size-4" />
+                    </Button>
+                  </TrackedLink>
                 </div>
               </div>
             </div>

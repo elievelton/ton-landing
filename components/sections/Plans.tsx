@@ -228,71 +228,70 @@ export function Plans() {
                 </ul>
 
                 {/* CTA */}
-                {/* CTA */}
-<div className="relative z-10 mt-auto pt-8">
-  {/* Recomendação Mega+ */}
-  {plan.recommended && (
-    <p className="mb-3 text-center text-xs font-medium text-primary">
-      Plano que recomendamos para a maioria dos negócios
-    </p>
-  )}
+                <div className="relative z-10 mt-auto pt-8">
+                  {/* Recomendação Mega+ */}
+                  {plan.recommended && (
+                    <p className="mb-3 text-center text-xs font-medium text-primary">
+                      Plano que recomendamos para a maioria dos negócios
+                    </p>
+                  )}
 
-  {/* Botão principal */}
-  <TrackedLink
-    href={siteConfig.links.catalog}
-    target="_blank"
-    rel="noopener noreferrer"
-    className="block"
-    tracking={{
-      event: "cta_click",
-      location: "plans",
-      destination: "catalog",
-      label: plan.recommended
-        ? "Quero conhecer o Mega+"
-        : "Conhecer o Ton Black",
-      product: plan.id,
-      conversionStrength: "medium",
-    }}
-  >
-    <Button
-      variant={plan.recommended ? "default" : "outline"}
-      size="lg"
-      className={[
-        "h-12 w-full gap-2",
+                  {/* Botão principal */}
+                  <TrackedLink
+                    href={siteConfig.links.catalog}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block"
+                    tracking={{
+                      event: "cta_click",
+                      location: "plans",
+                      destination: "catalog",
+                      label: plan.recommended
+                        ? "Garantir o Mega+ com Desconto"
+                        : "Quero o Ton Black",
+                      product: plan.id,
+                      conversionStrength: "medium",
+                    }}
+                  >
+                    <Button
+                      variant={plan.recommended ? "default" : "outline"}
+                      size="lg"
+                      className={[
+                        "h-12 w-full gap-2",
 
-        plan.recommended
-          ? "shadow-lg shadow-primary/20"
-          : "",
-      ].join(" ")}
-    >
-      {plan.recommended
-        ? "Quero conhecer o Mega+"
-        : "Conhecer o Ton Black"}
+                        plan.recommended
+                          ? "shadow-lg shadow-primary/20"
+                          : "",
+                      ].join(" ")}
+                    >
+                      {plan.recommended
+                        ? "Garantir o Mega+ com Desconto"
+                        : "Quero o Ton Black"}
 
-      <ArrowRight className="size-4" />
-    </Button>
-  </TrackedLink>
+                      <ArrowRight className="size-4" />
+                    </Button>
+                  </TrackedLink>
 
-  {/* Detalhamento das taxas */}
-  <TrackedLink
-    href={siteConfig.links.plansAndRates}
-    target="_blank"
-    rel="noopener noreferrer"
-    className="mt-3 flex h-11 w-full items-center justify-center gap-2 rounded-xl border border-primary/20 bg-primary/5 px-4 text-sm font-semibold text-primary transition-all duration-300 hover:border-primary/30 hover:bg-primary/10"
-    tracking={{
-      event: "rates_click",
-      location: "plans",
-      destination: "plans_and_rates",
-      label: "Ver todas as taxas e condições",
-      product: plan.id,
-      conversionStrength: "weak",
-    }}
-  >
-    Ver todas as taxas e condições
+                  {/* Detalhamento das taxas */}
+                  <TrackedLink
+                    href={siteConfig.links.plansAndRates}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-3 flex h-11 w-full items-center justify-center gap-2 rounded-xl border border-primary/20 bg-primary/5 px-4 text-sm font-semibold text-primary transition-all duration-300 hover:border-primary/30 hover:bg-primary/10"
+                    tracking={{
+                      event: "rates_click",
+                      location: "plans",
+                      destination: "plans_and_rates",
+                      label: "Ver todas as taxas e condições",
+                      product: plan.id,
+                      conversionStrength: "weak",
+                    }}
+                  >
+                    Ver todas as taxas e condições
 
-    <ArrowRight className="size-4" />
-  </TrackedLink>
-</div>
+                    <ArrowRight className="size-4" />
+                  </TrackedLink>
+                </div>
               </article>
             </FadeIn>
           ))}

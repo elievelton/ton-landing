@@ -144,9 +144,9 @@ export function Footer() {
           </div>
 
           <p className="max-w-xl sm:text-right">
-            Esta é uma página de consultor independente. Preços, taxas,
-            promoções e demais condições estão sujeitos às regras e alterações
-            da Ton.
+            Este site atua como um canal de indicação independente. Não realizamos cobranças 
+            por aqui; apenas garantimos e aplicamos o seu cupom de desconto exclusivo. Todas as 
+            transações, garantias e entregas são processadas diretamente no site oficial da Ton.
           </p>
         </div>
       </Container>

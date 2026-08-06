@@ -2,6 +2,10 @@ import { Container } from "@/components/shared/Container"
 import { FadeIn } from "@/components/shared/FadeIn"
 import { MachineCard } from "@/components/shared/MachineCard"
 import { machines } from "@/config/machines"
+import {
+  ShieldCheck,
+  Sparkles,
+} from "lucide-react"
 
 export function Machines() {
   return (
@@ -13,7 +17,7 @@ export function Machines() {
         {/* Cabeçalho da seção */}
         <FadeIn>
           <div className="mx-auto max-w-3xl text-center">
-            <span className="text-sm font-semibold uppercase tracking-wider text-primary">
+            <span className="text-sm font-semibold uppercase tracking-wider text-orange-500">
               Escolha sua maquininha
             </span>
 
@@ -25,6 +29,12 @@ export function Machines() {
               Compare os modelos e encontre a maquininha que combina melhor
               com a sua rotina de vendas.
             </p>
+
+            {/* Dica de reforço do cupom em tom alaranjado */}
+            <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-orange-500/30 bg-orange-500/10 px-4 py-1.5 text-xs font-semibold text-orange-600">
+              <Sparkles className="size-3.5 text-orange-500" />
+              <span>O cupom de 20% de desconto extra é aplicado automaticamente ao clicar nos botões de adicionar no carrinho.</span>
+            </div>
           </div>
         </FadeIn>
 
@@ -39,6 +49,15 @@ export function Machines() {
               <MachineCard machine={machine} />
             </FadeIn>
           ))}
+        </div>
+
+        {/* Aviso de Segurança e Direcionamento Oficial */}
+        <div className="mt-8 flex items-center justify-center gap-2 text-xs text-muted">
+          <ShieldCheck className="size-4 text-orange-500 shrink-0" />
+          <span>
+            Ambiente 100% seguro. Você será redirecionado para o site oficial da{" "}
+            <strong className="text-foreground">Ton (Grupo Stone)</strong> para finalizar a compra com garantia de fábrica e frete grátis.
+          </span>
         </div>
 
         {/* Orientação */}
