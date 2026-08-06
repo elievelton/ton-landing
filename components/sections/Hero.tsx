@@ -51,25 +51,25 @@ export function Hero() {
               </h1>
 
               {/* Destaque comercial */}
-              <p className="mt-5 max-w-2xl text-lg font-semibold leading-7 sm:text-xl">
-                <span className="text-orange-500">
-                  Não compre sua Ton sem aplicar o cupom:
-                </span>{" "}
-                <span className="text-primary">
-                  além do preço promocional disponível, você recebe mais 20% OFF
-                  usando meu cupom.
-                </span>
-              </p>
+<p className="mt-5 max-w-2xl text-lg font-semibold leading-7 sm:text-xl">
+  <span className="text-orange-500">
+    Não pague mais caro pela sua Ton:
+  </span>{" "}
+  <span className="text-primary">
+    primeiro, a Ton aplica o desconto promocional disponível.
+    Depois, você economiza mais 20% sobre esse valor usando
+    meu cupom exclusivo.
+  </span>
+</p>
 
-              {/* Explicação */}
-              <p className="mt-6 max-w-2xl text-lg leading-8 text-muted sm:text-xl">
-                Escolha a maquininha ideal para o seu negócio e acesse o
-                catálogo da Ton com meu cupom de{" "}
-                <strong className="font-semibold text-foreground">
-                  20% de desconto adicional
-                </strong>{" "}
-                aplicado.
-              </p>
+              {/* Explicação 2 */}
+<p className="mt-6 max-w-2xl text-lg leading-8 text-muted sm:text-xl">
+  Escolha a maquininha ideal para o seu negócio e veja os{" "}
+  <strong className="font-semibold text-foreground">
+    preços finais com o desconto
+  </strong>{" "}
+  de forma segura diretamente no catálogo oficial da Ton.
+</p>
 
               {/* CTA */}
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
