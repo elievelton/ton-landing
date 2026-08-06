@@ -73,7 +73,7 @@ export function Hero() {
   <strong className="font-semibold text-foreground">
     preços finais com o desconto
   </strong>{" "}
-  de forma segura diretamente no catálogo oficial da Ton usando os botões abaixo.
+  de forma segura diretamente no catálogo oficial da Ton usando o botão verde abaixo.
 </p>
 
               {/* CTA */}
