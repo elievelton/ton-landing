@@ -84,6 +84,7 @@ export function Header() {
               href={siteConfig.links.catalog}
               target="_blank"
               rel="noopener noreferrer"
+              celebration
               tracking={{
                 event: "cta_click",
                 location: "header_desktop",
@@ -92,12 +93,12 @@ export function Header() {
                 conversionStrength: "medium",
               }}
             >
-              <Button 
-  size="lg"
-  className="relative overflow-hidden bg-orange-500 font-bold text-white shadow-lg shadow-orange-500/30 transition-all duration-300 hover:bg-orange-600 hover:scale-105 animate-[bounce_2s_infinite]"
->
-  🔥 Pegar Meu Desconto
-</Button>
+              <Button
+                size="lg"
+                className="relative overflow-hidden bg-orange-500 font-bold text-white shadow-lg shadow-orange-500/30 transition-all duration-300 hover:scale-105 hover:bg-orange-600 animate-[bounce_2s_infinite]"
+              >
+                🔥 Pegar Meu Desconto
+              </Button>
             </TrackedLink>
           </div>
 
@@ -177,12 +178,13 @@ export function Header() {
                     </Link>
                   ))}
 
-                  {/* CTA */}
+                  {/* CTA mobile */}
                   <div className="mt-6">
                     <TrackedLink
                       href={siteConfig.links.catalog}
                       target="_blank"
                       rel="noopener noreferrer"
+                      celebration
                       onClick={() => setMenuOpen(false)}
                       tracking={{
                         event: "cta_click",
@@ -196,7 +198,7 @@ export function Header() {
                         size="lg"
                         className="h-14 w-full rounded-xl bg-orange-500 text-base font-extrabold text-white shadow-lg shadow-black/10 transition-all hover:bg-orange-600 active:scale-[0.98]"
                       >
-                        Comprar com desconto
+                        🔥 Pegar Meu Desconto
                       </Button>
                     </TrackedLink>
 

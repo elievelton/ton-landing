@@ -6,8 +6,47 @@ const redis = new Redis({
   token: process.env.KV_REST_API_TOKEN!,
 })
 
-const ACTIVITY_COUNT_KEY = "ton:activity:count"
+/*
+ * Contador histórico.
+ *
+ * Essa chave já existe no projeto e NÃO deve ser apagada.
+ * Ela passa a representar o total global de atividades
+ * registradas desde o início.
+ */
+const ACTIVITY_TOTAL_KEY = "ton:activity:count"
+
 const ACTIVITY_LATEST_KEY = "ton:activity:latest"
+
+/*
+ * Retorna a data atual considerando o horário de Brasília.
+ *
+ * Exemplo:
+ * 2026-08-05
+ */
+function getBrazilDate() {
+  return new Intl.DateTimeFormat("en-CA", {
+    timeZone: "America/Sao_Paulo",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).format(new Date())
+}
+
+/*
+ * Cada dia possui sua própria chave no Redis.
+ *
+ * Exemplo:
+ * ton:activity:daily:2026-08-05
+ *
+ * No dia seguinte:
+ * ton:activity:daily:2026-08-06
+ *
+ * Assim não precisamos executar nenhum processo
+ * à meia-noite para zerar o contador.
+ */
+function getDailyActivityKey() {
+  return `ton:activity:daily:${getBrazilDate()}`
+}
 
 type LatestActivity = {
   id: string
@@ -17,21 +56,33 @@ type LatestActivity = {
 
 export async function GET() {
   try {
-    const [count, latestActivity] = await Promise.all([
-      redis.get<number>(ACTIVITY_COUNT_KEY),
+    const dailyActivityKey = getDailyActivityKey()
+
+    const [
+      totalCount,
+      todayCount,
+      latestActivity,
+    ] = await Promise.all([
+      redis.get<number>(ACTIVITY_TOTAL_KEY),
+      redis.get<number>(dailyActivityKey),
       redis.get<LatestActivity>(ACTIVITY_LATEST_KEY),
     ])
 
     return NextResponse.json({
-      count: count ?? 0,
+      totalCount: totalCount ?? 0,
+      todayCount: todayCount ?? 0,
       latestActivity: latestActivity ?? null,
     })
   } catch (error) {
-    console.error("Erro ao consultar atividades:", error)
+    console.error(
+      "Erro ao consultar atividades:",
+      error
+    )
 
     return NextResponse.json(
       {
-        error: "Não foi possível consultar as atividades.",
+        error:
+          "Não foi possível consultar as atividades.",
       },
       {
         status: 500,
@@ -52,7 +103,8 @@ export async function POST(request: NextRequest) {
     if (!message) {
       return NextResponse.json(
         {
-          error: "Mensagem da atividade é obrigatória.",
+          error:
+            "Mensagem da atividade é obrigatória.",
         },
         {
           status: 400,
@@ -60,7 +112,32 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const count = await redis.incr(ACTIVITY_COUNT_KEY)
+    const dailyActivityKey = getDailyActivityKey()
+
+    /*
+     * Incrementamos os dois contadores:
+     *
+     * 1. Histórico/global
+     * 2. Somente o dia atual
+     */
+    const [
+      totalCount,
+      todayCount,
+    ] = await Promise.all([
+      redis.incr(ACTIVITY_TOTAL_KEY),
+      redis.incr(dailyActivityKey),
+    ])
+
+    /*
+     * Mantemos a chave diária por 48 horas.
+     *
+     * Isso evita acumular milhares de chaves antigas
+     * desnecessariamente no Redis.
+     */
+    await redis.expire(
+      dailyActivityKey,
+      60 * 60 * 48
+    )
 
     const latestActivity: LatestActivity = {
       id: crypto.randomUUID(),
@@ -68,6 +145,10 @@ export async function POST(request: NextRequest) {
       createdAt: Date.now(),
     }
 
+    /*
+     * Mantemos exatamente o funcionamento atual
+     * da última atividade.
+     */
     await redis.set(
       ACTIVITY_LATEST_KEY,
       latestActivity,
@@ -77,15 +158,20 @@ export async function POST(request: NextRequest) {
     )
 
     return NextResponse.json({
-      count,
+      totalCount,
+      todayCount,
       latestActivity,
     })
   } catch (error) {
-    console.error("Erro ao registrar atividade:", error)
+    console.error(
+      "Erro ao registrar atividade:",
+      error
+    )
 
     return NextResponse.json(
       {
-        error: "Não foi possível registrar a atividade.",
+        error:
+          "Não foi possível registrar a atividade.",
       },
       {
         status: 500,

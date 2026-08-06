@@ -15,6 +15,7 @@ import { StructuredData } from "@/components/shared/StructuredData"
 import { siteConfig } from "@/config/site"
 import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics"
 import { MicrosoftUET } from "@/components/analytics/MicrosoftUET"
+import { SocialProofBar } from "@/components/shared/SocialProofBar"
 
 import "./globals.css"
 
@@ -125,22 +126,24 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} ${manrope.variable} ${archivoBlack.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">
-        <GoogleAnalytics />
-        <MicrosoftUET />
-        <StructuredData />
+  <GoogleAnalytics />
+  <MicrosoftUET />
+  <StructuredData />
 
-        <Header />
+  <SocialProofBar />
 
-        <main className="flex-1">
-          {children}
-        </main>
+  <Header />
 
-        <Footer />
+  <main className="flex-1">
+    {children}
+  </main>
 
-        <BackToTop />
-        <SocialProofToast />
-        <CookieConsent />
-      </body>
+  <Footer />
+
+  <BackToTop />
+  <SocialProofToast />
+  <CookieConsent />
+</body>
     </html>
   )
 }

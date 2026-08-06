@@ -114,38 +114,52 @@ export function TrackedLink({
 
     onClick?.(event)
 
-    if (celebration && href) {
-      event.preventDefault()
+    /*
+ * Pequena celebração antes da navegação.
+ * O confete nasce exatamente no ponto
+ * onde o usuário clicou.
+ */
+if (celebration && href) {
+  event.preventDefault()
 
-      confetti({
-        particleCount: 35,
-        spread: 55,
-        startVelocity: 28,
-        origin: {
-          y: 0.75,
-        },
-        colors: [
-          "#00C853",
-          "#22C55E",
-          "#DCFCE7",
-          "#FFFFFF",
-        ],
-      })
+  const rect = event.currentTarget.getBoundingClientRect()
 
-      setTimeout(() => {
-        if (target === "_blank") {
-          window.open(
-            href.toString(),
-            "_blank",
-            "noopener,noreferrer"
-          )
-        } else {
-          window.location.href = href.toString()
-        }
-      }, 2000)
+  const originX =
+    (rect.left + rect.width / 2) / window.innerWidth
 
-      return
+  const originY =
+    (rect.top + rect.height / 2) / window.innerHeight
+
+  confetti({
+    particleCount: 35,
+    spread: 55,
+    startVelocity: 28,
+    origin: {
+      x: originX,
+      y: originY,
+    },
+    colors: [
+      "#00C853",
+      "#22C55E",
+      "#DCFCE7",
+      "#FFFFFF",
+    ],
+  })
+
+  setTimeout(() => {
+    if (target === "_blank") {
+      window.open(
+        href.toString(),
+        "_blank",
+        "noopener,noreferrer"
+      )
+    } else {
+      window.location.href = href.toString()
     }
+  }, 2700)
+
+  return
+}
   }
 
   return (

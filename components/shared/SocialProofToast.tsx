@@ -14,7 +14,8 @@ type LatestActivity = {
 }
 
 type ActivityResponse = {
-  count: number
+  totalCount: number
+  todayCount: number
   latestActivity: LatestActivity | null
 }
 
@@ -23,7 +24,14 @@ const POLLING_INTERVAL = 5000
 export function SocialProofToast() {
   const [message, setMessage] = useState<string | null>(null)
   const [visible, setVisible] = useState(false)
-  const [count, setCount] = useState(0)
+
+  /*
+   * Contador utilizado no toast.
+   *
+   * Representa somente as atividades registradas
+   * no dia atual.
+   */
+  const [todayCount, setTodayCount] = useState(0)
 
   const lastActivityId = useRef<string | null>(null)
   const initialized = useRef(false)
@@ -72,8 +80,12 @@ export function SocialProofToast() {
 
         const data = (await response.json()) as ActivityResponse
 
-        if (Number.isFinite(data.count)) {
-          setCount(data.count)
+        /*
+         * O toast utiliza somente o contador
+         * referente ao dia atual.
+         */
+        if (Number.isFinite(data.todayCount)) {
+          setTodayCount(data.todayCount)
         }
 
         /*
@@ -85,7 +97,9 @@ export function SocialProofToast() {
          */
         if (!initialized.current) {
           initialized.current = true
-          lastActivityId.current = data.latestActivity?.id ?? null
+          lastActivityId.current =
+            data.latestActivity?.id ?? null
+
           return
         }
 
@@ -104,35 +118,49 @@ export function SocialProofToast() {
           showNewActivity &&
           data.latestActivity.id !== lastActivityId.current
         ) {
-          lastActivityId.current = data.latestActivity.id
+          lastActivityId.current =
+            data.latestActivity.id
 
           showToast(data.latestActivity.message)
         }
       } catch (error) {
-        console.error("Erro ao carregar atividades:", error)
+        console.error(
+          "Erro ao carregar atividades:",
+          error
+        )
       }
     }
 
-    async function registerActivity(newMessage: string) {
+    async function registerActivity(
+      newMessage: string
+    ) {
       try {
-        const response = await fetch("/api/activity", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            message: newMessage,
-          }),
-        })
+        const response = await fetch(
+          "/api/activity",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              message: newMessage,
+            }),
+          }
+        )
 
         if (!response.ok || !mounted) {
           return
         }
 
-        const data = (await response.json()) as ActivityResponse
+        const data =
+          (await response.json()) as ActivityResponse
 
-        if (Number.isFinite(data.count)) {
-          setCount(data.count)
+        /*
+         * Atualiza imediatamente o contador
+         * de atividades realizadas hoje.
+         */
+        if (Number.isFinite(data.todayCount)) {
+          setTodayCount(data.todayCount)
         }
 
         if (data.latestActivity) {
@@ -143,15 +171,20 @@ export function SocialProofToast() {
            * Assim o polling não mostra novamente para ele
            * a mesma notificação.
            */
-          lastActivityId.current = data.latestActivity.id
+          lastActivityId.current =
+            data.latestActivity.id
         }
       } catch (error) {
-        console.error("Erro ao registrar atividade:", error)
+        console.error(
+          "Erro ao registrar atividade:",
+          error
+        )
       }
     }
 
     function handleSocialProof(event: Event) {
-      const customEvent = event as CustomEvent<SocialProofDetail>
+      const customEvent =
+        event as CustomEvent<SocialProofDetail>
 
       if (!customEvent.detail?.message) {
         return
@@ -165,20 +198,27 @@ export function SocialProofToast() {
       /*
        * Também registramos a atividade no Redis para que
        * os outros visitantes possam recebê-la.
+       *
+       * A API incrementa:
+       *
+       * - contador histórico/global
+       * - contador do dia atual
        */
-      void registerActivity(customEvent.detail.message)
+      void registerActivity(
+        customEvent.detail.message
+      )
     }
 
     /*
      * Primeira consulta.
      *
-     * Carrega o contador e estabelece qual é a atividade
-     * atual sem mostrar uma notificação antiga.
+     * Carrega o contador de hoje e estabelece qual é
+     * a atividade atual sem mostrar uma notificação antiga.
      */
     void loadActivity(false)
 
     /*
-     * A cada 10 segundos consultamos o servidor para verificar
+     * Consulta periodicamente o servidor para verificar
      * se outro visitante gerou uma nova atividade.
      */
     const interval = window.setInterval(() => {
@@ -252,10 +292,10 @@ export function SocialProofToast() {
               <span className="inline-flex items-center gap-1 font-semibold text-orange-600">
                 <Flame className="size-3.5" />
 
-                {count}{" "}
-                {count === 1
-                  ? "oferta já foi conferida"
-                  : "ofertas já foram conferidas"}
+                {todayCount}{" "}
+                {todayCount === 1
+                  ? "oferta conferida hoje"
+                  : "ofertas conferidas hoje"}
               </span>
             </div>
           </div>
