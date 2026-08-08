@@ -7,7 +7,7 @@ export const siteConfig = {
     "Maquininha Ton com Cupom de Desconto | Taxas, Planos e Cupom",
 
   description:
-  "Compre maquininhas Ton com cupom de desconto. Compare modelos, planos e taxas, conheça o TapTon e encontre a melhor opção para o seu negócio.",
+    "Compre maquininhas Ton com cupom de desconto. Compare modelos, planos e taxas, conheça o TapTon e encontre a melhor opção para o seu negócio.",
 
   author: "Elievelto",
 
@@ -56,7 +56,9 @@ export const siteConfig = {
     },
   },
 
-  whatsapp: "",
+  whatsapp: "5589981077574",
+  whatsappUrl:
+    "https://wa.me/5589981077574?text=Ol%C3%A1%20Elievelto!%20Tenho%20d%C3%BAvidas%20sobre%20a%20maquininha%20Ton",
   instagram: "",
   facebook: "",
   youtube: "",
