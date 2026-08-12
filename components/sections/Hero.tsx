@@ -96,15 +96,24 @@ export function Hero() {
                   </Button>
                 </TrackedLink>
 
-                <a href="#maquinas" className="w-full sm:w-auto">
-                  <Button
-                    variant="outline"
-                    size="lg"
-                    className="h-13 w-full px-6 text-base font-semibold sm:w-auto"
-                  >
-                    Comparar modelos
-                  </Button>
-                </a>
+                <TrackedLink
+  href="#maquinas"
+  tracking={{
+    event: "compare_models_click",
+    location: "hero",
+    destination: "machines",
+    label: "Comparar modelos",
+    conversionStrength: "weak",
+  }}
+>
+  <Button
+    variant="outline"
+    size="lg"
+    className="h-12 w-full px-6 text-base sm:w-auto"
+  >
+    Comparar modelos
+  </Button>
+</TrackedLink>
               </div>
 
               {/* Aviso de segurança e garantia */}
@@ -204,7 +213,7 @@ export function Hero() {
                   <div className="my-2.5 rounded-xl bg-primary/5 py-2 px-3 border border-primary/15">
                     <span className="text-xs text-muted-foreground line-through block">De R$ 671,43</span>
                     <span className="text-sm font-extrabold text-foreground">
-                      Por apenas <span className="text-primary text-base">R$ 155,77</span>
+                      Por apenas <span className="text-primary text-base">R$ 153,50</span>
                     </span>
                   </div>
 

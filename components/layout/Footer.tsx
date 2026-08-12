@@ -144,9 +144,9 @@ export function Footer() {
           </div>
 
           <p className="max-w-xl sm:text-right">
-            Este site atua como um canal de indicação independente. Não realizamos cobranças 
-            por aqui; apenas garantimos e aplicamos o seu cupom de desconto exclusivo. Todas as 
-            transações, garantias e entregas são processadas diretamente no site oficial da Ton.
+            Somos parceiros da Ton e este site atua como um canal independente de indicação e divulgação de ofertas. 
+            Não realizamos cobranças nem processamos pagamentos por aqui. 
+            Ao utilizar nosso cupom, você será direcionado ao site oficial da Ton, onde a compra, o pagamento, a entrega, as garantias e o atendimento são realizados diretamente pela Ton.
           </p>
         </div>
       </Container>
