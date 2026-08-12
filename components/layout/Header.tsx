@@ -1,8 +1,8 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Link from "next/link"
-import { Menu } from "lucide-react"
+import { Flame, Menu } from "lucide-react"
 
 import { Container } from "@/components/shared/Container"
 import { TrackedLink } from "@/components/shared/TrackedLink"
@@ -15,6 +15,10 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 import { siteConfig } from "@/config/site"
+import {
+  activePromotion,
+  PROMOTION_END,
+} from "@/config/promotions"
 
 const navigation = [
   { label: "Máquinas", href: "#maquinas" },
@@ -27,11 +31,33 @@ const navigation = [
 
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false)
+  const [promotionVisible, setPromotionVisible] = useState(false)
+
+  useEffect(() => {
+    function updatePromotionVisibility() {
+      setPromotionVisible(
+        activePromotion.enabled &&
+          Date.now() < PROMOTION_END
+      )
+    }
+
+    updatePromotionVisibility()
+
+    const interval = window.setInterval(
+      updatePromotionVisibility,
+      1000
+    )
+
+    return () => {
+      window.clearInterval(interval)
+    }
+  }, [])
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-black/5 bg-white/80 backdrop-blur-xl">
       <Container>
         <div className="flex h-20 items-center justify-between">
+
           {/* Logo */}
           <Link
             href="/"
@@ -76,6 +102,22 @@ export function Header() {
                 {item.label}
               </Link>
             ))}
+
+            {/* Promoção */}
+            {promotionVisible && (
+              <Link
+                href="#promocao"
+                className="group inline-flex items-center gap-1.5 whitespace-nowrap rounded-full bg-primary/10 px-3 py-1.5 text-sm font-bold text-primary transition-all duration-300 hover:bg-primary hover:text-white"
+              >
+                <Flame className="size-4 fill-current transition-transform duration-300 group-hover:scale-110" />
+
+                <span>Oferta</span>
+
+                <span className="rounded-full bg-orange-500 px-1.5 py-0.5 text-[9px] font-extrabold uppercase tracking-wide text-white group-hover:bg-white group-hover:text-orange-500">
+                  desse mês
+                </span>
+              </Link>
+            )}
           </nav>
 
           {/* CTA desktop */}
@@ -148,7 +190,6 @@ export function Header() {
                         </span>
                       </span>
 
-                      {/* Bolinha animada */}
                       <span className="relative flex size-2.5">
                         <span className="absolute inline-flex size-full animate-ping rounded-full bg-white opacity-40" />
 
@@ -177,6 +218,24 @@ export function Header() {
                       {item.label}
                     </Link>
                   ))}
+
+                  {/* Promoção mobile */}
+                  {promotionVisible && (
+                    <Link
+                      href="#promocao"
+                      onClick={() => setMenuOpen(false)}
+                      className="flex min-h-14 items-center justify-end gap-2 border-b border-white/10 px-3 text-right text-base font-extrabold text-white transition-all duration-200 hover:bg-white/10 hover:text-black active:bg-white/15 active:text-black"
+                    >
+                      <span className="rounded-full bg-orange-500 px-2 py-1 text-[9px] font-black uppercase tracking-wide text-white">
+                        Extra
+                      </span>
+
+                      <span className="flex items-center gap-1.5">
+                        <Flame className="size-4 fill-current text-orange-300" />
+                        Promoção
+                      </span>
+                    </Link>
+                  )}
 
                   {/* CTA mobile */}
                   <div className="mt-6">

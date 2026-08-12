@@ -8,11 +8,13 @@ import { Consultant } from "@/components/sections/Consultant"
 import { About } from "@/components/sections/About"
 import { FAQ } from "@/components/sections/FAQ"
 import { FinalCTA } from "@/components/sections/FinalCTA"
+import { PromotionBanner } from "@/components/sections/PromotionBanner"
 
 export default function Home() {
   return (
     <>
       <Hero />
+      <PromotionBanner />
       <Benefits />
       <Machines />
       <AcceptedBrands />
