@@ -220,22 +220,22 @@ export function Header() {
                   ))}
 
                   {/* Promoção mobile */}
-                  {promotionVisible && (
-                    <Link
-                      href="#promocao"
-                      onClick={() => setMenuOpen(false)}
-                      className="flex min-h-14 items-center justify-end gap-2 border-b border-white/10 px-3 text-right text-base font-extrabold text-white transition-all duration-200 hover:bg-white/10 hover:text-black active:bg-white/15 active:text-black"
-                    >
-                      <span className="rounded-full bg-orange-500 px-2 py-1 text-[9px] font-black uppercase tracking-wide text-white">
-                        Extra
-                      </span>
+{promotionVisible && (
+  <Link
+    href="#promocao"
+    onClick={() => setMenuOpen(false)}
+    className="flex min-h-14 items-center justify-end gap-2 border-b border-white/10 bg-white/5 px-3 text-right text-base font-extrabold text-white transition-all duration-200 hover:bg-white/10 hover:text-black active:bg-white/15 active:text-black"
+  >
+    <span className="rounded-full bg-orange-500 px-2 py-1 text-[9px] font-black uppercase tracking-wide text-white">
+      desse mês
+    </span>
 
-                      <span className="flex items-center gap-1.5">
-                        <Flame className="size-4 fill-current text-orange-300" />
-                        Promoção
-                      </span>
-                    </Link>
-                  )}
+    <span className="flex items-center gap-1.5">
+      <Flame className="size-4 fill-current text-orange-300" />
+      Oferta
+    </span>
+  </Link>
+)}
 
                   {/* CTA mobile */}
                   <div className="mt-6">
