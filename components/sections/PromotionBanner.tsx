@@ -165,7 +165,7 @@ export function PromotionBanner() {
 
                 <p className="mt-1 text-sm leading-6 text-white/65 sm:text-base">
                   É simples: compre sua primeira maquininha usando nosso link
-                  e cupom de desconto. Só seguir os três passoas a seguir!
+                  e cupom de desconto até dia 30/08/2026, ative sua máquina e venda 10.000 em 30 dias após a ativação. Veja os passos abaixo!
                 </p>
 
               </div>
