@@ -36,10 +36,27 @@ type TrackingParams = {
   conversionStrength?: ConversionStrength
 }
 
-type TrackedLinkProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
-  children: ReactNode
-  tracking: TrackingParams
-  celebration?: boolean
+type TrackedLinkProps =
+  AnchorHTMLAttributes<HTMLAnchorElement> & {
+    children: ReactNode
+    tracking: TrackingParams
+    celebration?: boolean
+  }
+
+declare global {
+  interface Window {
+    dataLayer?: Record<string, unknown>[]
+
+    gtag?: (
+      command: string,
+      eventName: string,
+      eventData?: Record<string, unknown>
+    ) => void
+
+    uetq?: {
+      push: (...args: unknown[]) => void
+    }
+  }
 }
 
 const socialProofMessages = [
@@ -74,6 +91,12 @@ export function TrackedLink({
       conversion_strength: tracking.conversionStrength,
     }
 
+    /*
+     * ============================================================
+     * DATA LAYER / GTM
+     * ============================================================
+     */
+
     window.dataLayer = window.dataLayer || []
 
     window.dataLayer.push({
@@ -81,28 +104,96 @@ export function TrackedLink({
       ...eventData,
     })
 
+    /*
+     * ============================================================
+     * GOOGLE ANALYTICS 4
+     * ============================================================
+     */
+
     window.gtag?.(
       "event",
       tracking.event,
       eventData
     )
 
-    if (
-      tracking.conversionStrength === "strong" &&
-      window.uetq
-    ) {
-      window.uetq.push(
-        "event",
-        "add_to_cart_intent",
-        {
-          event_category: "conversion",
-          event_label:
-            tracking.product ??
-            tracking.label ??
-            "maquininha_ton",
-        }
-      )
+    /*
+     * ============================================================
+     * MICROSOFT UET
+     * ============================================================
+     *
+     * Só envia o evento se a UET estiver carregada.
+     *
+     * strong → add_to_cart_intent
+     * promotion_click → promotion_click
+     * whatsapp_click → whatsapp_click
+     */
+
+    if (window.uetq) {
+      /*
+       * Conversão forte:
+       * intenção de compra da maquininha
+       */
+
+      if (
+        tracking.conversionStrength === "strong"
+      ) {
+        window.uetq.push(
+          "event",
+          "add_to_cart_intent",
+          {
+            event_category: "conversion",
+            event_label:
+              tracking.product ??
+              tracking.label ??
+              "maquininha_ton",
+          }
+        )
+      }
+
+      /*
+       * Clique na promoção
+       */
+
+      if (
+        tracking.event === "promotion_click"
+      ) {
+        window.uetq.push(
+          "event",
+          "promotion_click",
+          {
+            event_category: "conversion",
+            event_label:
+              tracking.label ??
+              "promotion_click",
+          }
+        )
+      }
+
+      /*
+       * Clique no WhatsApp
+       */
+
+      if (
+        tracking.event === "whatsapp_click"
+      ) {
+        window.uetq.push(
+          "event",
+          "whatsapp_click",
+          {
+            event_category: "conversion",
+            event_label:
+              tracking.label ??
+              "whatsapp_click",
+          }
+        )
+      }
     }
+
+    /*
+     * ============================================================
+     * PROVA SOCIAL
+     * ============================================================
+     */
 
     window.dispatchEvent(
       new CustomEvent("social-proof", {
@@ -112,54 +203,63 @@ export function TrackedLink({
       })
     )
 
+    /*
+     * Mantém o onClick original.
+     */
+
     onClick?.(event)
 
     /*
- * Pequena celebração antes da navegação.
- * O confete nasce exatamente no ponto
- * onde o usuário clicou.
- */
-if (celebration && href) {
-  event.preventDefault()
+     * ============================================================
+     * CELEBRAÇÃO
+     * ============================================================
+     */
 
-  const rect = event.currentTarget.getBoundingClientRect()
+    if (celebration && href) {
+      event.preventDefault()
 
-  const originX =
-    (rect.left + rect.width / 2) / window.innerWidth
+      const rect =
+        event.currentTarget.getBoundingClientRect()
 
-  const originY =
-    (rect.top + rect.height / 2) / window.innerHeight
+      const originX =
+        (rect.left + rect.width / 2) /
+        window.innerWidth
 
-  confetti({
-    particleCount: 35,
-    spread: 55,
-    startVelocity: 28,
-    origin: {
-      x: originX,
-      y: originY,
-    },
-    colors: [
-      "#00C853",
-      "#22C55E",
-      "#DCFCE7",
-      "#FFFFFF",
-    ],
-  })
+      const originY =
+        (rect.top + rect.height / 2) /
+        window.innerHeight
 
-  setTimeout(() => {
-    if (target === "_blank") {
-      window.open(
-        href.toString(),
-        "_blank",
-        "noopener,noreferrer"
-      )
-    } else {
-      window.location.href = href.toString()
+      confetti({
+        particleCount: 35,
+        spread: 55,
+        startVelocity: 28,
+        origin: {
+          x: originX,
+          y: originY,
+        },
+        colors: [
+          "#00C853",
+          "#22C55E",
+          "#DCFCE7",
+          "#FFFFFF",
+        ],
+      })
+
+      setTimeout(() => {
+        if (target === "_blank") {
+          window.open(
+            href.toString(),
+            "_blank",
+            "noopener,noreferrer"
+          )
+        } else {
+          window.location.href =
+            href.toString()
+        }
+      }, 2700)
+
+      return
     }
-  }, 2700)
-
-  return
-}
   }
 
   return (
