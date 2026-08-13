@@ -124,6 +124,7 @@ export function TrackedLink({
      * Só envia o evento se a UET estiver carregada.
      *
      * strong → add_to_cart_intent
+     * commercial_interest → commercial_interest
      * promotion_click → promotion_click
      * whatsapp_click → whatsapp_click
      */
@@ -146,6 +147,25 @@ export function TrackedLink({
               tracking.product ??
               tracking.label ??
               "maquininha_ton",
+          }
+        )
+      }
+
+      /*
+       * Interesse comercial
+       */
+
+      if (
+        tracking.event === "commercial_interest"
+      ) {
+        window.uetq.push(
+          "event",
+          "commercial_interest",
+          {
+            event_category: "engagement",
+            event_label:
+              tracking.label ??
+              "commercial_interest",
           }
         )
       }
