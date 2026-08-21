@@ -153,3 +153,134 @@ html{
 .brands-marquee:hover {
   animation-play-state: paused;
 }
+
+/* ============================================================
+   INTERAÇÕES GLOBAIS
+   ============================================================ */
+
+/*
+ * Elementos interativos devem deixar claro que são clicáveis.
+ * O feedback é aplicado somente em elementos que recebem
+ * explicitamente a classe .interactive.
+ */
+
+.interactive {
+  cursor: pointer;
+  transition:
+    transform 200ms ease,
+    box-shadow 200ms ease,
+    background-color 200ms ease,
+    border-color 200ms ease,
+    color 200ms ease;
+}
+
+/* Desktop */
+@media (hover: hover) and (pointer: fine) {
+  .interactive:hover {
+    transform: translateY(-2px);
+  }
+
+  .interactive:active {
+    transform: translateY(0);
+  }
+}
+
+/* Touch / Mobile */
+@media (hover: none) and (pointer: coarse) {
+  .interactive:active {
+    transform: scale(0.98);
+  }
+}
+
+/*
+ * Botões principais
+ */
+.interactive-button {
+  cursor: pointer;
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    filter 180ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .interactive-button:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.03);
+  }
+
+  .interactive-button:active {
+    transform: translateY(0) scale(0.98);
+  }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .interactive-button:active {
+    transform: scale(0.97);
+  }
+}
+
+/*
+ * Cards clicáveis
+ */
+.interactive-card {
+  cursor: pointer;
+  transition:
+    transform 250ms ease,
+    box-shadow 250ms ease,
+    border-color 250ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .interactive-card:hover {
+    transform: translateY(-4px);
+  }
+
+  .interactive-card:active {
+    transform: translateY(-1px);
+  }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .interactive-card:active {
+    transform: scale(0.985);
+  }
+}
+
+/*
+ * Links
+ */
+.interactive-link {
+  cursor: pointer;
+  transition:
+    color 180ms ease,
+    opacity 180ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .interactive-link:hover {
+    opacity: 0.85;
+  }
+
+  .interactive-link:active {
+    opacity: 0.7;
+  }
+}
+
+/*
+ * Respeita usuários que preferem menos movimento.
+ */
+@media (prefers-reduced-motion: reduce) {
+  .interactive,
+  .interactive-button,
+  .interactive-card,
+  .interactive-link {
+    transition: none;
+  }
+
+  .interactive:hover,
+  .interactive-button:hover,
+  .interactive-card:hover {
+    transform: none;
+  }
+}
