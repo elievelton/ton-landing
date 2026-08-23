@@ -5,7 +5,10 @@ const compat = new FlatCompat({
 })
 
 const eslintConfig = [
-  ...compat.extends("next/core-web-vitals", "next/typescript"),
+  ...compat.extends(
+    "next/core-web-vitals",
+    "next/typescript",
+  ),
 
   {
     ignores: [
@@ -13,6 +16,16 @@ const eslintConfig = [
       "out/**",
       "build/**",
       "next-env.d.ts",
+
+      // Arquivos usados apenas na investigação da Ton
+      "chunk-*.js",
+      "ton-plancard-fees.js",
+      "ton-modal-plan-details.js",
+      "ton-response-*.txt",
+      "ton-debug.txt",
+      "ton-inspection.txt",
+      "ton-test.png",
+      "ton-api-capture.png",
     ],
   },
 ]

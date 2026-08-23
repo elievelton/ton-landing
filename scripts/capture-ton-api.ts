@@ -110,7 +110,7 @@ async function main() {
       console.log(
         `💾 Salvo em: ${filename}`,
       );
-    } catch (error) {
+    } catch {
       console.log(
         `⚠️ Não foi possível ler a response: ${url}`,
       );

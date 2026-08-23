@@ -1131,7 +1131,7 @@ export default function TaxCalculator() {
                   </p>
 
                   <h3 className="text-xl font-black text-foreground">
-                    Veja quanto você recebe
+                    Simulador de Vendas
                   </h3>
                 </div>
               </div>

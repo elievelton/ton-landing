@@ -25,12 +25,6 @@ export function SocialProofToast() {
   const [message, setMessage] = useState<string | null>(null)
   const [visible, setVisible] = useState(false)
 
-  /*
-   * Contador utilizado no toast.
-   *
-   * Representa somente as atividades registradas
-   * no dia atual.
-   */
   const [todayCount, setTodayCount] = useState(0)
 
   const lastActivityId = useRef<string | null>(null)
@@ -39,33 +33,33 @@ export function SocialProofToast() {
   const hideTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
   const removeTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
-  function clearTimers() {
-    if (hideTimer.current) {
-      clearTimeout(hideTimer.current)
-    }
-
-    if (removeTimer.current) {
-      clearTimeout(removeTimer.current)
-    }
-  }
-
-  function showToast(newMessage: string) {
-    clearTimers()
-
-    setMessage(newMessage)
-    setVisible(true)
-
-    hideTimer.current = setTimeout(() => {
-      setVisible(false)
-
-      removeTimer.current = setTimeout(() => {
-        setMessage(null)
-      }, 400)
-    }, 8000)
-  }
-
   useEffect(() => {
     let mounted = true
+
+    function clearTimers() {
+      if (hideTimer.current) {
+        clearTimeout(hideTimer.current)
+      }
+
+      if (removeTimer.current) {
+        clearTimeout(removeTimer.current)
+      }
+    }
+
+    function showToast(newMessage: string) {
+      clearTimers()
+
+      setMessage(newMessage)
+      setVisible(true)
+
+      hideTimer.current = setTimeout(() => {
+        setVisible(false)
+
+        removeTimer.current = setTimeout(() => {
+          setMessage(null)
+        }, 400)
+      }, 8000)
+    }
 
     async function loadActivity(showNewActivity = true) {
       try {
@@ -80,21 +74,10 @@ export function SocialProofToast() {
 
         const data = (await response.json()) as ActivityResponse
 
-        /*
-         * O toast utiliza somente o contador
-         * referente ao dia atual.
-         */
         if (Number.isFinite(data.todayCount)) {
           setTodayCount(data.todayCount)
         }
 
-        /*
-         * A primeira consulta serve apenas para estabelecer
-         * o estado inicial da página.
-         *
-         * Mesmo que não exista nenhuma atividade, marcamos
-         * o componente como inicializado.
-         */
         if (!initialized.current) {
           initialized.current = true
           lastActivityId.current =
@@ -103,17 +86,10 @@ export function SocialProofToast() {
           return
         }
 
-        /*
-         * Ainda não existe nenhuma atividade registrada.
-         */
         if (!data.latestActivity) {
           return
         }
 
-        /*
-         * Se encontramos uma atividade diferente da última
-         * conhecida por este visitante, mostramos o toast.
-         */
         if (
           showNewActivity &&
           data.latestActivity.id !== lastActivityId.current
@@ -155,22 +131,11 @@ export function SocialProofToast() {
         const data =
           (await response.json()) as ActivityResponse
 
-        /*
-         * Atualiza imediatamente o contador
-         * de atividades realizadas hoje.
-         */
         if (Number.isFinite(data.todayCount)) {
           setTodayCount(data.todayCount)
         }
 
         if (data.latestActivity) {
-          /*
-           * Guardamos imediatamente o ID da atividade criada
-           * por este visitante.
-           *
-           * Assim o polling não mostra novamente para ele
-           * a mesma notificação.
-           */
           lastActivityId.current =
             data.latestActivity.id
         }
@@ -190,37 +155,15 @@ export function SocialProofToast() {
         return
       }
 
-      /*
-       * Quem realizou a ação vê a notificação imediatamente.
-       */
       showToast(customEvent.detail.message)
 
-      /*
-       * Também registramos a atividade no Redis para que
-       * os outros visitantes possam recebê-la.
-       *
-       * A API incrementa:
-       *
-       * - contador histórico/global
-       * - contador do dia atual
-       */
       void registerActivity(
         customEvent.detail.message
       )
     }
 
-    /*
-     * Primeira consulta.
-     *
-     * Carrega o contador de hoje e estabelece qual é
-     * a atividade atual sem mostrar uma notificação antiga.
-     */
     void loadActivity(false)
 
-    /*
-     * Consulta periodicamente o servidor para verificar
-     * se outro visitante gerou uma nova atividade.
-     */
     const interval = window.setInterval(() => {
       void loadActivity(true)
     }, POLLING_INTERVAL)

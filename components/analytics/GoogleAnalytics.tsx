@@ -14,8 +14,8 @@ export function GoogleAnalytics() {
         antes da inicialização da medição.
       */}
       <Script
-        id="google-consent-mode"
-        strategy="beforeInteractive"
+  id="google-consent-mode"
+  strategy="afterInteractive"
         dangerouslySetInnerHTML={{
           __html: `
             window.dataLayer = window.dataLayer || [];

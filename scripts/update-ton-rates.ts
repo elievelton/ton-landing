@@ -299,19 +299,7 @@ function mapSettlement(
   return null;
 }
 
-function mapBrand(
-  brand: string,
-): CardBrandGroup | null {
-  if (brand === "visa" || brand === "mastercard") {
-    return "visa-master";
-  }
 
-  if (brand === "elo" || brand === "amex") {
-    return "elo-amex";
-  }
-
-  return null;
-}
 
 function getRatesFromMdrs(
   mdrs: TonMdr[],
@@ -814,20 +802,6 @@ function rateKey(config: TonRateConfig): RateKey {
     config.brand,
     config.settlement,
   ].join("|");
-}
-
-function normalizeConfig(config: TonRateConfig) {
-  return {
-    plan: config.plan,
-    salesTier: config.salesTier,
-    brand: config.brand,
-    settlement: config.settlement,
-    rates: {
-      debit: config.rates.debit,
-      credit: config.rates.credit,
-      installments: [...config.rates.installments],
-    },
-  };
 }
 
 function parseExistingRateConfigs(
