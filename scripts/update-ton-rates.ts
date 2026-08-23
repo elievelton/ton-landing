@@ -3,7 +3,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 
 const TON_URL =
-  "https://www.ton.com.br/planos-e-taxas?coupon=ELIEVELTOSILVAVC&userAnticipation=0&utm_medium=invite_share&utm_source=revendedor";
+  "https://www.ton.com.br/esta-pagina-nao-existe";
 
 const RATES_FILE = path.resolve("data/ton-rates.ts");
 const META_FILE = path.resolve("data/ton-rates-meta.ts");
