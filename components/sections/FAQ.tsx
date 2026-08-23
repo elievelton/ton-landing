@@ -3,6 +3,7 @@
 import { useState } from "react"
 import Image from "next/image"
 import {
+  ArrowRight,
   BadgeCheck,
   BadgePercent,
   ChevronDown,
@@ -13,11 +14,14 @@ import { Container } from "@/components/shared/Container"
 import { FadeIn } from "@/components/shared/FadeIn"
 import { siteConfig } from "@/config/site"
 import { CouponCopy } from "@/components/shared/CouponCopy"
+import { TrackedLink } from "@/components/shared/TrackedLink"
 
 const faqs = [
   {
     question: "É seguro comprar nesse site?",
-    answer: "Sim, é 100% seguro. Este site é um canal parceiro de indicação e divulgação de ofertas da Ton. Disponibilizamos cupons de desconto exclusivos para ajudar você a economizar na compra da sua maquininha.\nFunciona assim: nós apenas disponibilizamos o cupom e direcionamos você para a oferta. Nada relacionado a pagamentos acontece neste site, e nós não solicitamos nem armazenamos seus dados financeiros.\nAo clicar em qualquer botão de desconto deste site, você será redirecionado para o site oficial da Ton. O desconto normalmente é aplicado automaticamente ao acessar a compra pelos nossos links. Antes de finalizar, confira o resumo do pedido para confirmar o desconto. Caso ele não apareça, você poderá inserir o cupom manualmente.\nA compra, o pagamento, a emissão da nota fiscal, a entrega, a garantia de fábrica e o atendimento são realizados diretamente pela Ton (Grupo Stone), dentro do ambiente oficial da empresa.\nVocê encontra seu cupom de desconto aqui, mas conclui sua compra diretamente no site oficial da Ton, com toda a segurança do ambiente oficial da empresa!",  },
+    answer:
+      "Sim, é 100% seguro. Este site é um canal parceiro de indicação e divulgação de ofertas da Ton. Disponibilizamos cupons de desconto exclusivos para ajudar você a economizar na compra da sua maquininha.\nFunciona assim: nós apenas disponibilizamos o cupom e direcionamos você para a oferta. Nada relacionado a pagamentos acontece neste site, e nós não solicitamos nem armazenamos seus dados financeiros.\nAo clicar em qualquer botão de desconto deste site, você será redirecionado para o site oficial da Ton. O desconto normalmente é aplicado automaticamente ao acessar a compra pelos nossos links. Antes de finalizar, confira o resumo do pedido para confirmar o desconto. Caso ele não apareça, você poderá inserir o cupom manualmente.\nA compra, o pagamento, a emissão da nota fiscal, a entrega, a garantia de fábrica e o atendimento são realizados diretamente pela Ton (Grupo Stone), dentro do ambiente oficial da empresa.\nVocê encontra seu cupom de desconto aqui, mas conclui sua compra diretamente no site oficial da Ton, com toda a segurança do ambiente oficial da empresa!",
+  },
   {
     question: "Preciso ter CNPJ para comprar uma maquininha Ton?",
     answer:
@@ -26,12 +30,13 @@ const faqs = [
   {
     question: "Estou com nome sujo posso comprar uma maquininha?",
     answer:
-      "Sim, a empresa Ton não faz consulta para saber o estado do seu nome, pode comprar com tranquilidade "
-    },
-    {
+      "Sim, a empresa Ton não faz consulta para saber o estado do seu nome, pode comprar com tranquilidade ",
+  },
+  {
     question: "Preciso ter conta para comprar uma maquininha?",
-    answer:"Não. Ao adquirir uma maquininha Ton, você recebe automaticamente uma conta digital no aplicativo Ton. Suas vendas caem diretamente nela, sem a necessidade de vincular outro banco. Pelo app, você pode transferir dinheiro, investir e aproveitar todo o ecossistema completo da Ton."
-    },
+    answer:
+      "Não. Ao adquirir uma maquininha Ton, você recebe automaticamente uma conta digital no aplicativo Ton. Suas vendas caem diretamente nela, sem a necessidade de vincular outro banco. Pelo app, você pode transferir dinheiro, investir e aproveitar todo o ecossistema completo da Ton.",
+  },
   {
     question: "As maquininhas Ton têm mensalidade?",
     answer:
@@ -177,7 +182,7 @@ export function FAQ() {
                         {faq.type === "coupon" ? (
                           <CouponTutorial />
                         ) : (
-                          <p className="text-sm leading-7 text-muted sm:text-base">
+                          <p className="whitespace-pre-line text-sm leading-7 text-muted sm:text-base">
                             {faq.answer}
                           </p>
                         )}
@@ -190,7 +195,7 @@ export function FAQ() {
           </div>
         </FadeIn>
 
-        {/* Destaque do cupom */}
+        {/* CTA final do catálogo */}
         <FadeIn delay={0.2}>
           <div className="mx-auto mt-8 flex max-w-3xl flex-col items-center justify-between gap-4 rounded-2xl border border-orange-500/20 bg-orange-500/5 p-5 text-center sm:flex-row sm:text-left">
             <div className="flex items-center gap-4">
@@ -204,21 +209,29 @@ export function FAQ() {
                 </p>
 
                 <p className="mt-1 text-sm text-muted">
-                  Utilize meu cupom nas condições aplicáveis.
+                  Veja as maquininhas disponíveis e aproveite meu cupom de 20% OFF.
                 </p>
               </div>
             </div>
 
-            <div className="flex flex-col items-center gap-2 sm:items-end">
-  <span className="text-xs font-semibold text-muted">
-    Clique para copiar
-  </span>
+            <TrackedLink
+              href={siteConfig.links.catalog}
+              target="_blank"
+              rel="noopener noreferrer"
+              celebration
+              tracking={{
+                event: "cta_click",
+                location: "faq_coupon",
+                destination: "catalog",
+                label: "Ver maquininhas com 20% de desconto",
+                conversionStrength: "medium",
+              }}
+              className="group inline-flex w-full items-center justify-center gap-2 rounded-xl bg-orange-500 px-5 py-3 text-sm font-extrabold text-white shadow-lg shadow-orange-500/20 transition-all duration-300 hover:-translate-y-0.5 hover:bg-orange-600 hover:shadow-xl hover:shadow-orange-500/30 sm:w-auto"
+            >
+              20% OFF Aqui
 
-  <CouponCopy
-  variant="orange"
-  location="faq_coupon"
-/>
-</div>
+              <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" />
+            </TrackedLink>
           </div>
         </FadeIn>
       </Container>
@@ -303,24 +316,24 @@ function CouponTutorial() {
         </div>
 
         {/* Cupom */}
-<div className="mt-4 rounded-2xl border border-orange-500/30 bg-orange-500/5 p-4">
-  <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
-    <div>
-      <p className="text-xs font-semibold uppercase tracking-wider text-muted">
-        Não apareceu? Copie meu cupom
-      </p>
+        <div className="mt-4 rounded-2xl border border-orange-500/30 bg-orange-500/5 p-4">
+          <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-wider text-muted">
+                Não apareceu? Copie meu cupom
+              </p>
 
-      <p className="mt-1 text-sm text-muted">
-        Clique no cupom e depois cole no checkout.
-      </p>
-    </div>
+              <p className="mt-1 text-sm text-muted">
+                Clique no cupom e depois cole no checkout.
+              </p>
+            </div>
 
-    <CouponCopy
-  variant="orange"
-  location="faq_activation"
-/>
-  </div>
-</div>
+            <CouponCopy
+              variant="orange"
+              location="faq_activation"
+            />
+          </div>
+        </div>
 
         {/* Print 2 */}
         <div className="mt-4 overflow-hidden rounded-2xl border border-border bg-zinc-50 p-2 shadow-sm">
