@@ -1,0 +1,65 @@
+name: Atualizar taxas Ton
+
+on:
+  workflow_dispatch:
+  schedule:
+    # 08:00 no horário de Brasília (UTC-3)
+    - cron: "0 11 * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-ton-rates
+  cancel-in-progress: false
+
+jobs:
+  update-rates:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixar código
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Instalar Chromium do Playwright
+        run: npx playwright install --with-deps chromium
+
+      - name: Atualizar taxas da Ton
+        id: update
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: npx tsx scripts/update-ton-rates.ts
+
+      - name: Verificar alterações nas taxas
+        id: changes
+        run: |
+          if git diff --quiet -- data/ton-rates.ts; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "✅ Nenhuma alteração nas taxas."
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "🔄 As taxas foram alteradas."
+          fi
+
+      - name: Commit e push das novas taxas
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add data/ton-rates.ts data/ton-rates-meta.ts
+
+          git commit -m "chore: atualizar taxas Ton"
+          git push
