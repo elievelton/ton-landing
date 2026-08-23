@@ -986,6 +986,19 @@ export default function TaxCalculator() {
                 >
                   {currentSettlementLabel}
                 </span>
+                <span
+                  className="
+                    rounded-full
+                    bg-white
+                    px-3 py-1
+                    text-[11px]
+                    font-semibold
+                    text-muted
+                    ring-1 ring-border
+                  "
+                >
+                  {currentPaymentLabel}
+                </span>
               </div>
             </div>
 
@@ -1615,6 +1628,19 @@ export default function TaxCalculator() {
                       "
                     >
                       {currentSettlementLabel}
+                    </span>
+                    <span
+                      className="
+                        rounded-full
+                        bg-white
+                        px-3 py-1
+                        text-[11px]
+                        font-semibold
+                        text-muted
+                        ring-1 ring-border
+                      "
+                    >
+                      {currentPaymentLabel}
                     </span>
                   </div>
                 </div>
