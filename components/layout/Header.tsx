@@ -22,9 +22,9 @@ import {
 
 const navigation = [
   { label: "Máquinas", href: "#maquinas" },
-  { label: "Planos e Taxas", href: "#planos" },
+  { label: "Planos", href: "#planos" },
   {
-    label: "Calculadora",
+    label: "Calculadora de Taxas",
     href: "#calculadora",
     highlight: true,
   },
