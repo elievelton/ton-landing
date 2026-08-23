@@ -1,11 +1,17 @@
-import { ArrowRight, Check, Flame, Sparkles } from "lucide-react"
+import {
+  ArrowRight,
+  Check,
+  Flame,
+  Sparkles,
+  Calculator,
+} from "lucide-react";
 
-import { Container } from "@/components/shared/Container"
-import { FadeIn } from "@/components/shared/FadeIn"
-import { TrackedLink } from "@/components/shared/TrackedLink"
-import { Button } from "@/components/ui/button"
-import { plans } from "@/config/plans"
-import { siteConfig } from "@/config/site"
+import { Container } from "@/components/shared/Container";
+import { FadeIn } from "@/components/shared/FadeIn";
+import { TrackedLink } from "@/components/shared/TrackedLink";
+import { Button } from "@/components/ui/button";
+import { plans } from "@/config/plans";
+import { siteConfig } from "@/config/site";
 
 export function Plans() {
   return (
@@ -111,6 +117,20 @@ export function Plans() {
                   <h3 className="mt-1 text-4xl font-bold tracking-tight text-foreground">
                     {plan.shortName}
                   </h3>
+
+                  {plan.id === "ton-black" && (
+                    <div className="mt-3">
+                      <span
+                        className="inline-flex items-center rounded-full bg-orange-500/10 px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.08em] text-orange-600"
+                      >
+                        Exclusivo para MEI / PJ
+                      </span>
+
+                      <p className="mt-2 text-xs font-semibold text-muted">
+                        Disponível para empresas e MEIs.
+                      </p>
+                    </div>
+                  )}
 
                   <p className="mt-4 min-h-[72px] text-sm leading-6 text-muted sm:text-base">
                     {plan.description}
@@ -271,32 +291,92 @@ export function Plans() {
                       <ArrowRight className="size-4" />
                     </Button>
                   </TrackedLink>
-
-                  {/* Detalhamento das taxas */}
-                  <TrackedLink
-                    href={siteConfig.links.plansAndRates}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-3 flex h-11 w-full items-center justify-center gap-2 rounded-xl border border-primary/20 bg-primary/5 px-4 text-sm font-semibold text-primary transition-all duration-300 hover:border-primary/30 hover:bg-primary/10"
-                    tracking={{
-                      event: "rates_click",
-                      location: "plans",
-                      destination: "plans_and_rates",
-                      label: "Ver todas as taxas e condições",
-                      product: plan.id,
-                      conversionStrength: "weak",
-                    }}
-                  >
-                    Ver todas as taxas e condições
-
-                    <ArrowRight className="size-4" />
-                  </TrackedLink>
                 </div>
               </article>
             </FadeIn>
           ))}
         </div>
+
+        {/* ==========================================================
+            CHAMADA PARA A CALCULADORA
+           ========================================================== */}
+
+        <FadeIn delay={0.2}>
+          <div
+            className="
+              mx-auto mt-10 max-w-4xl
+              rounded-[2rem]
+              border border-primary/15
+              bg-white
+              p-6
+              shadow-sm
+              sm:mt-12 sm:p-8
+            "
+          >
+            <div className="flex flex-col items-center gap-5 text-center sm:flex-row sm:text-left">
+              <div
+                className="
+                  flex size-12 shrink-0
+                  items-center justify-center
+                  rounded-2xl
+                  bg-primary/10
+                  text-primary
+                "
+              >
+                <Calculator className="size-6" />
+              </div>
+
+              <div className="min-w-0 flex-1">
+                <h3 className="text-lg font-bold text-foreground sm:text-xl">
+                  Quer saber quanto realmente sobra para você?
+                </h3>
+
+                <p className="mt-1 text-sm leading-6 text-muted">
+                  Simule uma venda, compare Pix, débito e parcelamento
+                  e descubra quanto realmente entra na sua conta.
+                </p>
+              </div>
+
+              <a
+                href="#calculadora"
+                className="
+                  group
+                  inline-flex
+                  h-11
+                  shrink-0
+                  items-center
+                  justify-center
+                  gap-2
+                  rounded-xl
+                  border border-primary/20
+                  bg-primary/5
+                  px-5
+                  text-sm
+                  font-bold
+                  text-primary
+                  transition-all
+                  duration-300
+                  hover:-translate-y-0.5
+                  hover:border-primary/30
+                  hover:bg-primary/10
+                  hover:shadow-sm
+                "
+              >
+                Simular minhas taxas
+
+                <ArrowRight
+                  className="
+                    size-4
+                    transition-transform
+                    duration-300
+                    group-hover:translate-x-1
+                  "
+                />
+              </a>
+            </div>
+          </div>
+        </FadeIn>
       </Container>
     </section>
-  )
+  );
 }

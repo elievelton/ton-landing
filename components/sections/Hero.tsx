@@ -37,10 +37,11 @@ export function Hero() {
               {/* Badge principal */}
               <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-2 text-sm font-semibold text-primary">
                 <BadgeCheck className="size-4 shrink-0" />
+
                 <span>🔥 +20% OFF com meu cupom exclusivo</span>
               </div>
 
-              {/* Título com correção de quebra de texto (hyphens e break-words) */}
+              {/* Título */}
               <h1 className="max-w-3xl break-words text-3xl font-extrabold tracking-tight text-foreground sm:text-5xl lg:text-6xl xl:text-6xl hyphens-auto">
                 Maquininha Ton com{" "}
                 <span className="gradient-text inline-block">
@@ -49,7 +50,7 @@ export function Hero() {
                 sobre o preço promocional
               </h1>
 
-              {/* Destaque comercial de facilidade */}
+              {/* Destaque comercial */}
               <p className="mt-5 max-w-2xl text-base font-medium leading-relaxed sm:text-lg lg:text-xl">
                 <strong className="font-bold text-orange-500">
                   Não pague mais caro pela sua Ton:
@@ -65,15 +66,17 @@ export function Hero() {
 
               {/* Explicação de apoio */}
               <p className="mt-4 max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base">
-                Escolha a maquininha ideal para o seu negócio e veja os{" "}
+                Compare os modelos,{" "}
                 <strong className="font-semibold text-foreground">
-                  preços finais com o desconto
+                  simule suas taxas
                 </strong>{" "}
-                de forma segura diretamente no catálogo oficial da Ton usando o botão verde abaixo.
+                e descubra quanto realmente entra na sua conta antes de
+                escolher sua maquininha.
               </p>
 
-              {/* Botoes de Ação (CTAs) */}
+              {/* Botões de Ação (CTAs) */}
               <div className="mt-8 flex flex-col gap-3.5 sm:flex-row">
+                {/* CTA principal */}
                 <TrackedLink
                   href={siteConfig.links.catalog}
                   target="_blank"
@@ -92,33 +95,56 @@ export function Hero() {
                     className="h-13 w-full gap-2 px-6 text-base font-bold shadow-lg shadow-primary/20 hover:shadow-primary/30 sm:w-auto"
                   >
                     Ativar +20% OFF e ver modelos
+
                     <ArrowRight className="size-5" />
                   </Button>
                 </TrackedLink>
 
+                {/* CTA calculadora */}
                 <TrackedLink
-  href="#maquinas"
-  tracking={{
-    event: "compare_models_click",
-    location: "hero",
-    destination: "machines",
-    label: "Comparar modelos",
-    conversionStrength: "weak",
-  }}
->
-  <Button
-    variant="outline"
-    size="lg"
-    className="h-12 w-full px-6 text-base sm:w-auto"
-  >
-    Comparar modelos
-  </Button>
-</TrackedLink>
+                  href="#calculadora"
+                  tracking={{
+                    event: "calculator_click",
+                    location: "hero",
+                    destination: "tax_calculator",
+                    label: "Simular quanto vou receber",
+                    conversionStrength: "weak",
+                  }}
+                  className="w-full sm:w-auto"
+                >
+                  <Button
+                    variant="outline"
+                    size="lg"
+                    className="
+                      h-12
+                      w-full
+                      gap-2
+                      border-primary/20
+                      bg-white
+                      px-6
+                      text-base
+                      font-bold
+                      text-foreground
+                      transition-all
+                      duration-300
+                      hover:-translate-y-0.5
+                      hover:border-primary/40
+                      hover:bg-primary/5
+                      hover:text-primary
+                      sm:w-auto
+                    "
+                  >
+                    Simular quanto vou receber
+
+                    <CreditCard className="size-4" />
+                  </Button>
+                </TrackedLink>
               </div>
 
               {/* Aviso de segurança e garantia */}
               <div className="mt-4 flex items-start gap-2 text-xs leading-5 text-muted-foreground">
                 <ShieldCheck className="mt-0.5 size-4 shrink-0 text-primary" />
+
                 <span>
                   Ambiente seguro. Você será redirecionado para o site oficial
                   da{" "}
@@ -134,16 +160,19 @@ export function Hero() {
               <div className="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-xs font-medium text-muted-foreground sm:text-sm">
                 <div className="flex items-center gap-2">
                   <ShieldCheck className="size-4 text-primary" />
+
                   Compra 100% Segura
                 </div>
 
                 <div className="flex items-center gap-2">
                   <CreditCard className="size-4 text-primary" />
+
                   Diversos Modelos
                 </div>
 
                 <div className="flex items-center gap-2">
                   <BadgeCheck className="size-4 text-primary" />
+
                   +20% OFF Automático
                 </div>
               </div>
@@ -161,7 +190,6 @@ export function Hero() {
 
               {/* Card T3 Smart */}
               <div className="group relative w-full max-w-sm overflow-hidden rounded-[2.2rem] border border-orange-500/40 bg-white/90 p-5 shadow-[0_20px_60px_rgba(34,197,94,0.12)] backdrop-blur-xl transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_25px_70px_rgba(34,197,94,0.20)] sm:p-6">
-                
                 {/* Glows internos */}
                 <div
                   className="pointer-events-none absolute -right-20 -top-20 size-48 rounded-full bg-primary/15 blur-3xl transition-all duration-700 group-hover:bg-primary/25"
@@ -176,6 +204,7 @@ export function Hero() {
 
                   <div className="relative">
                     <span className="absolute inset-0 animate-ping rounded-full bg-primary/20" />
+
                     <span className="relative inline-flex rounded-full border border-primary/20 bg-primary/10 px-3 py-1.5 text-[11px] font-extrabold text-primary">
                       Até 77% OFF
                     </span>
@@ -209,16 +238,26 @@ export function Hero() {
                     T3 Smart com +20% OFF usando meu cupom
                   </h2>
 
-                  {/* Ancoragem Visual de Preço (Novo elemento para aumentar conversão) */}
-                  <div className="my-2.5 rounded-xl bg-primary/5 py-2 px-3 border border-primary/15">
-                    <span className="text-xs text-muted-foreground line-through block">De R$ 671,43</span>
+                  {/* Ancoragem Visual de Preço */}
+                  <div className="my-2.5 rounded-xl border border-primary/15 bg-primary/5 px-3 py-2">
+                    <span className="block text-xs text-muted-foreground line-through">
+                      De R$ 671,43
+                    </span>
+
                     <span className="text-sm font-extrabold text-foreground">
-                      Por apenas <span className="text-primary text-base">R$ 153,50</span>
+                      Por apenas{" "}
+                      <span className="text-base text-primary">
+                        R$ 153,50
+                      </span>
                     </span>
                   </div>
 
                   <p className="mx-auto text-xs leading-relaxed text-muted-foreground">
-                    Desconto promocional da Ton + <strong className="text-primary font-bold">20% extra</strong> aplicado no valor promocional final.
+                    Desconto promocional da Ton +{" "}
+                    <strong className="font-bold text-primary">
+                      20% extra
+                    </strong>{" "}
+                    aplicado no valor promocional final.
                   </p>
 
                   {/* Contador de Oferta */}
@@ -255,6 +294,7 @@ export function Hero() {
                       className="h-12 w-full gap-2 text-sm font-bold shadow-lg shadow-primary/20 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-primary/30"
                     >
                       Adicionar ao carrinho com +20% OFF
+
                       <ArrowRight className="size-4" />
                     </Button>
                   </TrackedLink>

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import Link from "next/link"
-import { Flame, Menu } from "lucide-react"
+import { Calculator, Flame, Menu } from "lucide-react"
 
 import { Container } from "@/components/shared/Container"
 import { TrackedLink } from "@/components/shared/TrackedLink"
@@ -23,7 +23,11 @@ import {
 const navigation = [
   { label: "Máquinas", href: "#maquinas" },
   { label: "Planos e Taxas", href: "#planos" },
-  { label: "TapTon", href: "#tapton" },
+  {
+    label: "Calculadora",
+    href: "#calculadora",
+    highlight: true,
+  },
   { label: "Como ganhar 20% OFF", href: "#consultor" },
   { label: "Sobre mim", href: "#quem-somos" },
   { label: "FAQ", href: "#duvidas" },
@@ -31,13 +35,14 @@ const navigation = [
 
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false)
-  const [promotionVisible, setPromotionVisible] = useState(false)
+  const [promotionVisible, setPromotionVisible] =
+    useState(false)
 
   useEffect(() => {
     function updatePromotionVisibility() {
       setPromotionVisible(
         activePromotion.enabled &&
-          Date.now() < PROMOTION_END
+          Date.now() < PROMOTION_END,
       )
     }
 
@@ -45,7 +50,7 @@ export function Header() {
 
     const interval = window.setInterval(
       updatePromotionVisibility,
-      1000
+      1000,
     )
 
     return () => {
@@ -93,15 +98,48 @@ export function Header() {
             className="hidden items-center gap-5 lg:flex"
             aria-label="Navegação principal"
           >
-            {navigation.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="whitespace-nowrap text-sm font-medium text-foreground/70 transition-colors hover:text-primary"
-              >
-                {item.label}
-              </Link>
-            ))}
+            {navigation.map((item) => {
+              const isCalculator = item.highlight
+
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={[
+                    "group relative inline-flex items-center gap-1.5 whitespace-nowrap text-sm font-medium transition-all duration-200",
+
+                    isCalculator
+                      ? "font-bold text-primary"
+                      : "text-foreground/70 hover:text-primary",
+                  ].join(" ")}
+                >
+                  {isCalculator && (
+                    <Calculator className="size-3.5 transition-transform duration-200 group-hover:scale-110" />
+                  )}
+
+                  {item.label}
+
+                  {isCalculator && (
+                    <span
+                      className="
+                        absolute
+                        -bottom-1
+                        left-0
+                        h-0.5
+                        w-full
+                        origin-left
+                        scale-x-0
+                        rounded-full
+                        bg-primary
+                        transition-transform
+                        duration-300
+                        group-hover:scale-x-100
+                      "
+                    />
+                  )}
+                </Link>
+              )
+            })}
 
             {/* Promoção */}
             {promotionVisible && (
@@ -208,34 +246,52 @@ export function Header() {
                   className="flex flex-col px-4 py-5"
                   aria-label="Navegação mobile"
                 >
-                  {navigation.map((item) => (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      onClick={() => setMenuOpen(false)}
-                      className="flex min-h-14 items-center justify-end border-b border-white/10 px-3 text-right text-base font-bold text-white transition-all duration-200 last:border-b-0 hover:bg-white/10 hover:text-black active:bg-white/15 active:text-black"
-                    >
-                      {item.label}
-                    </Link>
-                  ))}
+                  {navigation.map((item) => {
+                    const isCalculator = item.highlight
+
+                    return (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        onClick={() =>
+                          setMenuOpen(false)
+                        }
+                        className={[
+                          "flex min-h-14 items-center justify-end gap-2 border-b border-white/10 px-3 text-right text-base transition-all duration-200 last:border-b-0 active:bg-white/15 active:text-black",
+
+                          isCalculator
+                            ? "font-extrabold text-white hover:bg-white/10 hover:text-white"
+                            : "font-bold text-white hover:bg-white/10 hover:text-black",
+                        ].join(" ")}
+                      >
+                        {isCalculator && (
+                          <Calculator className="size-4 text-orange-300" />
+                        )}
+
+                        {item.label}
+                      </Link>
+                    )
+                  })}
 
                   {/* Promoção mobile */}
-{promotionVisible && (
-  <Link
-    href="#promocao"
-    onClick={() => setMenuOpen(false)}
-    className="flex min-h-14 items-center justify-end gap-2 border-b border-white/10 bg-white/5 px-3 text-right text-base font-extrabold text-white transition-all duration-200 hover:bg-white/10 hover:text-black active:bg-white/15 active:text-black"
-  >
-    <span className="rounded-full bg-orange-500 px-2 py-1 text-[9px] font-black uppercase tracking-wide text-white">
-      desse mês
-    </span>
+                  {promotionVisible && (
+                    <Link
+                      href="#promocao"
+                      onClick={() =>
+                        setMenuOpen(false)
+                      }
+                      className="flex min-h-14 items-center justify-end gap-2 border-b border-white/10 bg-white/5 px-3 text-right text-base font-extrabold text-white transition-all duration-200 hover:bg-white/10 hover:text-black active:bg-white/15 active:text-black"
+                    >
+                      <span className="rounded-full bg-orange-500 px-2 py-1 text-[9px] font-black uppercase tracking-wide text-white">
+                        desse mês
+                      </span>
 
-    <span className="flex items-center gap-1.5">
-      <Flame className="size-4 fill-current text-orange-300" />
-      Oferta
-    </span>
-  </Link>
-)}
+                      <span className="flex items-center gap-1.5">
+                        <Flame className="size-4 fill-current text-orange-300" />
+                        Oferta
+                      </span>
+                    </Link>
+                  )}
 
                   {/* CTA mobile */}
                   <div className="mt-6">
@@ -244,7 +300,9 @@ export function Header() {
                       target="_blank"
                       rel="noopener noreferrer"
                       celebration
-                      onClick={() => setMenuOpen(false)}
+                      onClick={() =>
+                        setMenuOpen(false)
+                      }
                       tracking={{
                         event: "cta_click",
                         location: "header_mobile",

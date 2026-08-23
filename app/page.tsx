@@ -9,6 +9,7 @@ import { About } from "@/components/sections/About"
 import { FAQ } from "@/components/sections/FAQ"
 import { FinalCTA } from "@/components/sections/FinalCTA"
 import { PromotionBanner } from "@/components/sections/PromotionBanner"
+import TaxCalculator from "@/components/sections/tax-calculator"
 
 export default function Home() {
   return (
@@ -19,6 +20,7 @@ export default function Home() {
       <Machines />
       <AcceptedBrands />
       <Plans />
+      <TaxCalculator />
       <TapTon />
       <Consultant />
       <About />
