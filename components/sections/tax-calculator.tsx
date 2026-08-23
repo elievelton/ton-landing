@@ -1629,7 +1629,7 @@ export default function TaxCalculator() {
 
                     <p className="mt-1 text-xs leading-5 text-muted">
                       Compare quanto entraria na conta
-                      usando o mesmo valor da venda.
+                      usando o mesmo valor em outros parcelamentos.
                     </p>
                   </div>
 
