@@ -134,7 +134,7 @@ export function Hero() {
                       sm:w-auto
                     "
                   >
-                    Simular quanto vou receber
+                    Simular Taxas da Ton
 
                     <CreditCard className="size-4" />
                   </Button>

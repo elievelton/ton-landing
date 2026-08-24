@@ -859,34 +859,27 @@ export default function TaxCalculator() {
               "
             >
               <div className="flex items-end justify-between gap-4">
+                
                 <div className="min-w-0">
+                    
                   <div className="flex flex-wrap items-center gap-2">
                     <p className="text-sm font-bold text-muted">
-                      Você recebe
+    Em uma venda de{" "}
+    <strong className="text-foreground">
+      {formatCurrency(
+        numericSaleValue,
+      )}
+    </strong>
+  </p>
+                    
+                    <p className="text-sm font-bold text-muted">
+                      Você recebe:
                     </p>
 
-                    <span
-                      className="
-                        rounded-full
-                        bg-foreground
-                        px-2.5 py-1
-                        text-[10px]
-                        font-bold
-                        text-white
-                      "
-                    >
-                      {currentPaymentLabel}
-                    </span>
+                    
                   </div>
 
-                  <p className="mt-1 text-xs text-muted">
-                    Em uma venda de{" "}
-                    <strong className="text-foreground">
-                      {formatCurrency(
-                        numericSaleValue,
-                      )}
-                    </strong>
-                  </p>
+                  
                 </div>
 
                 <div
@@ -1519,18 +1512,19 @@ export default function TaxCalculator() {
                   <div className="flex items-start justify-between gap-5">
                     <div>
 <div>
-  <p className="text-sm font-bold text-muted">
-    Você recebe
-  </p>
-
-  <p className="mt-1 text-xs text-muted">
-    Em uma venda de{" "}
+    <p className="text-sm font-bold text-muted">
+    Em uma venda de{" "}  
     <strong className="text-foreground">
       {formatCurrency(
         numericSaleValue,
       )}
     </strong>
+     {" "} você recebe:
   </p>
+    
+  
+
+  
 </div>
                     </div>
 
