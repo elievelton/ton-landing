@@ -60,7 +60,7 @@ const faqs = [
   {
     question: "A garantia das maquininhas é vitalícia?",
     answer:
-      "A Ton oferece garantia vitalícia para as maquininhas elegíveis, conforme as regras e condições da empresa. Isso significa mais tranquilidade para quem pretende utilizar a máquina por bastante tempo.",
+      "A Ton oferece garantia vitalícia para as maquininhas elegíveis, conforme as regras e condições da empresa. Isso significa mais tranquilidade para quem pretende utilizar a máquina por bastante tempo. Resumindo, quebrou a Ton troca por outra nova, pois o que matém o sucesso da Ton é o seu sucesso!",
   },
   {
     question: "O frete é grátis?",
