@@ -116,7 +116,7 @@ export function PromotionBanner() {
               <div className="inline-flex animate-pulse items-center gap-2 rounded-full border border-orange-400/30 bg-orange-400/10 px-4 py-2 text-[11px] font-extrabold uppercase tracking-wider text-orange-300">
                 <Flame className="size-3.5 fill-orange-400 text-orange-400" />
 
-                Benefício extra
+                Promoção do Mês
               </div>
 
               {/* Reforço dos descontos */}

@@ -18,7 +18,7 @@ import { siteConfig } from "@/config/site"
 
 export function Hero() {
   return (
-    <section className="relative overflow-hidden bg-background">
+    <section id="hero" className="relative overflow-hidden bg-background">
       {/* Elementos decorativos de fundo */}
       <div
         className="pointer-events-none absolute -left-32 top-20 size-80 rounded-full bg-primary/10 blur-3xl"

@@ -10,10 +10,12 @@ import { FAQ } from "@/components/sections/FAQ"
 import { FinalCTA } from "@/components/sections/FinalCTA"
 import { PromotionBanner } from "@/components/sections/PromotionBanner"
 import TaxCalculator from "@/components/sections/tax-calculator"
+import { IntentRouter } from "@/components/sections/IntentRouter"
 
 export default function Home() {
   return (
     <>
+    <IntentRouter />
       <Hero />
       <PromotionBanner />
       <Benefits />

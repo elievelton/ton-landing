@@ -83,6 +83,14 @@ const faqs = [
       "Vai depender do plano que você escolher no ato da compra, mas em regra você recebe seus pagamento com 1 dia útil, mesmo que você parcele em 12x o dinheiro cai em sua conta em 1 dia útil",
   },
   {
+    question:
+      "Já tenho uma máquina de cartão de outra empresa. Vale a pena comprar outra da Ton?",
+    id: "faq-segunda-maquininha",
+    answer:
+      "Pode valer muito a pena, principalmente se a sua máquina atual é importante para o funcionamento do seu negócio. Pense no seguinte cenário: você precisa fazer suas vendas, mas a empresa da sua máquina fica temporariamente indisponível. Se esse problema durar duas ou três horas, quantas vendas você pode deixar de realizar?\n\nTer uma segunda maquininha, de outra empresa, funciona como uma forma de redundância: se uma solução apresentar instabilidade, você ainda pode ter outra opção para continuar recebendo pagamentos. Quanto menos você depender de uma única empresa, menor fica o risco de uma indisponibilidade interromper completamente as suas vendas.\n\nIsso pode ser especialmente interessante para negócios que precisam vender por muitas horas do dia ou que funcionam em horários de menor movimento. Manutenções e atualizações podem acontecer fora dos horários de pico, mas não existe um horário fixo ou garantia de que uma empresa ficará indisponível em determinado período.\n\nNo fim, você não está necessariamente comprando uma segunda máquina para substituir a primeira. Está criando uma alternativa para manter o seu negócio disponível quando mais precisar.",
+    type: "second-machine",
+  },
+  {
     question: "Qual é o melhor plano da Ton: Mega+ ou Black?",
     id: "faq-planos",
     answer:
@@ -106,7 +114,6 @@ export function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(0)
 
   useEffect(() => {
-  const openFaqFromHash = () => {
     const hash = window.location.hash
 
     if (!hash) {
@@ -130,23 +137,8 @@ export function FAQ() {
           behavior: "smooth",
           block: "start",
         })
-    }, 300)
-  }
-
-  openFaqFromHash()
-
-  window.addEventListener(
-    "hashchange",
-    openFaqFromHash,
-  )
-
-  return () => {
-    window.removeEventListener(
-      "hashchange",
-      openFaqFromHash,
-    )
-  }
-}, [])
+    }, 100)
+  }, [])
 
   function toggleFAQ(index: number) {
     setOpenIndex((current) => (current === index ? null : index))
@@ -259,6 +251,14 @@ export function FAQ() {
                           </>
                         ) : faq.type === "machines" ? (
                           <MachineComparison />
+                        ) : faq.type === "second-machine" ? (
+                          <>
+                            <p className="whitespace-pre-line text-sm leading-7 text-muted sm:text-base">
+                              {faq.answer}
+                            </p>
+
+                            <SecondMachineCTA />
+                          </>
                         ) : (
                           <p className="whitespace-pre-line text-sm leading-7 text-muted sm:text-base">
                             {faq.answer}
@@ -314,6 +314,81 @@ export function FAQ() {
         </FadeIn>
       </Container>
     </section>
+  )
+}
+
+function SecondMachineCTA() {
+  return (
+    <div className="mt-6 overflow-hidden rounded-2xl border border-primary/20 bg-primary/[0.04] p-4 sm:p-5">
+      <div className="flex items-start gap-3">
+        <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary text-white shadow-md shadow-primary/20">
+          <BadgeCheck className="size-5" />
+        </div>
+
+        <div>
+          <p className="text-sm font-black text-foreground">
+            Garanta uma segunda opção para o seu negócio
+          </p>
+
+          <p className="mt-1 text-sm leading-6 text-muted">
+            Aproveite meu desconto e tenha uma máquina Ton como alternativa
+            para continuar vendendo quando precisar.
+          </p>
+        </div>
+      </div>
+
+      <TrackedLink
+        href={siteConfig.links.catalog}
+        target="_blank"
+        rel="noopener noreferrer"
+        celebration
+        tracking={{
+          event: "machine_click",
+          location: "faq_redundancy",
+          destination: "catalog",
+          label: "Quero uma segunda máquina Ton com 20% de desconto",
+          product: "ton",
+          conversionStrength: "strong",
+        }}
+        className="
+          group relative mt-4 flex w-full
+          items-center justify-center
+          gap-2 overflow-hidden rounded-xl
+          bg-primary px-4 py-3.5
+          text-sm font-extrabold text-white
+          shadow-lg shadow-primary/20
+          transition-all duration-300
+          hover:-translate-y-0.5
+          hover:bg-primary-dark
+          hover:shadow-xl hover:shadow-primary/30
+          active:translate-y-0
+        "
+      >
+        <span
+          className="
+            pointer-events-none absolute inset-y-0
+            -left-1/3 w-1/3
+            -skew-x-12
+            bg-white/15
+            transition-transform duration-700
+            group-hover:translate-x-[430%]
+          "
+          aria-hidden="true"
+        />
+
+        <span className="relative z-10">
+          Quero minha segunda máquina com 20% OFF
+        </span>
+
+        <ArrowRight
+          className="
+            relative z-10 size-4
+            transition-transform duration-300
+            group-hover:translate-x-1
+          "
+        />
+      </TrackedLink>
+    </div>
   )
 }
 
