@@ -215,46 +215,69 @@ export function IntentRouter() {
       className="lg:hidden"
     >
       <style jsx>{`
-        @keyframes shine {
-          0% {
-            transform: translateX(-140%);
-            opacity: 0;
+        @keyframes borderGlow {
+          0%,
+          100% {
+            opacity: 0.45;
+            box-shadow: 0 0 0 0 rgba(249, 115, 22, 0);
           }
-          18% {
-            opacity: 0.9;
+          50% {
+            opacity: 1;
+            box-shadow:
+              0 0 0 3px rgba(249, 115, 22, 0.12),
+              0 0 18px rgba(249, 115, 22, 0.18);
+          }
+        }
+
+        @keyframes borderGlowOuter {
+          0%,
+          100% {
+            opacity: 0;
+            transform: scale(0.985);
+          }
+          50% {
+            opacity: 0.75;
+            transform: scale(1.015);
+          }
+        }
+
+        @keyframes borderSweep {
+          0%,
+          100% {
+            opacity: 0;
+            transform: translateX(-18%);
           }
           45% {
-            transform: translateX(420%);
-            opacity: 0.35;
+            opacity: 0.45;
           }
-          100% {
-            transform: translateX(420%);
+          75% {
             opacity: 0;
+            transform: translateX(18%);
           }
         }
       `}</style>
       <div className="mx-auto mt-6 w-full max-w-xl px-4">
-        <div className="overflow-hidden rounded-[1.75rem] border border-slate-200 bg-slate-50 shadow-[0_18px_55px_rgba(15,23,42,0.08)]">
+        <div className="overflow-hidden rounded-[1.75rem] border border-emerald-950/20 bg-[#052E2B] shadow-[0_20px_60px_rgba(5,46,43,0.22)]">
           {/* Cabeçalho */}
-          <div className="border-b border-slate-200 bg-white px-5 py-6">
+          <div className="border-b border-white/10 bg-gradient-to-br from-[#064E3B] via-[#052E2B] to-[#022C22] px-5 py-6">
             <div className="flex items-start gap-3.5">
-              <div className="flex size-11 shrink-0 items-center justify-center rounded-2xl bg-slate-900 text-white shadow-md">
+              <div className="flex size-11 shrink-0 items-center justify-center rounded-2xl bg-white/10 text-white shadow-md ring-1 ring-white/15">
                 <CircleHelp className="size-5" />
               </div>
 
               <div>
-                <p className="text-[11px] font-black uppercase tracking-[0.16em] text-slate-500">
+                <p className="text-[11px] font-black uppercase tracking-[0.16em] text-orange-300">
                   Encontre seu caminho
                 </p>
 
                 <h2
                   id="intent-router-title"
-                  className="mt-1 text-xl font-black tracking-tight text-slate-900"
+                  className="mt-1 text-xl font-black tracking-tight text-white"
                 >
                   O que você está procurando?
                 </h2>
 
-                <p className="mt-2 max-w-sm text-sm leading-6 text-slate-600">
+                <p className="mt-2 max-w-sm text-sm leading-6 text-white/80">
                   Me diga o que trouxe você até aqui e eu te mostro o caminho
                   mais rápido.
                 </p>
@@ -263,7 +286,7 @@ export function IntentRouter() {
           </div>
 
           {/* Opções */}
-          <div className="space-y-2 p-3.5">
+          <div className="space-y-2.5 bg-[#0B3B35] p-3.5">
             {intents.map((intent) => {
               const isStrong = intent.id === "buy_machine"
 
@@ -304,24 +327,24 @@ export function IntentRouter() {
                     "transition-all duration-300",
                     "hover:-translate-y-0.5 hover:shadow-md active:translate-y-0",
                     isStrong
-                      ? "border-orange-300 bg-orange-50/80 shadow-lg shadow-orange-500/10 ring-1 ring-orange-200/70 animate-[pulse_2.8s_ease-in-out_infinite] hover:border-orange-400 hover:shadow-orange-500/20"
-                      : "border-slate-200 hover:border-slate-300",
+                      ? "border-orange-300 bg-white shadow-md shadow-orange-500/10 hover:border-orange-400 hover:shadow-orange-500/15"
+                      : "border-white/10 bg-white/[0.97] hover:border-white/25 hover:bg-white",
                   ].join(" ")}
                 >
                   {isStrong && (
                     <>
                       <span
-                        className="pointer-events-none absolute inset-y-0 left-0 w-1/3 -translate-x-[140%] bg-gradient-to-r from-transparent via-white/75 to-transparent animate-[shine_2.8s_ease-in-out_infinite]"
+                        className="pointer-events-none absolute inset-0 rounded-2xl border-2 border-orange-400 opacity-80 animate-[borderGlow_2.4s_ease-in-out_infinite]"
                         aria-hidden="true"
                       />
 
                       <span
-                        className="pointer-events-none absolute -right-10 -top-10 size-24 rounded-full bg-orange-300/25 blur-2xl animate-pulse"
+                        className="pointer-events-none absolute inset-[-3px] rounded-[19px] border border-orange-300/60 opacity-0 animate-[borderGlowOuter_2.4s_ease-in-out_infinite]"
                         aria-hidden="true"
                       />
 
                       <span
-                        className="pointer-events-none absolute bottom-0 left-6 right-6 h-px bg-gradient-to-r from-transparent via-orange-300/80 to-transparent opacity-70 animate-pulse"
+                        className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-r from-transparent via-orange-200/25 to-transparent opacity-0 animate-[borderSweep_3.2s_ease-in-out_infinite]"
                         aria-hidden="true"
                       />
                     </>
@@ -332,7 +355,7 @@ export function IntentRouter() {
                       "relative z-10 flex size-10 shrink-0 items-center justify-center rounded-xl border transition-all duration-300",
                       iconStyles[intent.id],
                       isStrong
-                        ? "animate-[bounce_2.6s_ease-in-out_infinite] group-hover:scale-110"
+                        ? "text-primary group-hover:scale-105"
                         : "group-hover:scale-105",
                     ].join(" ")}
                     aria-hidden="true"
@@ -365,8 +388,8 @@ export function IntentRouter() {
           </div>
 
           {/* Rodapé */}
-          <div className="border-t border-slate-200 bg-white px-5 py-3.5">
-            <p className="text-center text-[11px] leading-5 text-slate-500">
+          <div className="border-t border-white/10 bg-gradient-to-r from-[#022C22] via-[#052E2B] to-[#064E3B] px-5 py-3.5">
+            <p className="text-center text-[11px] leading-5 text-white/75">
               Você escolhe o caminho. A ideia é facilitar sua decisão sem
               obrigar você a navegar por tudo.
             </p>

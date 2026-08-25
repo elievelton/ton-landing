@@ -114,34 +114,75 @@ export function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(0)
 
   useEffect(() => {
-    const hash = window.location.hash
+    function openFAQFromHash(smooth = true) {
+      const hash = window.location.hash
 
-    if (!hash) {
-      return
-    }
+      if (!hash) return
 
-    const index = faqs.findIndex(
-      (faq) => `#${faq.id}` === hash,
-    )
+      const index = faqs.findIndex(
+        (faq) => `#${faq.id}` === hash,
+      )
 
-    if (index === -1) {
-      return
-    }
+      if (index === -1) return
 
-    setOpenIndex(index)
+      setOpenIndex(index)
 
-    window.setTimeout(() => {
-      document
-        .getElementById(faqs[index].id)
-        ?.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
+      window.setTimeout(() => {
+        const element = document.getElementById(
+          faqs[index].id,
+        )
+
+        if (!element) return
+
+        const headerOffset = 96
+        const elementTop =
+          element.getBoundingClientRect().top +
+          window.scrollY
+
+        window.scrollTo({
+          top: Math.max(0, elementTop - headerOffset),
+          behavior: smooth ? "smooth" : "auto",
         })
-    }, 100)
+      }, 320)
+    }
+
+    function handleHashChange() {
+      openFAQFromHash(true)
+    }
+
+    openFAQFromHash(false)
+
+    window.addEventListener("hashchange", handleHashChange)
+
+    return () => {
+      window.removeEventListener("hashchange", handleHashChange)
+    }
   }, [])
 
   function toggleFAQ(index: number) {
-    setOpenIndex((current) => (current === index ? null : index))
+    setOpenIndex((current) => {
+      const next = current === index ? null : index
+
+      if (next === null) return null
+
+      window.setTimeout(() => {
+        const element = document.getElementById(faqs[next].id)
+
+        if (!element) return
+
+        const headerOffset = 96
+        const elementTop =
+          element.getBoundingClientRect().top +
+          window.scrollY
+
+        window.scrollTo({
+          top: Math.max(0, elementTop - headerOffset),
+          behavior: "smooth",
+        })
+      }, 320)
+
+      return next
+    })
   }
 
   return (

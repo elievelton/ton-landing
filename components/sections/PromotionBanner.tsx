@@ -82,11 +82,11 @@ export function PromotionBanner() {
     <section
       id="promocao"
       aria-label="Oferta especial Ton"
-      className="relative overflow-hidden border-y border-primary/20 bg-[#063d2c] text-white"
+      className="relative mx-4 overflow-hidden rounded-[1.75rem] border border-white/10 bg-gradient-to-br from-[#064E3B] via-[#052E2B] to-[#022C22] text-white shadow-[0_20px_60px_rgba(5,46,43,0.22)] sm:mx-6 lg:mx-8"
     >
       {/* Glow esquerdo */}
       <div
-        className="pointer-events-none absolute -left-40 top-1/2 size-96 -translate-y-1/2 rounded-full bg-primary/20 blur-3xl"
+        className="pointer-events-none absolute -left-40 top-1/2 size-96 -translate-y-1/2 rounded-full bg-emerald-300/10 blur-3xl"
         aria-hidden="true"
       />
 
@@ -98,7 +98,7 @@ export function PromotionBanner() {
 
       {/* Linha de brilho */}
       <div
-        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/80 to-transparent"
+        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-orange-300/70 to-transparent"
         aria-hidden="true"
       />
 
@@ -113,15 +113,15 @@ export function PromotionBanner() {
             <div className="mx-auto max-w-4xl text-center">
 
               {/* Benefício extra */}
-              <div className="inline-flex animate-pulse items-center gap-2 rounded-full border border-orange-400/30 bg-orange-400/10 px-4 py-2 text-[11px] font-extrabold uppercase tracking-wider text-orange-300">
-                <Flame className="size-3.5 fill-orange-400 text-orange-400" />
+              <div className="inline-flex animate-pulse items-center gap-2 rounded-full border border-orange-400/30 bg-orange-400/10 px-4 py-2 text-[11px] font-extrabold uppercase tracking-wider text-orange-200">
+                <Flame className="size-3.5 fill-orange-200 text-orange-400" />
 
                 Promoção do Mês
               </div>
 
               {/* Reforço dos descontos */}
               <div className="mt-3 flex items-center justify-center gap-2 text-xs font-semibold text-white/70 sm:text-sm">
-                <span className="flex size-5 shrink-0 items-center justify-center rounded-full bg-primary/20 text-primary">
+                <span className="flex size-5 shrink-0 items-center justify-center rounded-full bg-primary/20 text-orange-300">
                   <Check className="size-3" />
                 </span>
 
@@ -133,7 +133,7 @@ export function PromotionBanner() {
               {/* Título */}
               <h2 className="mt-5 text-3xl font-black tracking-tight sm:text-4xl lg:text-5xl">
                 Como fazer sua{" "}
-                <span className="text-primary">
+                <span className="text-orange-500">
                   maquininha sair de graça?
                 </span>
               </h2>
@@ -206,20 +206,20 @@ export function PromotionBanner() {
             <div className="mx-auto mt-8 grid max-w-4xl gap-5 lg:grid-cols-[1fr_auto] lg:items-center">
 
               {/* Resultado */}
-              <div className="rounded-2xl border border-primary/20 bg-primary/10 p-5">
+              <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
 
                 <div className="flex items-start gap-3">
 
-                  <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary text-white shadow-lg shadow-primary/20">
+                  <div className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-orange-500 text-white shadow-lg shadow-orange-500/20">
                     <BadgePercent className="size-5" />
                   </div>
 
                   <div>
-                    <h3 className="font-extrabold text-white">
+                    <h3 className="font-extrabold text-slate-900">
                       Cumpriu a meta?
                     </h3>
 
-                    <p className="mt-1 text-sm leading-5 text-white/65">
+                    <p className="mt-1 text-sm leading-5 text-slate-600">
                       Cumprindo as condições da promoção, você recebe na sua
                       Conta Ton o valor efetivamente pago pela maquininha.
                     </p>
@@ -232,11 +232,11 @@ export function PromotionBanner() {
               {/* CONTADOR */}
               {/* ======================================================= */}
 
-              <div className="rounded-2xl border border-orange-400/30 bg-white p-4 shadow-2xl shadow-black/10 sm:p-5 lg:min-w-[360px]">
+              <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-lg shadow-black/10 sm:p-5 lg:min-w-[360px]">
 
-                <div className="flex items-center justify-center gap-2 text-[11px] font-black uppercase tracking-wider text-orange-600">
+                <div className="flex items-center justify-center gap-2 text-[11px] font-black uppercase tracking-wider text-orange-300">
 
-                  <Clock3 className="size-4 text-red-500" />
+                  <Clock3 className="size-4 text-orange-300" />
 
                   Oferta relâmpago termina em
 
@@ -289,7 +289,7 @@ export function PromotionBanner() {
                 >
                   <Button
                     size="lg"
-                    className="group relative h-12 w-full gap-2 overflow-hidden bg-primary px-6 text-sm font-extrabold text-white shadow-lg shadow-primary/20 transition-all duration-300 hover:-translate-y-0.5 hover:bg-primary/90 hover:shadow-xl hover:shadow-primary/30"
+                    className="group relative h-12 w-full gap-2 overflow-hidden bg-orange-500 px-6 text-sm font-extrabold text-white shadow-lg shadow-orange-500/20 transition-all duration-300 hover:-translate-y-0.5 hover:bg-orange-400 hover:shadow-xl hover:shadow-orange-500/30"
                   >
 
                     {/* Brilho animado */}
@@ -318,7 +318,7 @@ export function PromotionBanner() {
 
             <div className="mx-auto mt-6 flex max-w-3xl items-start justify-center gap-2 text-center text-[10px] leading-5 text-white/40 sm:text-[11px]">
 
-              <ShieldCheck className="mt-0.5 size-3.5 shrink-0 text-primary/70" />
+              <ShieldCheck className="mt-0.5 size-3.5 shrink-0 text-orange-300/80" />
 
               <p>
                 {activePromotion.disclaimer}
@@ -348,21 +348,21 @@ function Step({
   description: string
 }) {
   return (
-    <div className="group rounded-2xl border border-white/10 bg-white/[0.05] p-4 transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:bg-white/[0.08] sm:p-5">
+    <div className="group rounded-2xl border border-white/10 bg-white p-4 text-slate-900 transition-all duration-300 hover:-translate-y-1 hover:border-orange-300/50 hover:shadow-lg hover:shadow-black/10 sm:p-5">
 
       <div className="flex items-start gap-3">
 
-        <div className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-primary font-black text-white shadow-lg shadow-primary/20">
+        <div className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-orange-500 font-black text-white shadow-lg shadow-orange-500/20">
           {number}
         </div>
 
         <div>
 
-          <h3 className="text-sm font-extrabold text-white sm:text-base">
+          <h3 className="text-sm font-extrabold text-slate-900 sm:text-base">
             {title}
           </h3>
 
-          <p className="mt-1.5 text-xs leading-5 text-white/55">
+          <p className="mt-1.5 text-xs leading-5 text-slate-600">
             {description}
           </p>
 
@@ -391,7 +391,7 @@ function CountdownBox({
   return (
     <div
       className={[
-        "rounded-xl border border-orange-200 bg-orange-50 px-2 py-2.5 text-center",
+        "rounded-xl border border-slate-200 bg-white px-2 py-2.5 text-center shadow-sm",
         "shadow-sm transition-all duration-300",
         pulse
           ? "animate-[pulse_1s_ease-in-out_infinite] border-red-200 bg-red-50"
