@@ -8,23 +8,6 @@ import type {
 
 import confetti from "canvas-confetti"
 
-/*
- * Nível de intenção comercial do clique:
- *
- * weak   → Conversão fraca:
- *          cliques informativos, como planos, taxas,
- *          TapTon e outras informações do site.
- *
- * medium → Conversão média:
- *          cliques que levam ao catálogo de maquininhas,
- *          demonstrando interesse em conhecer as ofertas.
- *
- * strong → Conversão forte:
- *          cliques que levam diretamente ao carrinho/checkout
- *          de uma maquininha específica, indicando alta
- *          intenção de compra.
- */
-
 type ConversionStrength = "weak" | "medium" | "strong"
 
 type TrackingParams = {
@@ -34,6 +17,13 @@ type TrackingParams = {
   label?: string
   product?: string
   conversionStrength?: ConversionStrength
+}
+
+type IntentContext = {
+  intent: string
+  interest_strength: ConversionStrength | "none"
+  label?: string
+  saved_at?: string
 }
 
 type TrackedLinkProps =
@@ -72,6 +62,80 @@ function getSocialProofMessage() {
   ]
 }
 
+function readIntentContext(): IntentContext | null {
+  try {
+    const raw = window.sessionStorage.getItem("intent_context")
+
+    if (!raw) {
+      return null
+    }
+
+    const parsed = JSON.parse(raw) as Partial<IntentContext>
+
+    if (
+      typeof parsed.intent !== "string" ||
+      typeof parsed.interest_strength !== "string"
+    ) {
+      return null
+    }
+
+    return {
+      intent: parsed.intent,
+      interest_strength:
+        parsed.interest_strength as IntentContext["interest_strength"],
+      label:
+        typeof parsed.label === "string"
+          ? parsed.label
+          : undefined,
+      saved_at:
+        typeof parsed.saved_at === "string"
+          ? parsed.saved_at
+          : undefined,
+    }
+  } catch {
+    return null
+  }
+}
+
+function registerFinalIntent(
+  context: IntentContext | null,
+) {
+  if (!context) {
+    return
+  }
+
+  const alreadyRegistered =
+    window.sessionStorage.getItem(
+      "final_intent_registered",
+    )
+
+  if (alreadyRegistered === "true") {
+    return
+  }
+
+  const eventData = {
+    intent: context.intent,
+    interest_strength: context.interest_strength,
+    origin_label: context.label,
+    event_location: "tracked_link",
+    event_destination: "checkout",
+  }
+
+  window.dataLayer = window.dataLayer || []
+
+  window.dataLayer.push({
+    event: "intent_final",
+    ...eventData,
+  })
+
+  window.gtag?.("event", "intent_final", eventData)
+
+  window.sessionStorage.setItem(
+    "final_intent_registered",
+    "true",
+  )
+}
+
 export function TrackedLink({
   children,
   tracking,
@@ -82,20 +146,30 @@ export function TrackedLink({
   rel,
   ...props
 }: TrackedLinkProps) {
-  function handleClick(event: MouseEvent<HTMLAnchorElement>) {
+  function handleClick(
+    event: MouseEvent<HTMLAnchorElement>,
+  ) {
+    const intentContext =
+      tracking.conversionStrength === "strong"
+        ? readIntentContext()
+        : null
+
     const eventData = {
       event_location: tracking.location,
       event_destination: tracking.destination,
       event_label: tracking.label,
       product: tracking.product,
-      conversion_strength: tracking.conversionStrength,
+      conversion_strength:
+        tracking.conversionStrength,
+      origin_intent:
+        tracking.conversionStrength === "strong"
+          ? intentContext?.intent
+          : undefined,
+      origin_intent_strength:
+        tracking.conversionStrength === "strong"
+          ? intentContext?.interest_strength
+          : undefined,
     }
-
-    /*
-     * ============================================================
-     * DATA LAYER / GTM
-     * ============================================================
-     */
 
     window.dataLayer = window.dataLayer || []
 
@@ -104,37 +178,13 @@ export function TrackedLink({
       ...eventData,
     })
 
-    /*
-     * ============================================================
-     * GOOGLE ANALYTICS 4
-     * ============================================================
-     */
-
     window.gtag?.(
       "event",
       tracking.event,
-      eventData
+      eventData,
     )
 
-    /*
-     * ============================================================
-     * MICROSOFT UET
-     * ============================================================
-     *
-     * Só envia o evento se a UET estiver carregada.
-     *
-     * strong → add_to_cart_intent
-     * commercial_interest → commercial_interest
-     * promotion_click → promotion_click
-     * whatsapp_click → whatsapp_click
-     */
-
     if (window.uetq) {
-      /*
-       * Conversão forte:
-       * intenção de compra da maquininha
-       */
-
       if (
         tracking.conversionStrength === "strong"
       ) {
@@ -147,13 +197,9 @@ export function TrackedLink({
               tracking.product ??
               tracking.label ??
               "maquininha_ton",
-          }
+          },
         )
       }
-
-      /*
-       * Interesse comercial
-       */
 
       if (
         tracking.event === "commercial_interest"
@@ -166,13 +212,9 @@ export function TrackedLink({
             event_label:
               tracking.label ??
               "commercial_interest",
-          }
+          },
         )
       }
-
-      /*
-       * Clique na promoção
-       */
 
       if (
         tracking.event === "promotion_click"
@@ -185,13 +227,9 @@ export function TrackedLink({
             event_label:
               tracking.label ??
               "promotion_click",
-          }
+          },
         )
       }
-
-      /*
-       * Clique no WhatsApp
-       */
 
       if (
         tracking.event === "whatsapp_click"
@@ -204,36 +242,30 @@ export function TrackedLink({
             event_label:
               tracking.label ??
               "whatsapp_click",
-          }
+          },
         )
       }
     }
 
-    /*
-     * ============================================================
-     * PROVA SOCIAL
-     * ============================================================
-     */
+    if (
+      tracking.conversionStrength === "strong"
+    ) {
+      registerFinalIntent(intentContext)
+
+      window.sessionStorage.removeItem(
+        "intent_context",
+      )
+    }
 
     window.dispatchEvent(
       new CustomEvent("social-proof", {
         detail: {
           message: getSocialProofMessage(),
         },
-      })
+      }),
     )
 
-    /*
-     * Mantém o onClick original.
-     */
-
     onClick?.(event)
-
-    /*
-     * ============================================================
-     * CELEBRAÇÃO
-     * ============================================================
-     */
 
     if (celebration && href) {
       event.preventDefault()
@@ -270,7 +302,7 @@ export function TrackedLink({
           window.open(
             href.toString(),
             "_blank",
-            "noopener,noreferrer"
+            "noopener,noreferrer",
           )
         } else {
           window.location.href =

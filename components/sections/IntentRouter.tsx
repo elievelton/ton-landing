@@ -55,7 +55,7 @@ const intents: IntentOption[] = [
   {
     id: "buy_machine",
     title: "Já decidi que quero comprar a máquina Ton",
-    description: "Já conheço a Ton quero só meu cupom de 20% para comprar mais barato.",
+    description: "Quero só meu cupom de 20% para comprar mais barato.",
     strength: "strong",
     href: siteConfig.links.catalog,
     external: true,
@@ -71,7 +71,7 @@ const intents: IntentOption[] = [
   },
   {
     id: "choose_plan",
-    title: "Quero escolher o melhor plano da Ton",
+    title: "Quero escolher um plano da Ton",
     description: "Mega+ ou Black?",
     strength: "medium",
     href: "#faq-planos",
@@ -89,7 +89,7 @@ const intents: IntentOption[] = [
     id: "resell",
     title: "Quero revender máquinas da Ton",
     description: "Quero saber como funciona para revender.",
-    strength: "strong",
+    strength: "weak",
     href: RESELL_URL,
     external: true,
     icon: <Users className="size-5" />,
@@ -97,7 +97,7 @@ const intents: IntentOption[] = [
   {
     id: "promotion",
     title: "Promoção do mês",
-    description: "Quero entender a promoção do mês [Maquininha de Graça].",
+    description: "Quero entender a promoção do mês.",
     strength: "weak",
     href: "#promocao",
     icon: <Gift className="size-5" />,
@@ -105,40 +105,53 @@ const intents: IntentOption[] = [
   {
     id: "research",
     title: "Estou apenas pesquisando",
-    description: "Quero conhecer melhor a Ton antes de decidir.",
+    description: "Quero conhecer melhor antes de decidir.",
     strength: "weak",
     href: "#hero",
     icon: <Search className="size-5" />,
   },
   {
     id: "not_interested",
-    title: "Não quero nada relacionado a comprar máquinas de cartão",
-    description: "Entrei por engano ou procuro outra coisa",
+    title: "Não quero nada relacionado a máquinas de cartão",
+    description: "Entrei por engano ou procuro outra coisa.",
     strength: "none",
     href: "#hero",
     icon: <XCircle className="size-5" />,
   },
 ]
 
-function trackIntent(intent: IntentOption) {
+function rememberIntent(intent: IntentOption) {
+  sessionStorage.setItem(
+    "intent_context",
+    JSON.stringify({
+      intent: intent.id,
+      interest_strength: intent.strength,
+      label: intent.title,
+      saved_at: new Date().toISOString(),
+    }),
+  )
+}
+
+function registerFinalIntent(intent: IntentOption) {
+  if (intent.strength !== "strong") {
+    return
+  }
+
   const eventData = {
     intent: intent.id,
     interest_strength: intent.strength,
     event_location: "mobile_intent_router",
-    event_destination: intent.external
-      ? "external"
-      : intent.href.replace(/^#/, ""),
+    event_destination: intent.href,
     event_label: intent.title,
   }
 
   window.dataLayer = window.dataLayer || []
-
   window.dataLayer.push({
-    event: "intent_select",
+    event: "intent_final",
     ...eventData,
   })
 
-  window.gtag?.("event", "intent_select", eventData)
+  window.gtag?.("event", "intent_final", eventData)
 }
 
 function registerStrongIntentInCounter(intent: IntentOption) {
@@ -166,10 +179,11 @@ export function IntentRouter() {
     event: MouseEvent<HTMLAnchorElement>,
     intent: IntentOption,
   ) {
-    trackIntent(intent)
-    registerStrongIntentInCounter(intent)
+    rememberIntent(intent)
 
     if (intent.external) {
+      registerFinalIntent(intent)
+      registerStrongIntentInCounter(intent)
       return
     }
 
@@ -230,7 +244,7 @@ export function IntentRouter() {
 
               <div>
                 <p className="text-[11px] font-black uppercase tracking-[0.16em] text-slate-500">
-                  Navegação Rápida
+                  Encontre seu caminho
                 </p>
 
                 <h2
@@ -242,7 +256,7 @@ export function IntentRouter() {
 
                 <p className="mt-2 max-w-sm text-sm leading-6 text-slate-600">
                   Me diga o que trouxe você até aqui e eu te mostro o caminho
-                  mais rápido para chegar em seu objetivo.
+                  mais rápido.
                 </p>
               </div>
             </div>
