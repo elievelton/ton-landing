@@ -266,8 +266,8 @@ export function IntentRouter() {
               </div>
 
               <div>
-                <p className="text-[11px] font-black uppercase tracking-[0.16em] text-orange-300">
-                  Encontre seu caminho
+                <p className="text-[11px] font-black uppercase tracking-[0.16em] text-orange-400">
+                  Navegação Rápida
                 </p>
 
                 <h2
@@ -279,7 +279,7 @@ export function IntentRouter() {
 
                 <p className="mt-2 max-w-sm text-sm leading-6 text-white/80">
                   Me diga o que trouxe você até aqui e eu te mostro o caminho
-                  mais rápido.
+                  mais rápido para seu objetivo.
                 </p>
               </div>
             </div>
@@ -327,14 +327,14 @@ export function IntentRouter() {
                     "transition-all duration-300",
                     "hover:-translate-y-0.5 hover:shadow-md active:translate-y-0",
                     isStrong
-                      ? "border-orange-300 bg-white shadow-md shadow-orange-500/10 hover:border-orange-400 hover:shadow-orange-500/15"
+                      ? "border-green-400 bg-white shadow-md shadow-green-500/10 hover:border-green-400 hover:shadow-green-500/15"
                       : "border-white/10 bg-white/[0.97] hover:border-white/25 hover:bg-white",
                   ].join(" ")}
                 >
                   {isStrong && (
                     <>
                       <span
-                        className="pointer-events-none absolute inset-0 rounded-2xl border-2 border-orange-400 opacity-80 animate-[borderGlow_2.4s_ease-in-out_infinite]"
+                        className="pointer-events-none absolute inset-0 rounded-2xl border-2 border-blue-500 opacity-80 animate-[borderGlow_2.4s_ease-in-out_infinite]"
                         aria-hidden="true"
                       />
 
