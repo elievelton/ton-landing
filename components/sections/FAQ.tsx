@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Image from "next/image"
 import {
   ArrowRight,
@@ -25,65 +25,78 @@ import { TrackedLink } from "@/components/shared/TrackedLink"
 const faqs = [
   {
     question: "É seguro comprar nesse site?",
+    id: "faq-seguranca",
     answer:
       "Sim, é 100% seguro. Este site é um canal parceiro de indicação e divulgação de ofertas da Ton. Disponibilizamos cupons de desconto exclusivos para ajudar você a economizar na compra da sua maquininha.\nFunciona assim: nós apenas disponibilizamos o cupom e direcionamos você para a oferta. Nada relacionado a pagamentos acontece neste site, e nós não solicitamos nem armazenamos seus dados financeiros.\nAo clicar em qualquer botão de desconto deste site, você será redirecionado para o site oficial da Ton. O desconto normalmente é aplicado automaticamente ao acessar a compra pelos nossos links. Antes de finalizar, confira o resumo do pedido para confirmar o desconto. Caso ele não apareça, você poderá inserir o cupom manualmente.\nA compra, o pagamento, a emissão da nota fiscal, a entrega, a garantia de fábrica e o atendimento são realizados diretamente pela Ton (Grupo Stone), dentro do ambiente oficial da empresa.\nVocê encontra seu cupom de desconto aqui, mas conclui sua compra diretamente no site oficial da Ton, com toda a segurança do ambiente oficial da empresa!",
   },
   {
     question: "Preciso ter CNPJ para comprar uma maquininha Ton?",
+    id: "faq-cnpj",
     answer:
       "Não. Existem opções para quem vende como pessoa física e também para quem possui CNPJ. Algumas bandeiras e benefícios específicos podem depender do tipo de cadastro.",
   },
   {
     question: "Estou com nome sujo posso comprar uma maquininha?",
+    id: "faq-nome-sujo",
     answer:
       "Sim, a empresa Ton não faz consulta para saber o estado do seu nome, pode comprar com tranquilidade ",
   },
   {
     question: "Preciso ter conta para comprar uma maquininha?",
+    id: "faq-conta",
     answer:
       "Não. Ao adquirir uma maquininha Ton, você recebe automaticamente uma conta digital no aplicativo Ton. Suas vendas caem diretamente nela, sem a necessidade de vincular outro banco. Pelo app, você pode transferir dinheiro, investir e aproveitar todo o ecossistema completo da Ton.",
   },
   {
     question: "As maquininhas Ton têm mensalidade?",
+    id: "faq-mensalidade",
     answer:
       "Não, as maquininhas Ton são sem mensalidades, você só vai pagar quando ultilizar ela e pequenas taxas de acordo com o plano que escolheu no ato da compra",
   },
   {
     question: "Como funciona o desconto adicional de 20%?",
+    id: "faq-desconto-20",
     answer: `Primeiro é aplicado o preço promocional disponibilizado pela Ton. Depois, nas condições aplicáveis, você ainda pode utilizar meu cupom ${siteConfig.coupon} para obter 20% de desconto adicional. Ou seja: o segundo desconto é aplicado sobre o valor que já está com a promoção da Ton.`,
   },
   {
     question: "Como saber se meu cupom de 20% foi aplicado?",
+    id: "faq-cupom-aplicado",
     answer: "",
     type: "coupon",
   },
   {
     question: "A garantia das maquininhas é vitalícia?",
+    id: "faq-garantia",
     answer:
       "A Ton oferece garantia vitalícia para as maquininhas elegíveis, conforme as regras e condições da empresa. Isso significa mais tranquilidade para quem pretende utilizar a máquina por bastante tempo. Resumindo, quebrou a Ton troca por outra nova, pois o que matém o sucesso da Ton é o seu sucesso!",
   },
   {
     question: "O frete é grátis?",
+    id: "faq-frete",
     answer:
       "A Ton oferece frete grátis nas condições divulgadas para a aquisição das maquininhas. As condições finais de entrega e disponibilidade podem ser consultadas no momento da compra.",
   },
   {
     question: "Quando recebo o dinheiro das minhas vendas?",
+    id: "faq-recebimento",
     answer:
       "Vai depender do plano que você escolher no ato da compra, mas em regra você recebe seus pagamento com 1 dia útil, mesmo que você parcele em 12x o dinheiro cai em sua conta em 1 dia útil",
   },
   {
     question: "Qual é o melhor plano da Ton: Mega+ ou Black?",
+    id: "faq-planos",
     answer:
       "O melhor plano depende do seu volume de vendas, mas a comparação das taxas mostra alguns padrões interessantes.\n\nAté cerca de R$ 6 mil por mês, o Ton Black pode ter vantagem em algumas situações, principalmente dependendo da forma de pagamento escolhida.\n\nEntre R$ 6 mil e R$ 10 mil, existe uma faixa de transição: em algumas modalidades o Mega+ passa a oferecer taxas melhores, enquanto em outras o Black continua competitivo.\n\nDe R$ 10 mil até menos de R$ 20 mil por mês, o Ton Mega+ tende a levar vantagem, especialmente nas condições de recebimento em 1 dia útil.\n\nAcima de R$ 20 mil por mês, o Ton Black passa a ser muito mais competitivo e, em várias das principais condições, apresenta taxas menores que o Mega+.\n\nO Black possui ainda faixas específicas para vendas acima de R$ 20 mil, R$ 40 mil e R$ 80 mil, enquanto o Mega+ possui suas próprias faixas de crescimento.\n\nMas não existe uma resposta única: a melhor opção também depende da bandeira do cartão, do número de parcelas e de quando você quer receber.",
     type: "plan-comparison",
   },  {
     question: "Qual maquininha Ton é melhor para o meu negócio?",
+    id: "faq-maquininhas",
     answer: "",
     type: "machines",
   },
   {
     question: "O que é o TapTon?",
+    id: "faq-tapton",
     answer:
       "O TapTon permite utilizar um celular compatível para receber pagamentos por aproximação, transformando o próprio smartphone em uma solução de pagamento. É uma alternativa interessante para quem quer começar a vender sem depender imediatamente de uma maquininha física.",
   },
@@ -91,6 +104,49 @@ const faqs = [
 
 export function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(0)
+
+  useEffect(() => {
+  const openFaqFromHash = () => {
+    const hash = window.location.hash
+
+    if (!hash) {
+      return
+    }
+
+    const index = faqs.findIndex(
+      (faq) => `#${faq.id}` === hash,
+    )
+
+    if (index === -1) {
+      return
+    }
+
+    setOpenIndex(index)
+
+    window.setTimeout(() => {
+      document
+        .getElementById(faqs[index].id)
+        ?.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        })
+    }, 300)
+  }
+
+  openFaqFromHash()
+
+  window.addEventListener(
+    "hashchange",
+    openFaqFromHash,
+  )
+
+  return () => {
+    window.removeEventListener(
+      "hashchange",
+      openFaqFromHash,
+    )
+  }
+}, [])
 
   function toggleFAQ(index: number) {
     setOpenIndex((current) => (current === index ? null : index))
@@ -143,8 +199,9 @@ export function FAQ() {
 
               return (
                 <div
+                  id={faq.id}
                   key={faq.question}
-                  className={`overflow-hidden rounded-2xl border bg-white transition-all duration-300 ${
+                  className={`scroll-mt-28 overflow-hidden rounded-2xl border bg-white transition-all duration-300 ${
                     isOpen
                       ? "border-primary/30 shadow-lg shadow-primary/5"
                       : "border-border shadow-sm hover:border-primary/20"

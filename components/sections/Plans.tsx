@@ -374,6 +374,36 @@ export function Plans() {
                 />
               </a>
             </div>
+            <a
+  href="#faq-planos"
+  className="
+    group mt-5 flex w-full
+    items-center justify-center
+    gap-3 rounded-xl
+    border border-primary/20
+    bg-primary/5
+    px-4 py-3.5
+    text-left
+    transition-all duration-300
+    hover:-translate-y-0.5
+    hover:border-primary/30
+    hover:bg-primary/10
+    hover:shadow-md
+    hover:shadow-primary/10
+  "
+>
+  <div className="min-w-0 flex-1">
+    <p className="text-xs font-semibold text-muted">
+      Ainda em dúvida qual plano escolher?
+    </p>
+
+    <p className="mt-0.5 text-sm font-extrabold text-primary">
+      Mega+ ou Black?
+    </p>
+  </div>
+
+  <ArrowRight className="size-5 shrink-0 text-primary transition-transform duration-300 group-hover:translate-x-1" />
+</a>
           </div>
         </FadeIn>
       </Container>

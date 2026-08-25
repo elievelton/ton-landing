@@ -5,6 +5,7 @@ import {
   BadgeCheck,
   CreditCard,
   ShieldCheck,
+  PiggyBank,
 } from "lucide-react"
 
 import { Container } from "@/components/shared/Container"
@@ -101,44 +102,85 @@ export function Hero() {
                 </TrackedLink>
 
                 {/* CTA calculadora */}
-                <TrackedLink
-                  href="#calculadora"
-                  tracking={{
-                    event: "calculator_click",
-                    location: "hero",
-                    destination: "tax_calculator",
-                    label: "Simular quanto vou receber",
-                    conversionStrength: "weak",
-                  }}
-                  className="w-full sm:w-auto"
-                >
-                  <Button
-                    variant="outline"
-                    size="lg"
-                    className="
-                      h-12
-                      w-full
-                      gap-2
-                      border-primary/20
-                      bg-white
-                      px-6
-                      text-base
-                      font-bold
-                      text-foreground
-                      transition-all
-                      duration-300
-                      hover:-translate-y-0.5
-                      hover:border-primary/40
-                      hover:bg-primary/5
-                      hover:text-primary
-                      sm:w-auto
-                    "
-                  >
-                    Simular Taxas da Ton
+              <a
+  href="#calculadora"
+  className="
+    group
+    inline-flex
+    w-full
+    sm:w-auto
+  "
+>
+  <Button
+    variant="outline"
+    size="lg"
+    className="
+      relative
+      h-12
+      w-full
+      gap-2
+      overflow-hidden
+      border-primary/20
+      bg-white
+      font-extrabold
+      text-primary
+      shadow-sm
+      transition-all
+      duration-300
+      hover:-translate-y-0.5
+      hover:border-primary/40
+      hover:bg-primary/5
+      hover:shadow-lg
+      hover:shadow-primary/10
+      active:translate-y-0
+      sm:w-auto
+    "
+  >
+    <span
+      className="
+        pointer-events-none
+        absolute
+        inset-0
+        -translate-x-full
+        bg-gradient-to-r
+        from-transparent
+        via-primary/10
+        to-transparent
+        transition-transform
+        duration-700
+        group-hover:translate-x-full
+      "
+      aria-hidden="true"
+    />
 
-                    <CreditCard className="size-4" />
-                  </Button>
-                </TrackedLink>
+    <PiggyBank
+      className="
+        relative
+        z-10
+        size-5
+        transition-transform
+        duration-300
+        group-hover:-rotate-6
+        group-hover:scale-110
+      "
+    />
+
+    <span className="relative z-10">
+      Simular as Taxas da Ton
+    </span>
+
+    <ArrowRight
+      className="
+        relative
+        z-10
+        size-4
+        transition-transform
+        duration-300
+        group-hover:translate-x-1
+      "
+    />
+  </Button>
+</a>
               </div>
 
               {/* Aviso de segurança e garantia */}
