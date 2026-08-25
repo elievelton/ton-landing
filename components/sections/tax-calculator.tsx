@@ -266,6 +266,8 @@ export default function TaxCalculator() {
   const [limitMessage, setLimitMessage] =
     useState(false);
 
+
+  const isSaleValueEmpty = saleValue.trim() === "";
   const availableSalesTierOptions = useMemo(() => {
     return getSalesTierOptionsForPlan(plan);
   }, [plan]);
@@ -875,6 +877,38 @@ export default function TaxCalculator() {
                     </motion.p>
                   )}
                 </AnimatePresence>
+
+                <AnimatePresence>
+                  {isSaleValueEmpty && (
+                    <motion.p
+                      initial={{
+                        opacity: 0,
+                        y: -5,
+                      }}
+                      animate={{
+                        opacity: 1,
+                        y: 0,
+                      }}
+                      exit={{
+                        opacity: 0,
+                        y: -5,
+                      }}
+                      className="
+                        mt-2
+                        rounded-xl
+                        bg-slate-50
+                        px-3 py-2
+                        text-xs
+                        font-semibold
+                        text-slate-700
+                        ring-1 ring-slate-200
+                      "
+                    >
+                      Digite um valor acima de R$ 1.00 para calcular sua venda.
+                    </motion.p>
+                  )}
+                </AnimatePresence>
+                
               </div>
             </div>
 
@@ -1381,6 +1415,38 @@ export default function TaxCalculator() {
                     </motion.p>
                   )}
                 </AnimatePresence>
+
+                <AnimatePresence>
+                  {isSaleValueEmpty && (
+                    <motion.p
+                      initial={{
+                        opacity: 0,
+                        y: -5,
+                      }}
+                      animate={{
+                        opacity: 1,
+                        y: 0,
+                      }}
+                      exit={{
+                        opacity: 0,
+                        y: -5,
+                      }}
+                      className="
+                        mt-2
+                        rounded-xl
+                        bg-slate-50
+                        px-3 py-2
+                        text-xs
+                        font-semibold
+                        text-slate-700
+                        ring-1 ring-slate-200
+                      "
+                    >
+                      Digite um valor acima de R$ 1.00 para calcular sua venda.
+                    </motion.p>
+                  )}
+                </AnimatePresence>
+                
               </div>
 
               {/* =================================================

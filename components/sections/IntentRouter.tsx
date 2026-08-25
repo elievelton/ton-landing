@@ -112,8 +112,8 @@ const intents: IntentOption[] = [
   },
   {
     id: "not_interested",
-    title: "Não quero nada relacionado a máquinas de cartão",
-    description: "Entrei por engano ou procuro outra coisa.",
+    title: "Não quero nada relacionado a comprar máquinas de cartão",
+    description: "Entrei por engano ou procuro outra coisa",
     strength: "none",
     href: "#hero",
     icon: <XCircle className="size-5" />,
@@ -230,7 +230,7 @@ export function IntentRouter() {
 
               <div>
                 <p className="text-[11px] font-black uppercase tracking-[0.16em] text-slate-500">
-                  Encontre seu caminho
+                  Navegação Rápida
                 </p>
 
                 <h2
@@ -242,7 +242,7 @@ export function IntentRouter() {
 
                 <p className="mt-2 max-w-sm text-sm leading-6 text-slate-600">
                   Me diga o que trouxe você até aqui e eu te mostro o caminho
-                  mais rápido.
+                  mais rápido para chegar em seu objetivo.
                 </p>
               </div>
             </div>
