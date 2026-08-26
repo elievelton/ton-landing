@@ -88,7 +88,7 @@ export const machines: Machine[] = [
       "Compacta e leve",
       "Pagamento por aproximação",
       "Comprovante digital",
-      "Internet grátis",
+      "Precisa de celular com internet",
       "Garantia Vitalícia, quebrou trocou!",
       "Frete grátis",
       "Parcele vendas em até 12x",

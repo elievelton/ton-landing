@@ -278,8 +278,7 @@ export function IntentRouter() {
                 </h2>
 
                 <p className="mt-2 max-w-sm text-sm leading-6 text-white/80">
-                  Me diga o que trouxe você até aqui e eu te mostro o caminho
-                  mais rápido para seu objetivo.
+                  Seu tempo é precioso. Criamos este menu para levar você direto ao que procura. Escolha uma opção abaixo e vá direto ao ponto.
                 </p>
               </div>
             </div>
