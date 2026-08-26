@@ -6,9 +6,6 @@ on:
     # 08:00 no horário de Brasília (UTC-3)
     - cron: "0 11 * * *"
 
-permissions:
-  contents: write
-
 concurrency:
   group: update-ton-rates
   cancel-in-progress: false
@@ -16,6 +13,12 @@ concurrency:
 jobs:
   update-rates:
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+
+    outputs:
+      changed: ${{ steps.changes.outputs.changed }}
 
     steps:
       - name: Baixar código
@@ -44,14 +47,73 @@ jobs:
 
       - name: Verificar alterações nas taxas
         id: changes
+        shell: bash
         run: |
-          if git diff --quiet -- data/ton-rates.ts; then
+          if git diff --quiet -- data/ton-rates.ts data/ton-rates-meta.ts; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
             echo "✅ Nenhuma alteração nas taxas."
           else
             echo "changed=true" >> "$GITHUB_OUTPUT"
             echo "🔄 As taxas foram alteradas."
           fi
+
+      - name: Preparar artefato das taxas
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          mkdir -p rates-artifact
+          cp data/ton-rates.ts rates-artifact/ton-rates.ts
+          cp data/ton-rates-meta.ts rates-artifact/ton-rates-meta.ts
+
+      - name: Publicar artefato das taxas
+        if: steps.changes.outputs.changed == 'true'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: ton-rates
+          path: rates-artifact/
+
+  publish-rates:
+    needs: update-rates
+    if: needs.update-rates.outputs.changed == 'true'
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Baixar código
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0
+
+      - name: Baixar artefato das taxas
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: ton-rates
+          path: rates-artifact
+
+      - name: Verificar se há novas taxas
+        id: changes
+        shell: bash
+        run: |
+          if [ ! -f "rates-artifact/ton-rates.ts" ] || [ ! -f "rates-artifact/ton-rates-meta.ts" ]; then
+            echo "❌ Artefato de taxas incompleto."
+            exit 1
+          fi
+
+          if cmp -s "rates-artifact/ton-rates.ts" "data/ton-rates.ts" && \
+             cmp -s "rates-artifact/ton-rates-meta.ts" "data/ton-rates-meta.ts"; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "✅ Os arquivos já estão atualizados."
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "🔄 Novas taxas encontradas para publicar."
+          fi
+
+      - name: Aplicar novas taxas
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          cp rates-artifact/ton-rates.ts data/ton-rates.ts
+          cp rates-artifact/ton-rates-meta.ts data/ton-rates-meta.ts
 
       - name: Commit e push das novas taxas
         if: steps.changes.outputs.changed == 'true'
