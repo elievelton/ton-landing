@@ -714,7 +714,7 @@ export default function TaxCalculator() {
                   <strong className="text-foreground">R$ 10.000,00</strong>
                 </p>
                 <div
-  className="
+                  className="
     group mt-5 flex w-full
     items-center justify-center
     rounded-xl
@@ -723,19 +723,19 @@ export default function TaxCalculator() {
     px-4 py-3.5
     shadow-sm
   "
-  aria-hidden="true"
->
-  <p
-    className="
+                  aria-hidden="true"
+                >
+                  <p
+                    className="
       flex items-center justify-center gap-2
       text-center
       text-sm font-extrabold text-orange-600
       animate-bounce
     "
-  >
-    👇🔥 Quanto cai em sua Conta? 👇🔥
-  </p>
-</div>
+                  >
+                    👇🔥 Quanto cai em sua Conta? 👇🔥
+                  </p>
+                </div>
 
                 <AnimatePresence>
                   {limitMessage && (
