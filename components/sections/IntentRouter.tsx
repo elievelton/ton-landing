@@ -63,16 +63,16 @@ const intents: IntentOption[] = [
   },
   {
     id: "compare_fees",
-    title: "Estou pesquisando taxas de maquininhas",
-    description: "Quero saber quanto realmente recebo em cada venda.",
+    title: "Estou pesquisando as taxas das maquininhas Ton",
+    description: "Quero saber quanto realmente recebo em cada venda na Ton.",
     strength: "medium",
     href: "#calculadora",
     icon: <BarChart3 className="size-5" />,
   },
   {
     id: "choose_plan",
-    title: "Quero escolher um plano da Ton",
-    description: "Mega+ ou Black?",
+    title: "Quero entender melhor os planos da Ton",
+    description: "Mega+ ou Black, qual o melhor?",
     strength: "medium",
     href: "#faq-planos",
     icon: <CircleHelp className="size-5" />,
@@ -80,7 +80,7 @@ const intents: IntentOption[] = [
   {
     id: "choose_machine",
     title: "Quero escolher um modelo de maquininha da Ton",
-    description: "T1, T2, T3 ou T3 Smart?",
+    description: "Quero entender as diferenças dos modelos T1, T2, T3 ou T3 Smart?",
     strength: "medium",
     href: "#maquinas",
     icon: <CreditCard className="size-5" />,
@@ -88,7 +88,7 @@ const intents: IntentOption[] = [
   {
     id: "resell",
     title: "Quero revender máquinas da Ton",
-    description: "Quero saber como funciona para revender.",
+    description: "Quero saber como funciona para revender as maquininhas da Ton.",
     strength: "weak",
     href: RESELL_URL,
     external: true,
@@ -97,7 +97,7 @@ const intents: IntentOption[] = [
   {
     id: "promotion",
     title: "Promoção do mês",
-    description: "Quero entender a promoção do mês.",
+    description: "Quero entender melhor a promoção do mês [maquininha de graça].",
     strength: "weak",
     href: "#promocao",
     icon: <Gift className="size-5" />,
@@ -105,7 +105,7 @@ const intents: IntentOption[] = [
   {
     id: "research",
     title: "Estou apenas pesquisando",
-    description: "Quero conhecer melhor antes de decidir.",
+    description: "Quero conhecer melhor a Ton para decidir se vou comprar.",
     strength: "weak",
     href: "#hero",
     icon: <Search className="size-5" />,
