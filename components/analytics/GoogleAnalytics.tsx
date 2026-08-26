@@ -19,6 +19,10 @@ export function GoogleAnalytics() {
               window.dataLayer.push(arguments);
             };
 
+            /*
+             * Estado padrão do Consent Mode.
+             * Começa negado até o usuário escolher no banner.
+             */
             window.gtag('consent', 'default', {
               analytics_storage: 'denied',
               ad_storage: 'denied',
@@ -28,20 +32,14 @@ export function GoogleAnalytics() {
             });
 
             /*
-             * Preserva parâmetros de identificação de anúncios
-             * durante navegações/redirecionamentos.
+             * Permite que os identificadores de campanha
+             * sejam preservados quando disponíveis na URL.
              */
             window.gtag('set', 'url_passthrough', true);
 
             /*
-             * Redação de dados de anúncios quando o
-             * armazenamento de anúncios estiver negado.
-             */
-            window.gtag('set', 'ads_data_redaction', true);
-
-            /*
-             * Restaura o consentimento já salvo pelo
-             * CookieConsent.tsx.
+             * Restaura a preferência de consentimento
+             * salva pelo CookieConsent.
              */
             try {
               var storedConsent =
@@ -82,14 +80,14 @@ export function GoogleAnalytics() {
         }}
       />
 
-      {/* Google tag */}
+      {/* Biblioteca oficial do Google Analytics */}
       <Script
         id="google-gtag"
         src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
         strategy="afterInteractive"
       />
 
-      {/* Google Analytics 4 */}
+      {/* Inicialização do Google Analytics 4 */}
       <Script
         id="google-analytics"
         strategy="afterInteractive"
