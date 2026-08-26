@@ -51,9 +51,7 @@ function formatCurrency(value: number) {
     currency: "BRL",
   }).format(value);
 }
-function formatUpdatedDate(
-  value: string | null,
-) {
+function formatUpdatedDate(value: string | null) {
   if (!value) {
     return null;
   }
@@ -69,9 +67,7 @@ function formatUpdatedDate(
     timeZone: "America/Sao_Paulo",
   }).format(date);
 }
-const ratesUpdatedDate = formatUpdatedDate(
-  tonRatesMeta.sourceRatesUpdatedAt,
-);
+const ratesUpdatedDate = formatUpdatedDate(tonRatesMeta.sourceRatesUpdatedAt);
 
 function formatRate(value: number) {
   return value.toFixed(2).replace(".", ",");
@@ -128,10 +124,7 @@ function SelectField({
           "
         >
           {options.map((option) => (
-            <option
-              key={String(option.value)}
-              value={option.value}
-            >
+            <option key={String(option.value)} value={option.value}>
               {option.label}
             </option>
           ))}
@@ -148,11 +141,7 @@ function SelectField({
   );
 }
 
-function ComparisonRow({
-  item,
-}: {
-  item: ComparisonItem;
-}) {
+function ComparisonRow({ item }: { item: ComparisonItem }) {
   return (
     <motion.div
       layout
@@ -204,17 +193,13 @@ function ComparisonRow({
               item.isPix ? "text-orange-500" : "text-primary",
             ].join(" ")}
           >
-            {item.rate === 0
-              ? "Taxa zero"
-              : `${formatRate(item.rate)}%`}
+            {item.rate === 0 ? "Taxa zero" : `${formatRate(item.rate)}%`}
           </p>
         </div>
       </div>
 
       <div className="shrink-0 text-right">
-        <p className="text-[10px] font-medium text-muted">
-          Você recebe
-        </p>
+        <p className="text-[10px] font-medium text-muted">Você recebe</p>
 
         <AnimatePresence mode="wait">
           <motion.p
@@ -245,27 +230,19 @@ function ComparisonRow({
 }
 
 export default function TaxCalculator() {
-  const [plan, setPlan] =
-    useState<TonPlan>("ton-mega-plus");
+  const [plan, setPlan] = useState<TonPlan>("ton-mega-plus");
 
-  const [salesTier, setSalesTier] =
-    useState<SalesTier>("promotional");
+  const [salesTier, setSalesTier] = useState<SalesTier>("promotional");
 
-  const [brand, setBrand] =
-    useState<CardBrandGroup>("visa-master");
+  const [brand, setBrand] = useState<CardBrandGroup>("visa-master");
 
-  const [settlement, setSettlement] =
-    useState<Settlement>("one-business-day");
+  const [settlement, setSettlement] = useState<Settlement>("one-business-day");
 
-  const [installments, setInstallments] =
-    useState(3);
+  const [installments, setInstallments] = useState(3);
 
-  const [saleValue, setSaleValue] =
-    useState("100");
+  const [saleValue, setSaleValue] = useState("100");
 
-  const [limitMessage, setLimitMessage] =
-    useState(false);
-
+  const [limitMessage, setLimitMessage] = useState(false);
 
   const isSaleValueEmpty = saleValue.trim() === "";
   const availableSalesTierOptions = useMemo(() => {
@@ -274,9 +251,7 @@ export default function TaxCalculator() {
 
   useEffect(() => {
     const options = getSalesTierOptionsForPlan(plan);
-    const currentExists = options.some(
-      (option) => option.value === salesTier,
-    );
+    const currentExists = options.some((option) => option.value === salesTier);
 
     if (!currentExists && options.length > 0) {
       setSalesTier(options[0].value);
@@ -284,19 +259,11 @@ export default function TaxCalculator() {
   }, [plan, salesTier]);
 
   const numericSaleValue = useMemo(() => {
-    return Math.min(
-      MAX_SALE_VALUE,
-      parseSaleValue(saleValue),
-    );
+    return Math.min(MAX_SALE_VALUE, parseSaleValue(saleValue));
   }, [saleValue]);
 
   const rates = useMemo(() => {
-    return getTonRate(
-      plan,
-      salesTier,
-      brand,
-      settlement,
-    );
+    return getTonRate(plan, salesTier, brand, settlement);
   }, [plan, salesTier, brand, settlement]);
 
   const currentRate = useMemo(() => {
@@ -304,10 +271,7 @@ export default function TaxCalculator() {
       return 0;
     }
 
-    return getInstallmentRate(
-      rates,
-      installments,
-    );
+    return getInstallmentRate(rates, installments);
   }, [rates, installments]);
 
   const fee = useMemo(() => {
@@ -315,21 +279,16 @@ export default function TaxCalculator() {
   }, [numericSaleValue, currentRate]);
 
   const received = useMemo(() => {
-    return Math.max(
-      0,
-      numericSaleValue - fee,
-    );
+    return Math.max(0, numericSaleValue - fee);
   }, [numericSaleValue, fee]);
 
   const currentPaymentLabel =
-    installmentOptions.find(
-      (item) => item.value === installments,
-    )?.label ?? `${installments}x`;
+    installmentOptions.find((item) => item.value === installments)?.label ??
+    `${installments}x`;
 
   const currentSettlementLabel =
-    settlementOptions.find(
-      (item) => item.value === settlement,
-    )?.label ?? "1 dia útil";
+    settlementOptions.find((item) => item.value === settlement)?.label ??
+    "1 dia útil";
 
   const comparisonItems = useMemo<ComparisonItem[]>(() => {
     if (!rates) {
@@ -358,72 +317,45 @@ export default function TaxCalculator() {
 
     // DÉBITO
     if (selectedKey !== "debit") {
-      const rate = getInstallmentRate(
-        rates,
-        0,
-      );
+      const rate = getInstallmentRate(rates, 0);
 
       items.push({
         key: "debit",
         label: "Débito",
         rate,
-        amount:
-          numericSaleValue -
-          numericSaleValue *
-            (rate / 100),
+        amount: numericSaleValue - numericSaleValue * (rate / 100),
       });
     }
 
     // CRÉDITO À VISTA
     if (selectedKey !== "credit") {
-      const rate = getInstallmentRate(
-        rates,
-        1,
-      );
+      const rate = getInstallmentRate(rates, 1);
 
       items.push({
         key: "credit",
         label: "Crédito à vista",
         rate,
-        amount:
-          numericSaleValue -
-          numericSaleValue *
-            (rate / 100),
+        amount: numericSaleValue - numericSaleValue * (rate / 100),
       });
     }
 
     // CRÉDITO 12X
     if (selectedKey !== "credit-12x") {
-      const rate = getInstallmentRate(
-        rates,
-        12,
-      );
+      const rate = getInstallmentRate(rates, 12);
 
       items.push({
         key: "credit-12x",
         label: "Crédito 12x",
         rate,
-        amount:
-          numericSaleValue -
-          numericSaleValue *
-            (rate / 100),
+        amount: numericSaleValue - numericSaleValue * (rate / 100),
       });
     }
 
     return items;
-  }, [
-    installments,
-    numericSaleValue,
-    rates,
-  ]);
+  }, [installments, numericSaleValue, rates]);
 
-  function handleSaleValueChange(
-    value: string,
-  ) {
-    const cleaned = value.replace(
-      /[^\d.,]/g,
-      "",
-    );
+  function handleSaleValueChange(value: string) {
+    const cleaned = value.replace(/[^\d.,]/g, "");
 
     const parsed = parseSaleValue(cleaned);
 
@@ -448,11 +380,7 @@ export default function TaxCalculator() {
 
     setLimitMessage(false);
 
-    setSaleValue(
-      parsed
-        .toFixed(2)
-        .replace(".", ","),
-    );
+    setSaleValue(parsed.toFixed(2).replace(".", ","));
   }
 
   return (
@@ -542,15 +470,12 @@ export default function TaxCalculator() {
             "
           >
             Quanto você recebe
-            <span className="text-primary">
-              {" "}
-              de verdade?
-            </span>
+            <span className="text-primary"> de verdade?</span>
           </motion.h2>
 
           <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-muted sm:text-base">
-            Escolha as condições da venda e veja
-            imediatamente quanto entra na sua conta.
+            Escolha as condições da venda e veja imediatamente quanto entra na
+            sua conta.
           </p>
         </div>
 
@@ -614,9 +539,7 @@ export default function TaxCalculator() {
                   </p>
 
                   <p className="truncate text-lg font-black text-foreground">
-                    {plan === "ton-mega-plus"
-                      ? "Ton Mega+"
-                      : "Ton Black"}
+                    {plan === "ton-mega-plus" ? "Ton Mega+" : "Ton Black"}
                   </p>
                 </div>
               </div>
@@ -640,58 +563,52 @@ export default function TaxCalculator() {
               {/* PLANO */}
 
               <div className="border-b border-border pb-4">
-  <SelectField
-    label="Plano"
-    value={plan}
-    onChange={(value) =>
-      setPlan(
-        value as TonPlan,
-      )
-    }
-    options={planOptions.map(
-      (option) => ({
-        value: option.value,
-        label: option.available
-          ? option.label
-          : `${option.label} — em breve`,
-      }),
-    )}
-  />
+                <SelectField
+                  label="Plano"
+                  value={plan}
+                  onChange={(value) => setPlan(value as TonPlan)}
+                  options={planOptions.map((option) => ({
+                    value: option.value,
+                    label: option.available
+                      ? option.label
+                      : `${option.label} — em breve`,
+                  }))}
+                />
 
-  <AnimatePresence>
-    {plan === "ton-black" && (
-      <motion.div
-        initial={{
-          opacity: 0,
-          y: -4,
-        }}
-        animate={{
-          opacity: 1,
-          y: 0,
-        }}
-        exit={{
-          opacity: 0,
-          y: -4,
-        }}
-        className="
+                <AnimatePresence>
+                  {plan === "ton-black" && (
+                    <motion.div
+                      initial={{
+                        opacity: 0,
+                        y: -4,
+                      }}
+                      animate={{
+                        opacity: 1,
+                        y: 0,
+                      }}
+                      exit={{
+                        opacity: 0,
+                        y: -4,
+                      }}
+                      className="
           mt-3
           rounded-xl
           border border-orange-200
           bg-orange-50
           px-3.5 py-2.5
         "
-      >
-        <p className="text-xs font-black text-orange-700">
-          🟠 Exclusivo para MEI / PJ
-        </p>
+                    >
+                      <p className="text-xs font-black text-orange-700">
+                        🟠 Exclusivo para MEI / PJ
+                      </p>
 
-        <p className="mt-0.5 text-[11px] leading-4 text-orange-700/80">
-          Disponível para empresas e MEIs.
-        </p>
-      </motion.div>
-    )}
-  </AnimatePresence>
-</div>
+                      <p className="mt-0.5 text-[11px] leading-4 text-orange-700/80">
+                        Disponível para empresas e MEIs.
+                      </p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
 
               {/* VENDAS + RECEBIMENTO */}
 
@@ -699,22 +616,14 @@ export default function TaxCalculator() {
                 <SelectField
                   label="Vendas mensais"
                   value={salesTier}
-                  onChange={(value) =>
-                    setSalesTier(
-                      value as SalesTier,
-                    )
-                  }
+                  onChange={(value) => setSalesTier(value as SalesTier)}
                   options={availableSalesTierOptions}
                 />
 
                 <SelectField
                   label="Recebimento"
                   value={settlement}
-                  onChange={(value) =>
-                    setSettlement(
-                      value as Settlement,
-                    )
-                  }
+                  onChange={(value) => setSettlement(value as Settlement)}
                   options={settlementOptions}
                 />
               </div>
@@ -725,24 +634,16 @@ export default function TaxCalculator() {
                 <SelectField
                   label="Bandeiras"
                   value={brand}
-                  onChange={(value) =>
-                    setBrand(
-                      value as CardBrandGroup,
-                    )
-                  }
+                  onChange={(value) => setBrand(value as CardBrandGroup)}
                   options={brandOptions}
                 />
 
                 <SelectField
-  label="Parcelamento escolhido"
-  value={installments}
-  onChange={(value) =>
-    setInstallments(
-      Number(value),
-    )
-  }
-  options={installmentOptions}
-/>
+                  label="Parcelamento escolhido"
+                  value={installments}
+                  onChange={(value) => setInstallments(Number(value))}
+                  options={installmentOptions}
+                />
               </div>
 
               {/* VALOR */}
@@ -791,9 +692,7 @@ export default function TaxCalculator() {
                     inputMode="decimal"
                     value={saleValue}
                     onChange={(event) =>
-                      handleSaleValueChange(
-                        event.target.value,
-                      )
+                      handleSaleValueChange(event.target.value)
                     }
                     onBlur={normalizeSaleValue}
                     className="
@@ -812,40 +711,31 @@ export default function TaxCalculator() {
 
                 <p className="mt-2 text-[10px] text-muted">
                   Simule vendas de até{" "}
-                  <strong className="text-foreground">
-                    R$ 10.000,00
-                  </strong>
+                  <strong className="text-foreground">R$ 10.000,00</strong>
                 </p>
-                <a
-  href="#faq-planos"
+                <div
   className="
     group mt-5 flex w-full
     items-center justify-center
-    gap-3 rounded-xl
-    border border-primary/20
-    bg-primary/5
+    rounded-xl
+    border border-orange-300/30
+    bg-orange-50/60
     px-4 py-3.5
-    text-left
-    transition-all duration-300
-    hover:-translate-y-0.5
-    hover:border-primary/30
-    hover:bg-primary/10
-    hover:shadow-md
-    hover:shadow-primary/10
+    shadow-sm
   "
+  aria-hidden="true"
 >
-  <div className="min-w-0 flex-1">
-    <p className="text-xs font-semibold text-muted">
-      Ainda em dúvida qual plano escolher?
-    </p>
-
-    <p className="mt-0.5 text-sm font-extrabold text-primary">
-      Mega+ ou Black?
-    </p>
-  </div>
-
-  <ArrowRight className="size-5 shrink-0 text-primary transition-transform duration-300 group-hover:translate-x-1" />
-</a>
+  <p
+    className="
+      flex items-center justify-center gap-2
+      text-center
+      text-sm font-extrabold text-orange-600
+      animate-bounce
+    "
+  >
+    👇🔥 Quanto cai em sua Conta? 👇🔥
+  </p>
+</div>
 
                 <AnimatePresence>
                   {limitMessage && (
@@ -872,8 +762,7 @@ export default function TaxCalculator() {
                         text-orange-700
                       "
                     >
-                      O simulador está limitado a vendas de
-                      até R$ 10.000,00.
+                      O simulador está limitado a vendas de até R$ 10.000,00.
                     </motion.p>
                   )}
                 </AnimatePresence>
@@ -908,7 +797,6 @@ export default function TaxCalculator() {
                     </motion.p>
                   )}
                 </AnimatePresence>
-                
               </div>
             </div>
 
@@ -923,27 +811,17 @@ export default function TaxCalculator() {
               "
             >
               <div className="flex items-end justify-between gap-4">
-                
                 <div className="min-w-0">
-                    
                   <div className="flex flex-wrap items-center gap-2">
                     <p className="text-sm font-bold text-muted">
-    Em uma venda de{" "}
-    <strong className="text-foreground">
-      {formatCurrency(
-        numericSaleValue,
-      )}
-    </strong>
-  </p>
-                    
-                    <p className="text-sm font-bold text-muted">
-                      Você recebe:
+                      Em uma venda de{" "}
+                      <strong className="text-foreground">
+                        {formatCurrency(numericSaleValue)}
+                      </strong>
                     </p>
 
-                    
+                    <p className="text-sm font-bold text-muted">Você recebe:</p>
                   </div>
-
-                  
                 </div>
 
                 <div
@@ -994,28 +872,28 @@ export default function TaxCalculator() {
                   {formatCurrency(received)}
                 </motion.div>
               </AnimatePresence>
-                  <motion.p
-  initial={{
-    opacity: 0,
-    y: 5,
-  }}
-  animate={{
-    opacity: 1,
-    y: 0,
-  }}
-  transition={{
-    duration: 0.3,
-    delay: 0.05,
-  }}
-  className="
+              <motion.p
+                initial={{
+                  opacity: 0,
+                  y: 5,
+                }}
+                animate={{
+                  opacity: 1,
+                  y: 0,
+                }}
+                transition={{
+                  duration: 0.3,
+                  delay: 0.05,
+                }}
+                className="
     mt-2
     text-sm
     font-bold
     text-orange-600
   "
->
-  Esse valor cai na sua conta bancária
-</motion.p>
+              >
+                Esse valor cai na sua conta bancária
+              </motion.p>
               <div className="mt-3 flex flex-wrap gap-2">
                 <span
                   className="
@@ -1074,14 +952,9 @@ export default function TaxCalculator() {
 
               <div className="rounded-2xl border border-border bg-white px-4">
                 <AnimatePresence initial={false}>
-                  {comparisonItems.map(
-                    (item) => (
-                      <ComparisonRow
-                        key={item.key}
-                        item={item}
-                      />
-                    ),
-                  )}
+                  {comparisonItems.map((item) => (
+                    <ComparisonRow key={item.key} item={item} />
+                  ))}
                 </AnimatePresence>
               </div>
             </div>
@@ -1117,8 +990,7 @@ export default function TaxCalculator() {
                     </p>
 
                     <p className="mt-1 text-sm leading-6 text-muted">
-                      Use meu cupom e peça sua maquininha
-                      com 20% de desconto.
+                      Use meu cupom e peça sua maquininha com 20% de desconto.
                     </p>
                   </div>
                 </div>
@@ -1156,7 +1028,6 @@ export default function TaxCalculator() {
                   "
                 >
                   Pedir maquininha com 20% de desconto
-
                   <ArrowRight
                     className="
                       size-4
@@ -1209,58 +1080,52 @@ export default function TaxCalculator() {
               {/* PLANO */}
 
               <div className="mb-5">
-  <SelectField
-    label="Plano"
-    value={plan}
-    onChange={(value) =>
-      setPlan(
-        value as TonPlan,
-      )
-    }
-    options={planOptions.map(
-      (option) => ({
-        value: option.value,
-        label: option.available
-          ? option.label
-          : `${option.label} — em breve`,
-      }),
-    )}
-  />
+                <SelectField
+                  label="Plano"
+                  value={plan}
+                  onChange={(value) => setPlan(value as TonPlan)}
+                  options={planOptions.map((option) => ({
+                    value: option.value,
+                    label: option.available
+                      ? option.label
+                      : `${option.label} — em breve`,
+                  }))}
+                />
 
-  <AnimatePresence>
-    {plan === "ton-black" && (
-      <motion.div
-        initial={{
-          opacity: 0,
-          y: -4,
-        }}
-        animate={{
-          opacity: 1,
-          y: 0,
-        }}
-        exit={{
-          opacity: 0,
-          y: -4,
-        }}
-        className="
+                <AnimatePresence>
+                  {plan === "ton-black" && (
+                    <motion.div
+                      initial={{
+                        opacity: 0,
+                        y: -4,
+                      }}
+                      animate={{
+                        opacity: 1,
+                        y: 0,
+                      }}
+                      exit={{
+                        opacity: 0,
+                        y: -4,
+                      }}
+                      className="
           mt-3
           rounded-xl
           border border-orange-200
           bg-orange-50
           px-3.5 py-2.5
         "
-      >
-        <p className="text-xs font-black text-orange-700">
-          🟠 Exclusivo para MEI / PJ
-        </p>
+                    >
+                      <p className="text-xs font-black text-orange-700">
+                        🟠 Exclusivo para MEI / PJ
+                      </p>
 
-        <p className="mt-0.5 text-[11px] leading-4 text-orange-700/80">
-          Disponível para empresas e MEIs.
-        </p>
-      </motion.div>
-    )}
-  </AnimatePresence>
-</div>
+                      <p className="mt-0.5 text-[11px] leading-4 text-orange-700/80">
+                        Disponível para empresas e MEIs.
+                      </p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
 
               {/* VENDAS + RECEBIMENTO */}
 
@@ -1268,22 +1133,14 @@ export default function TaxCalculator() {
                 <SelectField
                   label="Vendas mensais"
                   value={salesTier}
-                  onChange={(value) =>
-                    setSalesTier(
-                      value as SalesTier,
-                    )
-                  }
+                  onChange={(value) => setSalesTier(value as SalesTier)}
                   options={availableSalesTierOptions}
                 />
 
                 <SelectField
                   label="Recebimento"
                   value={settlement}
-                  onChange={(value) =>
-                    setSettlement(
-                      value as Settlement,
-                    )
-                  }
+                  onChange={(value) => setSettlement(value as Settlement)}
                   options={settlementOptions}
                 />
               </div>
@@ -1294,24 +1151,16 @@ export default function TaxCalculator() {
                 <SelectField
                   label="Bandeiras"
                   value={brand}
-                  onChange={(value) =>
-                    setBrand(
-                      value as CardBrandGroup,
-                    )
-                  }
+                  onChange={(value) => setBrand(value as CardBrandGroup)}
                   options={brandOptions}
                 />
 
                 <SelectField
-  label="Parcelamento escolhido"
-  value={installments}
-  onChange={(value) =>
-    setInstallments(
-      Number(value),
-    )
-  }
-  options={installmentOptions}
-/>
+                  label="Parcelamento escolhido"
+                  value={installments}
+                  onChange={(value) => setInstallments(Number(value))}
+                  options={installmentOptions}
+                />
               </div>
 
               {/* VALOR */}
@@ -1360,9 +1209,7 @@ export default function TaxCalculator() {
                     inputMode="decimal"
                     value={saleValue}
                     onChange={(event) =>
-                      handleSaleValueChange(
-                        event.target.value,
-                      )
+                      handleSaleValueChange(event.target.value)
                     }
                     onBlur={normalizeSaleValue}
                     className="
@@ -1380,9 +1227,7 @@ export default function TaxCalculator() {
 
                 <p className="mt-2 text-[10px] text-muted">
                   Simule vendas de até{" "}
-                  <strong className="text-foreground">
-                    R$ 10.000,00
-                  </strong>
+                  <strong className="text-foreground">R$ 10.000,00</strong>
                 </p>
 
                 <AnimatePresence>
@@ -1410,8 +1255,7 @@ export default function TaxCalculator() {
                         text-orange-700
                       "
                     >
-                      O simulador está limitado a vendas
-                      de até R$ 10.000,00.
+                      O simulador está limitado a vendas de até R$ 10.000,00.
                     </motion.p>
                   )}
                 </AnimatePresence>
@@ -1446,7 +1290,6 @@ export default function TaxCalculator() {
                     </motion.p>
                   )}
                 </AnimatePresence>
-                
               </div>
 
               {/* =================================================
@@ -1460,8 +1303,8 @@ export default function TaxCalculator() {
                   </p>
 
                   <p className="mt-1 text-xs leading-5 text-muted">
-                    Além de taxas competitivas, você conta
-                    com benefícios para vender mais.
+                    Além de taxas competitivas, você conta com benefícios para
+                    vender mais.
                   </p>
                 </div>
 
@@ -1565,8 +1408,8 @@ export default function TaxCalculator() {
                   </p>
                 </div>
                 <a
-  href="#faq-planos"
-  className="
+                  href="#faq-planos"
+                  className="
     group mt-5 flex w-full
     items-center justify-center
     gap-3 rounded-xl
@@ -1581,19 +1424,19 @@ export default function TaxCalculator() {
     hover:shadow-md
     hover:shadow-primary/10
   "
->
-  <div className="min-w-0 flex-1">
-    <p className="text-xs font-semibold text-muted">
-      Ainda em dúvida qual plano escolher?
-    </p>
+                >
+                  <div className="min-w-0 flex-1">
+                    <p className="text-xs font-semibold text-muted">
+                      Ainda em dúvida qual plano escolher?
+                    </p>
 
-    <p className="mt-0.5 text-sm font-extrabold text-primary">
-      Mega+ ou Black?
-    </p>
-  </div>
+                    <p className="mt-0.5 text-sm font-extrabold text-primary">
+                      Conheça mais Detalhes Sobre os Planos Mega+ e Black
+                    </p>
+                  </div>
 
-  <ArrowRight className="size-5 shrink-0 text-primary transition-transform duration-300 group-hover:translate-x-1" />
-</a>
+                  <ArrowRight className="size-5 shrink-0 text-primary transition-transform duration-300 group-hover:translate-x-1" />
+                </a>
               </div>
             </div>
 
@@ -1637,21 +1480,15 @@ export default function TaxCalculator() {
                 <div className="border-b border-border pb-7">
                   <div className="flex items-start justify-between gap-5">
                     <div>
-<div>
-    <p className="text-sm font-bold text-muted">
-    Em uma venda de{" "}  
-    <strong className="text-foreground">
-      {formatCurrency(
-        numericSaleValue,
-      )}
-    </strong>
-     {" "} você recebe:
-  </p>
-    
-  
-
-  
-</div>
+                      <div>
+                        <p className="text-sm font-bold text-muted">
+                          Em uma venda de{" "}
+                          <strong className="text-foreground">
+                            {formatCurrency(numericSaleValue)}
+                          </strong>{" "}
+                          você recebe:
+                        </p>
+                      </div>
                     </div>
 
                     <div
@@ -1701,28 +1538,28 @@ export default function TaxCalculator() {
                       {formatCurrency(received)}
                     </motion.div>
                   </AnimatePresence>
-<motion.p
-  initial={{
-    opacity: 0,
-    y: 5,
-  }}
-  animate={{
-    opacity: 1,
-    y: 0,
-  }}
-  transition={{
-    duration: 0.3,
-    delay: 0.05,
-  }}
-  className="
+                  <motion.p
+                    initial={{
+                      opacity: 0,
+                      y: 5,
+                    }}
+                    animate={{
+                      opacity: 1,
+                      y: 0,
+                    }}
+                    transition={{
+                      duration: 0.3,
+                      delay: 0.05,
+                    }}
+                    className="
     mt-2
     text-sm
     font-bold
     text-orange-600
   "
->
-  Esse valor cai na sua conta bancária
-</motion.p>
+                  >
+                    Esse valor cai na sua conta bancária
+                  </motion.p>
                   <div className="mt-4 flex flex-wrap gap-2">
                     <span
                       className="
@@ -1774,21 +1611,16 @@ export default function TaxCalculator() {
                     </h3>
 
                     <p className="mt-1 text-xs leading-5 text-muted">
-                      Compare quanto entraria na conta
-                      usando o mesmo valor em outros parcelamentos.
+                      Compare quanto entraria na conta usando o mesmo valor em
+                      outros parcelamentos.
                     </p>
                   </div>
 
                   <div className="rounded-2xl border border-border bg-white px-4 shadow-sm">
                     <AnimatePresence initial={false}>
-                      {comparisonItems.map(
-                        (item) => (
-                          <ComparisonRow
-                            key={item.key}
-                            item={item}
-                          />
-                        ),
-                      )}
+                      {comparisonItems.map((item) => (
+                        <ComparisonRow key={item.key} item={item} />
+                      ))}
                     </AnimatePresence>
                   </div>
                 </div>
@@ -1824,8 +1656,8 @@ export default function TaxCalculator() {
                         </p>
 
                         <p className="mt-1 text-sm leading-6 text-muted">
-                          Use meu cupom e peça sua maquininha
-                          com 20% de desconto.
+                          Use meu cupom e peça sua maquininha com 20% de
+                          desconto.
                         </p>
                       </div>
                     </div>
@@ -1838,8 +1670,7 @@ export default function TaxCalculator() {
                         event: "machine_click",
                         location: "tax_calculator",
                         destination: "checkout",
-                        label:
-                          "Pedir maquininha com 20% de desconto",
+                        label: "Pedir maquininha com 20% de desconto",
                         product: "ton",
                         conversionStrength: "strong",
                       }}
@@ -1864,7 +1695,6 @@ export default function TaxCalculator() {
                       "
                     >
                       Pedir maquininha com 20% de desconto
-
                       <ArrowRight
                         className="
                           size-4
@@ -1888,28 +1718,25 @@ export default function TaxCalculator() {
         {/* OBSERVAÇÃO */}
 
         <div className="mx-auto mt-5 max-w-3xl text-center">
-  <p className="text-[11px] leading-5 text-muted">
-    Simulação informativa baseada nas taxas cadastradas
-    nesta calculadora. As condições podem variar conforme
-    plano, faixa de vendas e condições comerciais vigentes.
-  </p>
+          <p className="text-[11px] leading-5 text-muted">
+            Simulação informativa baseada nas taxas cadastradas nesta
+            calculadora. As condições podem variar conforme plano, faixa de
+            vendas e condições comerciais vigentes.
+          </p>
 
-  {tonRatesMeta.status === "success" &&
-    ratesUpdatedDate && (
-      <p className="mt-2 text-[11px] font-semibold text-primary">
-        ✓ Taxas atualizadas em {ratesUpdatedDate}
-        <span className="ml-1 font-medium text-muted">
-          · fonte: Ton
-        </span>
-      </p>
-    )}
+          {tonRatesMeta.status === "success" && ratesUpdatedDate && (
+            <p className="mt-2 text-[11px] font-semibold text-primary">
+              ✓ Taxas atualizadas em {ratesUpdatedDate}
+              <span className="ml-1 font-medium text-muted">· fonte: Ton</span>
+            </p>
+          )}
 
-  {tonRatesMeta.status === "error" && (
-  <p className="mt-2 text-[11px] font-semibold text-orange-600">
-    ⚠️ Estamos usando a última tabela válida de taxas.
-  </p>
-)}
-</div>
+          {tonRatesMeta.status === "error" && (
+            <p className="mt-2 text-[11px] font-semibold text-orange-600">
+              ⚠️ Estamos usando a última tabela válida de taxas.
+            </p>
+          )}
+        </div>
       </div>
     </section>
   );

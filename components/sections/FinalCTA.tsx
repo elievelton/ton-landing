@@ -15,10 +15,18 @@ import { siteConfig } from "@/config/site"
 
 export function FinalCTA() {
   return (
-    <section className="relative overflow-hidden bg-white py-20 sm:py-24">
+    <section
+      aria-label="Chamada final"
+      className="relative mx-4 overflow-hidden rounded-[1.75rem] border border-white/10 bg-gradient-to-br from-[#064E3B] via-[#052E2B] to-[#022C22] text-white shadow-[0_20px_60px_rgba(5,46,43,0.22)] sm:mx-6 lg:mx-8"
+    >
       <Container>
         <FadeIn>
-          <div className="relative overflow-hidden rounded-[1.75rem] bg-gradient-to-br from-[#064E3B] via-[#052E2B] to-[#022C22] px-6 py-12 text-white shadow-[0_20px_60px_rgba(5,46,43,0.22)] sm:px-10 sm:py-14 lg:px-16 lg:py-16">
+          <div className="relative py-8 sm:py-10 lg:py-12">
+            <div
+              className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-orange-300/70 to-transparent"
+              aria-hidden="true"
+            />
+
             {/* Elementos decorativos */}
             <div
               className="pointer-events-none absolute -right-24 -top-24 size-80 rounded-full bg-emerald-300/10 blur-3xl"

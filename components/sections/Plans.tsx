@@ -398,7 +398,7 @@ export function Plans() {
     </p>
 
     <p className="mt-0.5 text-sm font-extrabold text-primary">
-      Mega+ ou Black?
+      Conheça mais Detalhes Sobre os Planos Mega+ e Black
     </p>
   </div>
 
