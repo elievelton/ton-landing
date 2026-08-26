@@ -15,12 +15,13 @@ export type TonRatesMeta = {
 
 export const tonRatesMeta: TonRatesMeta = {
   "status": "success",
-  "fetchedAt": "2026-08-23T14:43:33.952Z",
+  "fetchedAt": "2026-08-26T15:51:38.438Z",
   "sourceRatesUpdatedAt": "2026-08-20T12:25:35.373Z",
   "sourceConditionsUpdatedAt": "2026-06-12T15:07:02.279Z",
   "plans": 10,
   "megaTiers": 6,
   "blackTiers": 4,
   "configs": 40,
-  "installmentsPerCreditConfig": 21
+  "installmentsPerCreditConfig": 21,
+  "message": "Nenhuma alteração nas taxas."
 };
