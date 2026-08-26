@@ -54,6 +54,13 @@ export function MachineCard({ machine }: MachineCardProps) {
   const machineUrl = machineLinks[machine.id as keyof typeof machineLinks]
   const priceInfo = MACHINE_PRICES[machine.id]
 
+  const discountLabel =
+    machine.id === "t1"
+      ? "Ton OFF 70%"
+      : machine.id === "t3-smart"
+        ? "Ton 71% + 20% Cupom"
+        : "Ton 72% + 20% Cupom"
+
   return (
     <article
       className={[
@@ -175,7 +182,7 @@ export function MachineCard({ machine }: MachineCardProps) {
                 {priceInfo.original}
               </span>
               <span className="inline-block rounded-md bg-orange-500/10 px-2 py-0.5 text-[10px] font-bold text-orange-600">
-                Desconto Ton + 20% Cupom
+                {discountLabel}
               </span>
             </div>
 
