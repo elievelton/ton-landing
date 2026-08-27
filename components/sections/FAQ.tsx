@@ -9,6 +9,7 @@ import {
   BatteryCharging,
   ChevronDown,
   CircleHelp,
+  Link2,
   CreditCard,
   Printer,
   Smartphone,
@@ -103,12 +104,69 @@ const faqs = [
     type: "machines",
   },
   {
+    question: "Com a Ton consigo vender enviando um link para o cliente?",
+    id: "faq-link-pagamento",
+    answer:
+      `Sim. A Ton oferece o Link de Pagamento pelo aplicativo, permitindo criar uma cobrança com o valor desejado e enviar o link para o cliente pelo WhatsApp, redes sociais ou outro canal. Assim, você pode vender à distância sem precisar levar a maquininha até o cliente.
+
+Na hora de pagar, o cliente acessa o link e escolhe uma das formas de pagamento disponíveis, como Pix ou cartão de crédito, inclusive com parcelamento em até 12x. Você cria o link pelo app, compartilha com o cliente e acompanha a venda pela própria conta Ton.
+
+É uma solução especialmente útil para quem vende pelo WhatsApp, Instagram, delivery, encomendas ou atende clientes que estão longe da loja. Você amplia suas formas de vender sem precisar estar fisicamente com o cliente.`,
+    type: "payment-link",
+  },
+  {
     question: "O que é o TapTon?",
     id: "faq-tapton",
     answer:
       "O TapTon permite utilizar um celular compatível para receber pagamentos por aproximação, transformando o próprio smartphone em uma solução de pagamento. É uma alternativa interessante para quem quer começar a vender sem depender imediatamente de uma maquininha física.",
   },
 ]
+
+export function FAQPurchaseCTA({
+  location,
+}: {
+  location: string
+}) {
+  return (
+    <div className="mt-6 overflow-hidden rounded-2xl border border-orange-500/20 bg-orange-500/5 p-4 sm:p-5">
+      <div className="flex items-start gap-3">
+        <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-orange-500 text-white shadow-md shadow-orange-500/20">
+          <BadgePercent className="size-5" />
+        </div>
+
+        <div>
+          <p className="text-sm font-black text-foreground">
+            Pronto para ter sua maquininha?
+          </p>
+
+          <p className="mt-1 text-sm leading-6 text-muted">
+            Aproveite meu cupom exclusivo e peça sua maquininha Ton com
+            <strong className="text-foreground"> 20% de desconto</strong>.
+          </p>
+        </div>
+      </div>
+
+      <TrackedLink
+        href={siteConfig.links.catalog}
+        target="_blank"
+        rel="noopener noreferrer"
+        celebration
+        tracking={{
+          event: "cta_click",
+          location,
+          destination: "catalog",
+          label: "Pedir maquininha Ton com 20% de desconto",
+          product: "ton",
+          conversionStrength: "medium",
+        }}
+        className="group relative mt-4 flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl bg-orange-500 px-4 py-3.5 text-sm font-extrabold text-white shadow-lg shadow-orange-500/20 transition-all duration-300 hover:-translate-y-0.5 hover:bg-orange-600 hover:shadow-xl hover:shadow-orange-500/30 active:translate-y-0"
+      >
+        <span>Quero minha maquininha com 20% OFF</span>
+        <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" />
+      </TrackedLink>
+    </div>
+  )
+}
 
 export function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(0)
@@ -300,10 +358,22 @@ export function FAQ() {
 
                             <SecondMachineCTA />
                           </>
+                        ) : faq.type === "payment-link" ? (
+                          <>
+                            <p className="whitespace-pre-line text-sm leading-7 text-muted sm:text-base">
+                              {faq.answer}
+                            </p>
+
+                            <PaymentLinkCTA />
+                          </>
                         ) : (
-                          <p className="whitespace-pre-line text-sm leading-7 text-muted sm:text-base">
-                            {faq.answer}
-                          </p>
+                          <>
+                            <p className="whitespace-pre-line text-sm leading-7 text-muted sm:text-base">
+                              {faq.answer}
+                            </p>
+
+                            <FAQPurchaseCTA location={faq.id} />
+                          </>
                         )}
                       </div>
                     </div>
@@ -419,6 +489,69 @@ function SecondMachineCTA() {
 
         <span className="relative z-10">
           Quero minha segunda máquina com 20% OFF
+        </span>
+
+        <ArrowRight
+          className="
+            relative z-10 size-4
+            transition-transform duration-300
+            group-hover:translate-x-1
+          "
+        />
+      </TrackedLink>
+    </div>
+  )
+}
+
+function PaymentLinkCTA() {
+  return (
+    <div className="mt-6 overflow-hidden rounded-2xl border border-primary/20 bg-primary/[0.04] p-4 sm:p-5">
+      <div className="flex items-start gap-3">
+        <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary text-white shadow-md shadow-primary/20">
+          <Link2 className="size-5" />
+        </div>
+
+        <div>
+          <p className="text-sm font-black text-foreground">
+            Venda de onde estiver, sem perder oportunidades
+          </p>
+
+          <p className="mt-1 text-sm leading-6 text-muted">
+            Com o Link de Pagamento, você pode cobrar à distância e oferecer mais
+            opções para o seu cliente. E com meu cupom, você ainda pode pedir sua
+            maquininha Ton com 20% de desconto.
+          </p>
+        </div>
+      </div>
+
+      <TrackedLink
+        href={siteConfig.links.catalog}
+        target="_blank"
+        rel="noopener noreferrer"
+        celebration
+        tracking={{
+          event: "cta_click",
+          location: "faq_link_payment",
+          destination: "catalog",
+          label: "Pedir maquininha Ton com 20% de desconto",
+          product: "ton",
+          conversionStrength: "medium",
+        }}
+        className="
+          group relative mt-4 flex w-full
+          items-center justify-center gap-2 overflow-hidden rounded-xl
+          bg-orange-500 px-4 py-3.5
+          text-sm font-extrabold text-white
+          shadow-lg shadow-orange-500/20
+          transition-all duration-300
+          hover:-translate-y-0.5
+          hover:bg-orange-600
+          hover:shadow-xl hover:shadow-orange-500/30
+          active:translate-y-0
+        "
+      >
+        <span className="relative z-10">
+          Quero minha maquininha com 20% OFF
         </span>
 
         <ArrowRight

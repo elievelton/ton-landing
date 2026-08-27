@@ -104,7 +104,7 @@ function SelectField({
 }) {
   return (
     <div className="flex min-w-0 flex-1 flex-col">
-      <label className="mb-1.5 text-[11px] font-bold uppercase tracking-[0.08em] text-muted">
+      <label className="mb-1.5 text-[11px] font-bold uppercase tracking-[0.08em] text-sky-600">
         {label}
       </label>
 
@@ -114,13 +114,13 @@ function SelectField({
           onChange={(event) => onChange(event.target.value)}
           className="
             h-12 w-full appearance-none
-            rounded-xl border border-border
-            bg-white px-3.5 pr-9
-            text-sm font-semibold text-foreground
+            rounded-xl border border-sky-200
+            bg-sky-50/50 px-3.5 pr-9
+            text-sm font-semibold text-sky-950
             outline-none transition-all
-            hover:border-primary/40
-            focus:border-primary
-            focus:ring-4 focus:ring-primary/10
+            hover:border-sky-400
+            focus:border-sky-500
+            focus:ring-4 focus:ring-sky-500/10
           "
         >
           {options.map((option) => (
@@ -133,7 +133,7 @@ function SelectField({
         <ChevronDown
           className="
             pointer-events-none absolute right-3 top-1/2
-            size-4 -translate-y-1/2 text-muted
+            size-4 -translate-y-1/2 text-sky-600
           "
         />
       </div>
@@ -219,7 +219,7 @@ function ComparisonRow({ item }: { item: ComparisonItem }) {
             transition={{
               duration: 0.18,
             }}
-            className="text-lg font-black tracking-tight text-foreground"
+            className="text-lg font-black tracking-tight text-primary"
           >
             {formatCurrency(item.amount)}
           </motion.p>
@@ -666,22 +666,22 @@ export default function TaxCalculator() {
                   className="
                     flex h-14 overflow-hidden
                     rounded-2xl
-                    border border-border
-                    bg-white
+                    border border-sky-200
+                    bg-sky-50/40
                     transition-all
-                    focus-within:border-primary
+                    focus-within:border-sky-500
                     focus-within:ring-4
-                    focus-within:ring-primary/10
+                    focus-within:ring-sky-500/10
                   "
                 >
                   <div
                     className="
                       flex items-center
-                      border-r border-border
-                      bg-slate-50
+                      border-r border-sky-200
+                      bg-sky-100/70
                       px-4
                       text-sm font-bold
-                      text-muted
+                      text-sky-700
                     "
                   >
                     R$
@@ -701,7 +701,7 @@ export default function TaxCalculator() {
                       px-4
                       text-2xl
                       font-black
-                      text-foreground
+                      text-sky-950
                       outline-none
                     "
                     placeholder="100,00"
@@ -861,7 +861,8 @@ export default function TaxCalculator() {
                     duration: 0.28,
                   }}
                   className="
-                    mt-2
+                    mt-4
+                    sm:mt-2
                     text-5xl
                     font-black
                     tracking-tight
@@ -886,7 +887,8 @@ export default function TaxCalculator() {
                   delay: 0.05,
                 }}
                 className="
-    mt-2
+    mt-4
+    sm:mt-2
     text-sm
     font-bold
     text-orange-600
@@ -942,11 +944,11 @@ export default function TaxCalculator() {
             <div className="px-5 py-5 sm:px-7">
               <div className="mb-2">
                 <h3 className="text-base font-black text-foreground">
-                  Veja também como cai em sua conta:
+                  Quanto cai em sua conta no mesmo plano:
                 </h3>
 
                 <p className="text-xs leading-5 text-muted">
-                  Compare o recebimento usando o mesmo valor da venda.
+                  Outras formas de recebimento do mesmo plano escolhido.
                 </p>
               </div>
 
@@ -1008,24 +1010,24 @@ export default function TaxCalculator() {
                     conversionStrength: "strong",
                   }}
                   className="
-                    group mt-4 flex w-full
-                    items-center
-                    justify-center
-                    gap-2.5
-                    rounded-xl
-                    bg-primary
-                    px-4 py-3.5
-                    text-sm font-black
-                    text-white
-                    shadow-lg
-                    shadow-primary/20
-                    transition-all
-                    duration-300
-                    hover:-translate-y-0.5
-                    hover:bg-primary-dark
-                    hover:shadow-xl
-                    active:translate-y-0
-                  "
+                        group
+                        mt-4 flex w-full
+                        items-center
+                        justify-center
+                        gap-2.5
+                        rounded-xl
+                        bg-orange-500
+                        px-4 py-3.5
+                        text-sm font-black
+                        text-white
+                        shadow-lg
+                        shadow-orange-500/20
+                        transition-all duration-300
+                        hover:-translate-y-0.5
+                        hover:bg-orange-600
+                        hover:shadow-xl
+                        active:translate-y-0
+                      "
                 >
                   Pedir maquininha com 20% de desconto
                   <ArrowRight
@@ -1183,22 +1185,22 @@ export default function TaxCalculator() {
                   className="
                     flex h-16 overflow-hidden
                     rounded-2xl
-                    border border-border
-                    bg-white
+                    border border-sky-200
+                    bg-sky-50/40
                     transition-all
-                    focus-within:border-primary
+                    focus-within:border-sky-500
                     focus-within:ring-4
-                    focus-within:ring-primary/10
+                    focus-within:ring-sky-500/10
                   "
                 >
                   <div
                     className="
                       flex items-center
-                      border-r border-border
-                      bg-slate-50
+                      border-r border-sky-200
+                      bg-sky-100/70
                       px-5
                       text-sm font-bold
-                      text-muted
+                      text-sky-700
                     "
                   >
                     R$
@@ -1217,7 +1219,7 @@ export default function TaxCalculator() {
                       bg-transparent
                       px-5
                       text-2xl font-black
-                      text-foreground
+                      text-sky-950
                       outline-none
                     "
                     placeholder="100,00"
@@ -1607,12 +1609,11 @@ export default function TaxCalculator() {
                 <div className="py-7">
                   <div className="mb-3">
                     <h3 className="text-lg font-black text-foreground">
-                      Veja também como cai em sua conta:
+                      Quanto cai em sua conta no mesmo plano:
                     </h3>
 
                     <p className="mt-1 text-xs leading-5 text-muted">
-                      Compare quanto entraria na conta usando o mesmo valor em
-                      outros parcelamentos.
+                      Quando cai em sua conta usando o mesmo plano, mas em parcelamentos diferentes.
                     </p>
                   </div>
 
@@ -1681,15 +1682,15 @@ export default function TaxCalculator() {
                         justify-center
                         gap-2.5
                         rounded-xl
-                        bg-primary
+                        bg-orange-500
                         px-4 py-3.5
                         text-sm font-black
                         text-white
                         shadow-lg
-                        shadow-primary/20
+                        shadow-orange-500/20
                         transition-all duration-300
                         hover:-translate-y-0.5
-                        hover:bg-primary-dark
+                        hover:bg-orange-600
                         hover:shadow-xl
                         active:translate-y-0
                       "
