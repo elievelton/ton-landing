@@ -401,7 +401,7 @@ export function IntentRouter() {
                         <span
                           className="absolute -left-1.5 -top-3 z-30 animate-[badgePulse_2.4s_ease-in-out_infinite] rounded-full border-2 border-white bg-primary px-2.5 py-1 text-[9px] font-black uppercase tracking-wide text-white shadow-md shadow-primary/30"
                         >
-                          🔥 Mais Procurado
+                          🔥 Menu mais acessado
                         </span>
                       )}
 
