@@ -64,7 +64,7 @@ const intents: IntentOption[] = [
   {
     id: "compare_fees",
     title: "Estou pesquisando as taxas das maquininhas Ton",
-    description: "Quero saber quanto realmente recebo em cada venda na Ton.",
+    description: "Quero simular quanto realmente recebo na minha conta em cada venda na Ton.",
     strength: "medium",
     href: "#calculadora",
     icon: <BarChart3 className="size-5" />,
@@ -219,13 +219,13 @@ export function IntentRouter() {
           0%,
           100% {
             opacity: 0.45;
-            box-shadow: 0 0 0 0 rgba(249, 115, 22, 0);
+            box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
           }
           50% {
             opacity: 1;
             box-shadow:
-              0 0 0 3px rgba(249, 115, 22, 0.12),
-              0 0 18px rgba(249, 115, 22, 0.18);
+              0 0 0 4px rgba(34, 197, 94, 0.12),
+              0 0 22px rgba(34, 197, 94, 0.24);
           }
         }
 
@@ -238,6 +238,28 @@ export function IntentRouter() {
           50% {
             opacity: 0.75;
             transform: scale(1.015);
+          }
+        }
+
+        @keyframes cartPulse {
+          0%,
+          100% {
+            transform: scale(1);
+            box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+          }
+          50% {
+            transform: scale(1.09);
+            box-shadow: 0 0 0 7px rgba(34, 197, 94, 0.13), 0 0 20px rgba(34, 197, 94, 0.24);
+          }
+        }
+
+        @keyframes badgePulse {
+          0%,
+          100% {
+            transform: scale(1);
+          }
+          50% {
+            transform: scale(1.04);
           }
         }
 
@@ -291,7 +313,7 @@ export function IntentRouter() {
 
               const iconStyles: Record<IntentId, string> = {
                 buy_machine:
-                  "border-orange-200 bg-orange-50 text-orange-600 group-hover:bg-orange-100",
+                  "border-primary-200 bg-primary-50 text-primary-600 group-hover:bg-primary-100",
                 compare_fees:
                   "border-blue-200 bg-blue-50 text-blue-600 group-hover:bg-blue-100",
                 choose_plan:
@@ -322,7 +344,7 @@ export function IntentRouter() {
                     handleClick(event, intent)
                   }
                   className={[
-                    "group relative flex items-center gap-3 overflow-hidden rounded-2xl border bg-white px-3.5 py-3.5",
+                    "group relative flex items-center gap-3 overflow-visible rounded-2xl border bg-white px-3.5 py-3.5",
                     "transition-all duration-300",
                     "hover:-translate-y-0.5 hover:shadow-md active:translate-y-0",
                     isStrong
@@ -333,7 +355,12 @@ export function IntentRouter() {
                   {isStrong && (
                     <>
                       <span
-                        className="pointer-events-none absolute inset-0 rounded-2xl border-2 border-blue-500 opacity-80 animate-[borderGlow_2.4s_ease-in-out_infinite]"
+                        className="pointer-events-none absolute inset-y-3 left-0 w-1 rounded-r-full bg-primary shadow-[0_0_12px_rgba(34,197,94,0.45)]"
+                        aria-hidden="true"
+                      />
+
+                      <span
+                        className="pointer-events-none absolute inset-0 rounded-2xl border-2 border-primary opacity-80 animate-[borderGlow_2.4s_ease-in-out_infinite]"
                         aria-hidden="true"
                       />
 
@@ -359,7 +386,9 @@ export function IntentRouter() {
                     ].join(" ")}
                     aria-hidden="true"
                   >
-                    {intent.icon}
+                    <span className={isStrong ? "animate-[cartPulse_2s_ease-in-out_infinite] rounded-lg" : ""}>
+                      {intent.icon}
+                    </span>
                   </div>
 
                   <div className="min-w-0 flex-1">
@@ -369,9 +398,19 @@ export function IntentRouter() {
                       </p>
 
                       {isStrong && (
-                        <span className="relative z-10 mt-0.5 shrink-0 rounded-full bg-orange-500 px-2 py-0.5 text-[9px] font-black uppercase tracking-wide text-white shadow-sm shadow-orange-500/20">
-                          20% OFF
+                        <span
+                          className="absolute -left-1.5 -top-3 z-30 animate-[badgePulse_2.4s_ease-in-out_infinite] rounded-full border-2 border-white bg-primary px-2.5 py-1 text-[9px] font-black uppercase tracking-wide text-white shadow-md shadow-primary/30"
+                        >
+                          🔥 Mais Procurado
                         </span>
+                      )}
+
+                      {isStrong && (
+                        <div className="relative z-10 mt-0.5 flex shrink-0 items-center">
+                          <span className="rounded-full bg-orange-500 px-2 py-0.5 text-[9px] font-black uppercase tracking-wide text-white shadow-sm shadow-orange-500/20">
+                            20% OFF
+                          </span>
+                        </div>
                       )}
                     </div>
 
@@ -380,7 +419,10 @@ export function IntentRouter() {
                     </p>
                   </div>
 
-                  <ChevronRight className="relative z-10 size-5 shrink-0 text-slate-400 transition-all duration-300 group-hover:translate-x-1 group-hover:text-slate-700" />
+                  <ChevronRight className={[
+                    "relative z-10 size-5 shrink-0 transition-all duration-300 group-hover:translate-x-1",
+                    isStrong ? "text-primary" : "text-slate-400 group-hover:text-slate-700",
+                  ].join(" ")} />
                 </a>
               )
             })}
