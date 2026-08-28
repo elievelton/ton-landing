@@ -33,13 +33,16 @@ export const siteConfig = {
 
   links: {
     catalog:
-      "https://www.ton.com.br/catalogo?coupon=ELIEVELTOSILVAVC&userAnticipation=0&utm_medium=invite_share&utm_source=revendedor",
+      "https://www.ton.com.br/catalogo?coupon=ELIEVELTOEDIMAR10&utm_medium=invite_share&utm_source=revendedor",
 
     tapTon:
       "https://www.ton.com.br/lp-tapton?r=B3814312-CCDD-451A-AB1A-7F6AD4A30063",
 
     plansAndRates:
       "https://www.ton.com.br/planos-e-taxas?coupon=ELIEVELTOSILVAVC&userAnticipation=0&utm_medium=invite_share&utm_source=revendedor",
+    
+    resell:
+      "https://www.ton.com.br/renda-ton/?utm_partner_id=0212b610-6211-4d59-9477-58d0662803b5&utm_source=indique_um_parceiro_nov22&utm_term=0212b610-6211-4d59-9477-58d0662803b5",
 
     machines: {
       t3Smart:

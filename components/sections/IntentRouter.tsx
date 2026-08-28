@@ -48,8 +48,6 @@ declare global {
   }
 }
 
-const RESELL_URL =
-  "https://www.ton.com.br/renda-ton/?utm_partner_id=0212b610-6211-4d59-9477-58d0662803b5&utm_source=indique_um_parceiro_nov22&utm_term=0212b610-6211-4d59-9477-58d0662803b5"
 
 const intents: IntentOption[] = [
   {
@@ -90,7 +88,7 @@ const intents: IntentOption[] = [
     title: "Quero revender máquinas da Ton",
     description: "Quero saber como funciona para revender as maquininhas da Ton.",
     strength: "weak",
-    href: RESELL_URL,
+    href: siteConfig.links.resell,
     external: true,
     icon: <Users className="size-5" />,
   },
