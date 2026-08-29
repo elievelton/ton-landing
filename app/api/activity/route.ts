@@ -12,8 +12,8 @@ const ACTIVITY_LATEST_KEY = "ton:activity:latest"
 
 const MAX_MESSAGE_LENGTH = 200
 const RATE_LIMIT_WINDOW_SECONDS = 60
-const POST_RATE_LIMIT_MAX_REQUESTS = 5
-const GET_RATE_LIMIT_MAX_REQUESTS = 30
+const POST_RATE_LIMIT_MAX_REQUESTS = 15
+const GET_RATE_LIMIT_MAX_REQUESTS = 50
 
 function getBrazilDate() {
   return new Intl.DateTimeFormat("en-CA", {
