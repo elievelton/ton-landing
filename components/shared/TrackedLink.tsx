@@ -97,6 +97,42 @@ function readIntentContext(): IntentContext | null {
   }
 }
 
+function isTonAffiliateLink(href?: string | URL) {
+  if (!href) return false
+
+  try {
+    const url = new URL(href.toString())
+
+    return (
+      url.protocol === "https:" &&
+      url.hostname === "www.ton.com.br"
+    )
+  } catch {
+    return false
+  }
+}
+
+function logAffiliateClick(href?: string | URL) {
+  if (!isTonAffiliateLink(href)) {
+    return
+  }
+
+  void fetch("/api/log", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      type: "affiliate_click",
+      message: "Clique em link de afiliado Ton",
+      path: window.location.pathname,
+    }),
+    keepalive: true,
+  }).catch(() => {
+    // Logging is non-critical and must never affect navigation.
+  })
+}
+
 function registerFinalIntent(
   context: IntentContext | null,
 ) {
@@ -149,6 +185,8 @@ export function TrackedLink({
   function handleClick(
     event: MouseEvent<HTMLAnchorElement>,
   ) {
+    logAffiliateClick(href)
+
     const intentContext =
       tracking.conversionStrength === "strong"
         ? readIntentContext()
