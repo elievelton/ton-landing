@@ -23,6 +23,11 @@ const nextConfig: NextConfig = {
             value:
               "camera=(), microphone=(), geolocation=(), payment=()",
           },
+          {
+            key: "Content-Security-Policy-Report-Only",
+            value:
+              "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://bat.bing.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self' data: https:; connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com https://bat.bing.net; frame-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self';",
+          },
         ],
       },
     ]
