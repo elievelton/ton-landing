@@ -8,21 +8,20 @@ const redis = new Redis({
 })
 
 const LOG_KEY = "ton:logs:recent"
-
 const MAX_LOGS = 100
-const MAX_MESSAGE_LENGTH = 200
 
+const MAX_MESSAGE_LENGTH = 1000
 const RATE_LIMIT_WINDOW_SECONDS = 60
 const RATE_LIMIT_MAX_REQUESTS = 30
 
-const ALLOWED_TYPES = [
+const ALLOWED_LOG_TYPES = [
   "affiliate_click",
   "csp_violation",
   "api_error",
   "rate_limit",
 ] as const
 
-type LogType = (typeof ALLOWED_TYPES)[number]
+type LogType = (typeof ALLOWED_LOG_TYPES)[number]
 
 type LogEntry = {
   id: string
@@ -33,24 +32,35 @@ type LogEntry = {
 }
 
 function getClientIp(request: NextRequest) {
-  const forwardedFor = request.headers.get("x-forwarded-for")
+  const forwardedFor =
+    request.headers.get("x-forwarded-for")
 
   if (forwardedFor) {
-    return forwardedFor.split(",")[0]?.trim() || "unknown"
+    return (
+      forwardedFor.split(",")[0]?.trim() ||
+      "unknown"
+    )
   }
 
-  return request.headers.get("x-real-ip")?.trim() || "unknown"
+  return (
+    request.headers.get("x-real-ip")?.trim() ||
+    "unknown"
+  )
 }
 
 function getRateLimitKey(request: NextRequest) {
+  const ip = getClientIp(request)
+
   const ipHash = createHash("sha256")
-    .update(getClientIp(request))
+    .update(ip)
     .digest("hex")
 
   return `ton:logs:ratelimit:${ipHash}`
 }
 
-async function checkRateLimit(request: NextRequest) {
+async function checkRateLimit(
+  request: NextRequest
+) {
   const key = getRateLimitKey(request)
 
   const count = await redis.incr(key)
@@ -65,8 +75,11 @@ async function checkRateLimit(request: NextRequest) {
   return count <= RATE_LIMIT_MAX_REQUESTS
 }
 
-function isAdminAuthorized(request: NextRequest) {
-  const configuredToken = process.env.LOG_ADMIN_TOKEN
+function isAdminAuthorized(
+  request: NextRequest
+) {
+  const configuredToken =
+    process.env.LOG_ADMIN_TOKEN
 
   if (!configuredToken) {
     return false
@@ -88,7 +101,9 @@ function isAdminAuthorized(request: NextRequest) {
   )
 }
 
-export async function GET(request: NextRequest) {
+export async function GET(
+  request: NextRequest
+) {
   try {
     if (!isAdminAuthorized(request)) {
       return NextResponse.json(
@@ -101,7 +116,7 @@ export async function GET(request: NextRequest) {
       )
     }
 
-    const logs = await redis.lrange<string>(
+    const logs = await redis.lrange<LogEntry>(
       LOG_KEY,
       0,
       MAX_LOGS - 1
@@ -128,14 +143,18 @@ export async function GET(request: NextRequest) {
   }
 }
 
-export async function POST(request: NextRequest) {
+export async function POST(
+  request: NextRequest
+) {
   try {
-    const allowed = await checkRateLimit(request)
+    const allowed =
+      await checkRateLimit(request)
 
     if (!allowed) {
       return NextResponse.json(
         {
-          error: "Muitas solicitações.",
+          error:
+            "Muitas solicitações. Tente novamente em instantes.",
         },
         {
           status: 429,
@@ -204,7 +223,7 @@ export async function POST(request: NextRequest) {
         : ""
 
     if (
-      !ALLOWED_TYPES.includes(
+      !ALLOWED_LOG_TYPES.includes(
         type as LogType
       )
     ) {
@@ -222,7 +241,7 @@ export async function POST(request: NextRequest) {
       "message" in body &&
       typeof body.message === "string"
         ? body.message.trim()
-        : undefined
+        : ""
 
     if (
       message &&
@@ -230,7 +249,7 @@ export async function POST(request: NextRequest) {
     ) {
       return NextResponse.json(
         {
-          error: "Mensagem muito longa.",
+          error: "Mensagem de log muito longa.",
         },
         {
           status: 400,
@@ -241,14 +260,18 @@ export async function POST(request: NextRequest) {
     const path =
       "path" in body &&
       typeof body.path === "string"
-        ? body.path.slice(0, 200)
+        ? body.path.trim().slice(0, 500)
         : undefined
 
     const log: LogEntry = {
       id: crypto.randomUUID(),
       type: type as LogType,
-      ...(message ? { message } : {}),
-      ...(path ? { path } : {}),
+      ...(message
+        ? { message }
+        : {}),
+      ...(path
+        ? { path }
+        : {}),
       timestamp: Date.now(),
     }
 
@@ -281,6 +304,44 @@ export async function POST(request: NextRequest) {
       {
         error:
           "Não foi possível registrar o log.",
+      },
+      {
+        status: 500,
+      }
+    )
+  }
+}
+
+export async function DELETE(
+  request: NextRequest
+) {
+  try {
+    if (!isAdminAuthorized(request)) {
+      return NextResponse.json(
+        {
+          error: "Não autorizado.",
+        },
+        {
+          status: 401,
+        }
+      )
+    }
+
+    await redis.del(LOG_KEY)
+
+    return NextResponse.json({
+      success: true,
+    })
+  } catch (error) {
+    console.error(
+      "Erro ao limpar logs:",
+      error
+    )
+
+    return NextResponse.json(
+      {
+        error:
+          "Não foi possível limpar os logs.",
       },
       {
         status: 500,
