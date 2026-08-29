@@ -12,7 +12,8 @@ const ACTIVITY_LATEST_KEY = "ton:activity:latest"
 
 const MAX_MESSAGE_LENGTH = 200
 const RATE_LIMIT_WINDOW_SECONDS = 60
-const RATE_LIMIT_MAX_REQUESTS = 5
+const POST_RATE_LIMIT_MAX_REQUESTS = 5
+const GET_RATE_LIMIT_MAX_REQUESTS = 30
 
 function getBrazilDate() {
   return new Intl.DateTimeFormat("en-CA", {
@@ -43,18 +44,25 @@ function getClientIp(request: NextRequest) {
   return request.headers.get("x-real-ip")?.trim() || "unknown"
 }
 
-function getRateLimitKey(request: NextRequest) {
+function getRateLimitKey(
+  request: NextRequest,
+  scope: "get" | "post"
+) {
   const ip = getClientIp(request)
 
   const ipHash = createHash("sha256")
     .update(ip)
     .digest("hex")
 
-  return `ton:activity:ratelimit:${ipHash}`
+  return `ton:activity:ratelimit:${scope}:${ipHash}`
 }
 
-async function checkRateLimit(request: NextRequest) {
-  const key = getRateLimitKey(request)
+async function checkRateLimit(
+  request: NextRequest,
+  scope: "get" | "post",
+  maxRequests: number
+) {
+  const key = getRateLimitKey(request, scope)
 
   const count = await redis.incr(key)
 
@@ -62,15 +70,33 @@ async function checkRateLimit(request: NextRequest) {
     await redis.expire(key, RATE_LIMIT_WINDOW_SECONDS)
   }
 
-  if (count > RATE_LIMIT_MAX_REQUESTS) {
-    return false
-  }
-
-  return true
+  return count <= maxRequests
 }
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
+    const allowed = await checkRateLimit(
+      request,
+      "get",
+      GET_RATE_LIMIT_MAX_REQUESTS
+    )
+
+    if (!allowed) {
+      return NextResponse.json(
+        {
+          error:
+            "Muitas solicitações. Tente novamente em instantes.",
+        },
+        {
+          status: 429,
+          headers: {
+            "Retry-After": String(
+              RATE_LIMIT_WINDOW_SECONDS
+            ),
+          },
+        }
+      )
+    }
     const dailyActivityKey = getDailyActivityKey()
 
     const [
@@ -108,7 +134,11 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   try {
-    const allowed = await checkRateLimit(request)
+    const allowed = await checkRateLimit(
+      request,
+      "post",
+      POST_RATE_LIMIT_MAX_REQUESTS
+    )
 
     if (!allowed) {
       return NextResponse.json(
