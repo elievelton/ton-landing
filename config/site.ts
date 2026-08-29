@@ -1,7 +1,7 @@
 export const siteConfig = {
   name: "Parceiro Ton",
 
-  url: "https://maquininhacomcupom.com.br",
+  url: "https://www.maquininhacomcupom.com.br",
 
   title:
     "Maquininha Ton com Cupom de Desconto | Taxas, Planos e Cupom",

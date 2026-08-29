@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto"
 import { Redis } from "@upstash/redis"
 import { NextRequest, NextResponse } from "next/server"
 
@@ -6,23 +7,13 @@ const redis = new Redis({
   token: process.env.KV_REST_API_TOKEN!,
 })
 
-/*
- * Contador histórico.
- *
- * Essa chave já existe no projeto e NÃO deve ser apagada.
- * Ela passa a representar o total global de atividades
- * registradas desde o início.
- */
 const ACTIVITY_TOTAL_KEY = "ton:activity:count"
-
 const ACTIVITY_LATEST_KEY = "ton:activity:latest"
 
-/*
- * Retorna a data atual considerando o horário de Brasília.
- *
- * Exemplo:
- * 2026-08-05
- */
+const MAX_MESSAGE_LENGTH = 200
+const RATE_LIMIT_WINDOW_SECONDS = 60
+const RATE_LIMIT_MAX_REQUESTS = 5
+
 function getBrazilDate() {
   return new Intl.DateTimeFormat("en-CA", {
     timeZone: "America/Sao_Paulo",
@@ -32,18 +23,6 @@ function getBrazilDate() {
   }).format(new Date())
 }
 
-/*
- * Cada dia possui sua própria chave no Redis.
- *
- * Exemplo:
- * ton:activity:daily:2026-08-05
- *
- * No dia seguinte:
- * ton:activity:daily:2026-08-06
- *
- * Assim não precisamos executar nenhum processo
- * à meia-noite para zerar o contador.
- */
 function getDailyActivityKey() {
   return `ton:activity:daily:${getBrazilDate()}`
 }
@@ -52,6 +31,42 @@ type LatestActivity = {
   id: string
   message: string
   createdAt: number
+}
+
+function getClientIp(request: NextRequest) {
+  const forwardedFor = request.headers.get("x-forwarded-for")
+
+  if (forwardedFor) {
+    return forwardedFor.split(",")[0]?.trim() || "unknown"
+  }
+
+  return request.headers.get("x-real-ip")?.trim() || "unknown"
+}
+
+function getRateLimitKey(request: NextRequest) {
+  const ip = getClientIp(request)
+
+  const ipHash = createHash("sha256")
+    .update(ip)
+    .digest("hex")
+
+  return `ton:activity:ratelimit:${ipHash}`
+}
+
+async function checkRateLimit(request: NextRequest) {
+  const key = getRateLimitKey(request)
+
+  const count = await redis.incr(key)
+
+  if (count === 1) {
+    await redis.expire(key, RATE_LIMIT_WINDOW_SECONDS)
+  }
+
+  if (count > RATE_LIMIT_MAX_REQUESTS) {
+    return false
+  }
+
+  return true
 }
 
 export async function GET() {
@@ -93,9 +108,71 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json()
+    const allowed = await checkRateLimit(request)
+
+    if (!allowed) {
+      return NextResponse.json(
+        {
+          error:
+            "Muitas solicitações. Tente novamente em instantes.",
+        },
+        {
+          status: 429,
+          headers: {
+            "Retry-After": String(
+              RATE_LIMIT_WINDOW_SECONDS
+            ),
+          },
+        }
+      )
+    }
+
+    const contentType = request.headers.get("content-type") ?? ""
+
+    if (!contentType.toLowerCase().includes("application/json")) {
+      return NextResponse.json(
+        {
+          error:
+            "O conteúdo da solicitação deve ser JSON.",
+        },
+        {
+          status: 415,
+        }
+      )
+    }
+
+    let body: unknown
+
+    try {
+      body = await request.json()
+    } catch {
+      return NextResponse.json(
+        {
+          error: "JSON inválido.",
+        },
+        {
+          status: 400,
+        }
+      )
+    }
+
+    if (
+      typeof body !== "object" ||
+      body === null ||
+      Array.isArray(body)
+    ) {
+      return NextResponse.json(
+        {
+          error: "Formato de dados inválido.",
+        },
+        {
+          status: 400,
+        }
+      )
+    }
 
     const message =
+      "message" in body &&
       typeof body.message === "string"
         ? body.message.trim()
         : ""
@@ -112,14 +189,20 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    if (message.length > MAX_MESSAGE_LENGTH) {
+      return NextResponse.json(
+        {
+          error:
+            "Mensagem da atividade é muito longa.",
+        },
+        {
+          status: 400,
+        }
+      )
+    }
+
     const dailyActivityKey = getDailyActivityKey()
 
-    /*
-     * Incrementamos os dois contadores:
-     *
-     * 1. Histórico/global
-     * 2. Somente o dia atual
-     */
     const [
       totalCount,
       todayCount,
@@ -128,12 +211,6 @@ export async function POST(request: NextRequest) {
       redis.incr(dailyActivityKey),
     ])
 
-    /*
-     * Mantemos a chave diária por 48 horas.
-     *
-     * Isso evita acumular milhares de chaves antigas
-     * desnecessariamente no Redis.
-     */
     await redis.expire(
       dailyActivityKey,
       60 * 60 * 48
@@ -145,10 +222,6 @@ export async function POST(request: NextRequest) {
       createdAt: Date.now(),
     }
 
-    /*
-     * Mantemos exatamente o funcionamento atual
-     * da última atividade.
-     */
     await redis.set(
       ACTIVITY_LATEST_KEY,
       latestActivity,
