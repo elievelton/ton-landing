@@ -65,6 +65,69 @@ async function checkRateLimit(request: NextRequest) {
   return count <= RATE_LIMIT_MAX_REQUESTS
 }
 
+function isAdminAuthorized(request: NextRequest) {
+  const configuredToken = process.env.LOG_ADMIN_TOKEN
+
+  if (!configuredToken) {
+    return false
+  }
+
+  const authorization =
+    request.headers.get("authorization")
+
+  if (!authorization) {
+    return false
+  }
+
+  const [scheme, token] =
+    authorization.split(" ")
+
+  return (
+    scheme === "Bearer" &&
+    token === configuredToken
+  )
+}
+
+export async function GET(request: NextRequest) {
+  try {
+    if (!isAdminAuthorized(request)) {
+      return NextResponse.json(
+        {
+          error: "Não autorizado.",
+        },
+        {
+          status: 401,
+        }
+      )
+    }
+
+    const logs = await redis.lrange<string>(
+      LOG_KEY,
+      0,
+      MAX_LOGS - 1
+    )
+
+    return NextResponse.json({
+      logs,
+    })
+  } catch (error) {
+    console.error(
+      "Erro ao consultar logs:",
+      error
+    )
+
+    return NextResponse.json(
+      {
+        error:
+          "Não foi possível consultar os logs.",
+      },
+      {
+        status: 500,
+      }
+    )
+  }
+}
+
 export async function POST(request: NextRequest) {
   try {
     const allowed = await checkRateLimit(request)
