@@ -18,6 +18,7 @@ import { Button } from "@/components/ui/button"
 import { siteConfig } from "@/config/site"
 import {
   activePromotion,
+  isPromotionActive,
   PROMOTION_END,
 } from "@/config/promotions"
 
@@ -63,18 +64,7 @@ export function PromotionBanner() {
     }
   }, [])
 
-  if (!activePromotion.enabled) {
-    return null
-  }
-
-  const expired =
-    countdown !== null &&
-    countdown.days === 0 &&
-    countdown.hours === 0 &&
-    countdown.minutes === 0 &&
-    countdown.seconds === 0
-
-  if (expired) {
+  if (!isPromotionActive()) {
     return null
   }
 

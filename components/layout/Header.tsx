@@ -16,8 +16,7 @@ import {
 } from "@/components/ui/sheet"
 import { siteConfig } from "@/config/site"
 import {
-  activePromotion,
-  PROMOTION_END,
+  isPromotionActive,
 } from "@/config/promotions"
 
 const navigation = [
@@ -40,10 +39,7 @@ export function Header() {
 
   useEffect(() => {
     function updatePromotionVisibility() {
-      setPromotionVisible(
-        activePromotion.enabled &&
-          Date.now() < PROMOTION_END,
-      )
+      setPromotionVisible(isPromotionActive())
     }
 
     updatePromotionVisibility()

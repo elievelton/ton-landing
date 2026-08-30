@@ -23,9 +23,9 @@ export const activePromotion = {
   disclaimer:
     "Promoção sujeita às condições de elegibilidade e demais regras do regulamento oficial da Ton.",
 }
-
+//Aqui é usado para ativar a promoção, colocar a data de validade da promoção
 export const PROMOTION_END = new Date(
-  "2026-08-30T23:59:59-03:00"
+  "2026-08-31T23:59:59-03:00"
 ).getTime()
 
 export function isPromotionActive() {
