@@ -15,7 +15,7 @@ export type TonRatesMeta = {
 
 export const tonRatesMeta: TonRatesMeta = {
   "status": "success",
-  "fetchedAt": "2026-08-29T15:23:23.710Z",
+  "fetchedAt": "2026-08-30T15:07:45.053Z",
   "sourceRatesUpdatedAt": "2026-08-20T12:25:35.373Z",
   "sourceConditionsUpdatedAt": "2026-06-12T15:07:02.279Z",
   "plans": 10,
