@@ -15,15 +15,15 @@ export type TonRatesMeta = {
 };
 
 export const tonRatesMeta: TonRatesMeta = {
-  status: "success",
-  fetchedAt: "2026-08-31T03:24:20.416Z",
-  sourceRatesUpdatedAt: "2026-08-20T12:25:35.373Z",
-  sourceConditionsUpdatedAt: "2026-07-01T12:24:51.271Z",
-  plans: 11,
-  megaTiers: 6,
-  blackTiers: 4,
-  tapTonConfigs: 4,
-  configs: 40,
-  installmentsPerCreditConfig: 21,
-  message: "Nenhuma alteração nas taxas.",
+  "status": "success",
+  "fetchedAt": "2026-08-31T17:46:12.490Z",
+  "sourceRatesUpdatedAt": "2026-08-20T12:25:35.373Z",
+  "sourceConditionsUpdatedAt": "2026-07-01T12:24:51.271Z",
+  "plans": 11,
+  "megaTiers": 6,
+  "blackTiers": 4,
+  "tapTonConfigs": 4,
+  "configs": 40,
+  "installmentsPerCreditConfig": 21,
+  "message": "Nenhuma alteração nas taxas."
 };
