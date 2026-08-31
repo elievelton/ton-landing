@@ -8,20 +8,22 @@ export type TonRatesMeta = {
   plans: number;
   megaTiers: number;
   blackTiers: number;
+  tapTonConfigs: number;
   configs: number;
   installmentsPerCreditConfig: number;
   message?: string;
 };
 
 export const tonRatesMeta: TonRatesMeta = {
-  "status": "success",
-  "fetchedAt": "2026-08-30T15:07:45.053Z",
-  "sourceRatesUpdatedAt": "2026-08-20T12:25:35.373Z",
-  "sourceConditionsUpdatedAt": "2026-06-12T15:07:02.279Z",
-  "plans": 10,
-  "megaTiers": 6,
-  "blackTiers": 4,
-  "configs": 40,
-  "installmentsPerCreditConfig": 21,
-  "message": "Nenhuma alteração nas taxas."
+  status: "success",
+  fetchedAt: "2026-08-31T03:24:20.416Z",
+  sourceRatesUpdatedAt: "2026-08-20T12:25:35.373Z",
+  sourceConditionsUpdatedAt: "2026-07-01T12:24:51.271Z",
+  plans: 11,
+  megaTiers: 6,
+  blackTiers: 4,
+  tapTonConfigs: 4,
+  configs: 40,
+  installmentsPerCreditConfig: 21,
+  message: "Nenhuma alteração nas taxas.",
 };

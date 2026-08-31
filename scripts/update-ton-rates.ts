@@ -113,6 +113,12 @@ type TonRateConfig = {
   rates: InstallmentRates;
 };
 
+type TapTonRateConfig = {
+  brand: CardBrandGroup;
+  settlement: Settlement;
+  rates: InstallmentRates;
+};
+
 type Meta = {
   status: "success" | "error";
   fetchedAt: string;
@@ -121,9 +127,37 @@ type Meta = {
   plans: number;
   megaTiers: number;
   blackTiers: number;
+  tapTonConfigs: number;
   configs: number;
   installmentsPerCreditConfig: number;
   message?: string;
+};
+
+// Tipagens usadas para os dados capturados pelo scraper.
+type ScrapedInstallment = {
+  installment?: number;
+  mdr?: number | string;
+};
+
+type ScrapedMdr = {
+  card_brand?: string;
+  payment_method?: string;
+  installments?: ScrapedInstallment[];
+};
+
+type ScrapedCondition = {
+  anticipation_delay?: number;
+  liquidation_type?: string;
+  mdrs?: ScrapedMdr[];
+};
+
+type ScrapedPlan = {
+  type?: string;
+  name?: string;
+  tierLabel?: string;
+  updated_at?: string;
+  conditions_updated_at?: string;
+  conditions?: ScrapedCondition[];
 };
 
 function nowIso() {
@@ -152,31 +186,7 @@ function collectFrshStates(html: string): unknown[] {
   return states;
 }
 
-type TonMdr = {
-  card_brand?: string;
-  payment_method?: string;
-  installments?: Array<{
-    installment?: number;
-    mdr?: number;
-  }>;
-};
-
-type TonCondition = {
-  anticipation_delay?: number;
-  liquidation_type?: string;
-  mdrs?: TonMdr[];
-};
-
-type TonPlanRecord = {
-  type?: string;
-  name?: string;
-  tierLabel?: string;
-  updated_at?: string;
-  conditions_updated_at?: string;
-  conditions?: TonCondition[];
-};
-
-function findPlans(value: unknown): TonPlanRecord[] | null {
+function findPlans(value: unknown): ScrapedPlan[] | null {
   if (Array.isArray(value)) {
     for (const item of value) {
       const result = findPlans(item);
@@ -196,17 +206,7 @@ function findPlans(value: unknown): TonPlanRecord[] | null {
   const object = value as Record<string, unknown>;
 
   if (Array.isArray(object.plans)) {
-    if (
-      object.plans.every(
-        (item) =>
-          item !== null &&
-          typeof item === "object",
-      )
-    ) {
-      return object.plans as TonPlanRecord[];
-    }
-
-    return null;
+    return object.plans as ScrapedPlan[];
   }
 
   for (const child of Object.values(object)) {
@@ -220,7 +220,7 @@ function findPlans(value: unknown): TonPlanRecord[] | null {
   return null;
 }
 
-function scorePlans(plans: TonPlanRecord[]): number {
+function scorePlans(plans: ScrapedPlan[]): number {
   const transactional = plans.filter(
     (plan) =>
       plan?.type === "transactional" &&
@@ -241,23 +241,25 @@ function scorePlans(plans: TonPlanRecord[]): number {
     (plan) => plan?.name === "Ton Black",
   );
 
+  const hasTapTon = plans.some(
+    (plan) =>
+      plan?.type === "tap_phone" &&
+      plan?.name === "TapTon",
+  );
+
   return (
     transactional.length * 1000 +
     tierLabels.size * 100 +
     (hasMega ? 5000 : 0) +
-    (hasBlack ? 5000 : 0)
+    (hasBlack ? 5000 : 0) +
+    (hasTapTon ? 3000 : 0)
   );
 }
 
-function findBestPlansFromHtml(
-  html: string,
-): TonPlanRecord[] | null {
+function findBestPlansFromHtml(html: string): ScrapedPlan[] | null {
   const states = collectFrshStates(html);
 
-  let best: {
-    plans: TonPlanRecord[];
-    score: number;
-  } | null = null;
+  let best: { plans: ScrapedPlan[]; score: number } | null = null;
 
   for (const state of states) {
     const plans = findPlans(state);
@@ -280,7 +282,7 @@ function findBestPlansFromHtml(
 }
 
 function mapSettlement(
-  condition: TonCondition,
+  condition: ScrapedCondition,
 ): Settlement | null {
   if (
     condition?.anticipation_delay === 0 &&
@@ -299,10 +301,8 @@ function mapSettlement(
   return null;
 }
 
-
-
 function getRatesFromMdrs(
-  mdrs: TonMdr[],
+  mdrs: ScrapedMdr[],
   brandGroup: CardBrandGroup,
 ): InstallmentRates {
   const brands =
@@ -321,30 +321,29 @@ function getRatesFromMdrs(
   >();
 
   for (const mdr of mdrs) {
-    const cardBrand = mdr.card_brand;
-
-    if (!cardBrand || !brands.includes(cardBrand)) {
+    if (!mdr.card_brand || !brands.includes(mdr.card_brand)) {
       continue;
     }
 
     const installments = Array.isArray(
-      mdr.installments,
+      mdr?.installments,
     )
       ? mdr.installments
       : [];
 
     if (mdr?.payment_method === "debit_card") {
       const first = installments.find(
-        (item) =>
+        (item: ScrapedInstallment) =>
           item?.installment === 1,
       );
 
       if (
         first &&
-        Number.isFinite(first.mdr)
+        first.mdr !== undefined &&
+        Number.isFinite(Number(first.mdr))
       ) {
         debitByBrand.set(
-          cardBrand,
+          mdr.card_brand,
           Number(first.mdr),
         );
       }
@@ -352,28 +351,26 @@ function getRatesFromMdrs(
 
     if (mdr?.payment_method === "credit_card") {
       const ordered = installments
-  .filter(
-    (item) =>
-      typeof item.installment === "number" &&
-      Number.isInteger(item.installment) &&
-      item.installment >= 1 &&
-      item.installment <= 21 &&
-      typeof item.mdr === "number" &&
-      Number.isFinite(item.mdr),
-  )
-  .sort(
-    (a, b) =>
-      (a.installment ?? 0) -
-      (b.installment ?? 0),
-  );
+        .filter(
+          (item: ScrapedInstallment) =>
+            Number.isInteger(item?.installment) &&
+            (item.installment ?? 0) >= 1 &&
+            (item.installment ?? 0) <= 21 &&
+            item.mdr !== undefined &&
+            Number.isFinite(Number(item.mdr)),
+        )
+        .sort(
+          (a: ScrapedInstallment, b: ScrapedInstallment) =>
+            (a.installment ?? 0) - (b.installment ?? 0),
+        );
 
       if (ordered.length === 21) {
         creditByBrand.set(
-  cardBrand,
-  ordered.map((item) =>
-    Number(item.mdr),
-  ),
-);
+          mdr.card_brand,
+          ordered.map((item: ScrapedInstallment) =>
+            Number(item.mdr),
+          ),
+        );
       }
     }
   }
@@ -438,15 +435,17 @@ function getRatesFromMdrs(
 }
 
 function buildConfigs(
-  plans: TonPlanRecord[],
+  plans: ScrapedPlan[],
 ): {
   configs: TonRateConfig[];
+  tapTonConfigs: TapTonRateConfig[];
   megaTiers: Set<string>;
   blackTiers: Set<string>;
   sourceRatesUpdatedAt: string | null;
   sourceConditionsUpdatedAt: string | null;
 } {
   const configs: TonRateConfig[] = [];
+  const tapTonConfigs: TapTonRateConfig[] = [];
   const megaTiers = new Set<string>();
   const blackTiers = new Set<string>();
 
@@ -454,18 +453,97 @@ function buildConfigs(
   let sourceConditionsUpdatedAt: string | null = null;
 
   for (const plan of plans) {
-    if (plan?.type !== "transactional") {
+    const name = plan?.name;
+
+    if (plan?.type === "tap_phone" && name === "TapTon") {
+      if (plan?.updated_at) {
+        sourceRatesUpdatedAt =
+          !sourceRatesUpdatedAt ||
+          new Date(plan.updated_at) >
+            new Date(sourceRatesUpdatedAt)
+            ? plan.updated_at
+            : sourceRatesUpdatedAt;
+      }
+
+      if (plan?.conditions_updated_at) {
+        sourceConditionsUpdatedAt =
+          !sourceConditionsUpdatedAt ||
+          new Date(plan.conditions_updated_at) >
+            new Date(sourceConditionsUpdatedAt)
+            ? plan.conditions_updated_at
+            : sourceConditionsUpdatedAt;
+      }
+
+      if (!Array.isArray(plan?.conditions)) {
+        throw new Error(
+          "TapTon não possui conditions válidas.",
+        );
+      }
+
+      const settlementMap = new Map<
+        Settlement,
+        ScrapedCondition
+      >();
+
+      for (const condition of plan.conditions) {
+        const settlement =
+          mapSettlement(condition);
+
+        if (settlement) {
+          settlementMap.set(
+            settlement,
+            condition,
+          );
+        }
+      }
+
+      for (const settlement of [
+        "same-day",
+        "one-business-day",
+      ] as const) {
+        const condition =
+          settlementMap.get(settlement);
+
+        if (!condition) {
+          throw new Error(
+            `TapTon não possui a condição ${settlement}.`,
+          );
+        }
+
+        if (!Array.isArray(condition.mdrs)) {
+          throw new Error(
+            `TapTon / ${settlement} não possui mdrs válidos.`,
+          );
+        }
+
+        for (const brand of [
+          "visa-master",
+          "elo-amex",
+        ] as const) {
+          tapTonConfigs.push({
+            brand,
+            settlement,
+            rates: getRatesFromMdrs(
+              condition.mdrs,
+              brand,
+            ),
+          });
+        }
+      }
+
       continue;
     }
 
-    const name = plan?.name;
+    if (plan?.type !== "transactional") {
+      continue;
+    }
 
     if (name !== "Ton Mega+" && name !== "Ton Black") {
       continue;
     }
 
     const tierLabel = String(
-      plan.tierLabel ?? "",
+      plan?.tierLabel ?? "",
     );
 
     const tier = TIER_MAP[tierLabel];
@@ -500,7 +578,7 @@ function buildConfigs(
           : sourceConditionsUpdatedAt;
     }
 
-    if (!Array.isArray(plan.conditions)) {
+    if (!Array.isArray(plan?.conditions)) {
       throw new Error(
         `Plano ${name} / ${tierLabel} não possui conditions válidas.`,
       );
@@ -508,7 +586,7 @@ function buildConfigs(
 
     const settlementMap = new Map<
       Settlement,
-      TonCondition
+      ScrapedCondition
     >();
 
     for (const condition of plan.conditions) {
@@ -562,6 +640,7 @@ function buildConfigs(
 
   return {
     configs,
+    tapTonConfigs,
     megaTiers,
     blackTiers,
     sourceRatesUpdatedAt,
@@ -571,6 +650,7 @@ function buildConfigs(
 
 function validateConfigs(
   configs: TonRateConfig[],
+  tapTonConfigs: TapTonRateConfig[],
   megaTiers: Set<string>,
   blackTiers: Set<string>,
 ) {
@@ -598,6 +678,40 @@ function validateConfigs(
     if (!blackTiers.has(expected)) {
       throw new Error(
         `Faixa do Black ausente: ${expected}`,
+      );
+    }
+  }
+
+  const expectedTapTonConfigs = 2 * 2;
+
+  if (tapTonConfigs.length !== expectedTapTonConfigs) {
+    throw new Error(
+      `Quantidade de configurações do TapTon inválida: esperado ${expectedTapTonConfigs}, encontrado ${tapTonConfigs.length}.`,
+    );
+  }
+
+  for (const config of tapTonConfigs) {
+    if (
+      !Number.isFinite(config.rates.debit) ||
+      !Number.isFinite(config.rates.credit) ||
+      config.rates.debit < 0 ||
+      config.rates.credit < 0
+    ) {
+      throw new Error(
+        `Taxa inválida no TapTon/${config.brand}/${config.settlement}.`,
+      );
+    }
+
+    if (
+      config.rates.installments.length !== 20 ||
+      config.rates.installments.some(
+        (value) =>
+          !Number.isFinite(value) ||
+          value < 0,
+      )
+    ) {
+      throw new Error(
+        `Parcelamento inválido no TapTon/${config.brand}/${config.settlement}.`,
       );
     }
   }
@@ -644,6 +758,7 @@ function tsString(value: unknown) {
 
 function buildRatesFile(
   configs: TonRateConfig[],
+  tapTonConfigs: TapTonRateConfig[],
 ): string {
   const grouped = new Map<
     string,
@@ -668,6 +783,18 @@ function buildRatesFile(
       ),
   );
 
+  const tapTonConfigLines = tapTonConfigs.map(
+    (config) => `  {
+    brand: ${tsString(config.brand)},
+    settlement: ${tsString(config.settlement)},
+    rates: {
+      debit: ${config.rates.debit},
+      credit: ${config.rates.credit},
+      installments: [${config.rates.installments.join(", ")}],
+    },
+  },`,
+  );
+
   const configLines = ordered.map(
     (config) => `  {
     plan: ${tsString(config.plan)},
@@ -683,6 +810,7 @@ function buildRatesFile(
   );
 
   return `export type TonPlan = "ton-mega-plus" | "ton-black";
+export type TapTonPlan = "tap-ton";
 export type CardBrandGroup = "visa-master" | "elo-amex";
 export type Settlement = "same-day" | "one-business-day";
 
@@ -707,6 +835,12 @@ export type InstallmentRates = {
 export type TonRateConfig = {
   plan: TonPlan;
   salesTier: SalesTier;
+  brand: CardBrandGroup;
+  settlement: Settlement;
+  rates: InstallmentRates;
+};
+
+export type TapTonRateConfig = {
   brand: CardBrandGroup;
   settlement: Settlement;
   rates: InstallmentRates;
@@ -754,6 +888,10 @@ export const TON_RATE_NOTES = {
   black: "Taxas de acordo com suas vendas mensais.",
 } as const;
 
+export const tapTonRateConfigs: TapTonRateConfig[] = [
+${tapTonConfigLines.join("\n")}
+];
+
 export const tonRateConfigs: TonRateConfig[] = [
 ${configLines.join("\n")}
 ];
@@ -789,6 +927,19 @@ export function getSalesTierOptionsForPlan(plan: TonPlan) {
     (option) => option.plan === plan,
   );
 }
+
+export function getTapTonRate(
+  brand: CardBrandGroup,
+  settlement: Settlement,
+): InstallmentRates | null {
+  return (
+    tapTonRateConfigs.find(
+      (item) =>
+        item.brand === brand &&
+        item.settlement === settlement,
+    )?.rates ?? null
+  );
+}
 `;
 }
 
@@ -799,6 +950,15 @@ function rateKey(config: TonRateConfig): RateKey {
   return [
     config.plan,
     config.salesTier,
+    config.brand,
+    config.settlement,
+  ].join("|");
+}
+
+function tapTonRateKey(
+  config: TapTonRateConfig,
+): RateKey {
+  return [
     config.brand,
     config.settlement,
   ].join("|");
@@ -855,8 +1015,63 @@ function parseExistingRateConfigs(
   return configs;
 }
 
+function parseExistingTapTonRateConfigs(
+  content: string,
+): TapTonRateConfig[] {
+  const configs: TapTonRateConfig[] = [];
+
+  const blockRegex =
+    /{\s*brand:\s*"([^"]+)",\s*settlement:\s*"([^"]+)",\s*rates:\s*{\s*debit:\s*([0-9.]+),\s*credit:\s*([0-9.]+),\s*installments:\s*\[([^\]]*)\]/g;
+
+  for (const match of content.matchAll(blockRegex)) {
+    const [
+      ,
+      brand,
+      settlement,
+      debit,
+      credit,
+      installmentsRaw,
+    ] = match;
+
+    const installments = installmentsRaw
+      .split(",")
+      .map((value) => Number(value.trim()))
+      .filter((value) => Number.isFinite(value));
+
+    if (
+      !brand ||
+      !settlement ||
+      installments.length !== 20
+    ) {
+      continue;
+    }
+
+    configs.push({
+      brand: brand as CardBrandGroup,
+      settlement: settlement as Settlement,
+      rates: {
+        debit: Number(debit),
+        credit: Number(credit),
+        installments,
+      },
+    });
+  }
+
+  return configs;
+}
+
 type RateChange = {
   config: TonRateConfig;
+  field:
+    | "debit"
+    | "credit"
+    | `credit-${number}x`;
+  previous: number;
+  current: number;
+};
+
+type TapTonRateChange = {
+  config: TapTonRateConfig;
   field:
     | "debit"
     | "credit"
@@ -939,6 +1154,80 @@ function compareRateConfigs(
   return changes;
 }
 
+function compareTapTonRateConfigs(
+  previous: TapTonRateConfig[],
+  current: TapTonRateConfig[],
+): TapTonRateChange[] {
+  const previousMap = new Map(
+    previous.map((config) => [
+      tapTonRateKey(config),
+      config,
+    ]),
+  );
+
+  const changes: TapTonRateChange[] = [];
+
+  for (const config of current) {
+    const old = previousMap.get(
+      tapTonRateKey(config),
+    );
+
+    if (!old) {
+      changes.push({
+        config,
+        field: "debit",
+        previous: NaN,
+        current: config.rates.debit,
+      });
+      continue;
+    }
+
+    if (
+      old.rates.debit !==
+      config.rates.debit
+    ) {
+      changes.push({
+        config,
+        field: "debit",
+        previous: old.rates.debit,
+        current: config.rates.debit,
+      });
+    }
+
+    if (
+      old.rates.credit !==
+      config.rates.credit
+    ) {
+      changes.push({
+        config,
+        field: "credit",
+        previous: old.rates.credit,
+        current: config.rates.credit,
+      });
+    }
+
+    config.rates.installments.forEach(
+      (currentRate, index) => {
+        const previousRate =
+          old.rates.installments[index];
+
+        if (
+          previousRate !== currentRate
+        ) {
+          changes.push({
+            config,
+            field: `credit-${index + 2}x`,
+            previous: previousRate,
+            current: currentRate,
+          });
+        }
+      },
+    );
+  }
+
+  return changes;
+}
+
 function formatRateChange(
   change: RateChange,
 ): string {
@@ -962,28 +1251,56 @@ function formatRateChange(
   ].join(" | ");
 }
 
+function formatTapTonRateChange(
+  change: TapTonRateChange,
+): string {
+  const oldValue = Number.isFinite(
+    change.previous,
+  )
+    ? `${change.previous.toFixed(2)}%`
+    : "nova";
+
+  const newValue = `${change.current.toFixed(2)}%`;
+
+  return [
+    "TapTon",
+    change.config.brand,
+    change.config.settlement,
+    change.field,
+    `${oldValue} → ${newValue}`,
+  ].join(" | ");
+}
+
 function buildChangeSummary(
   changes: RateChange[],
+  tapTonChanges: TapTonRateChange[],
 ): string {
-  if (changes.length === 0) {
+  const totalChanges =
+    changes.length + tapTonChanges.length;
+
+  if (totalChanges === 0) {
     return "Nenhuma alteração nas taxas.";
   }
 
-  const lines = changes
-    .slice(0, 20)
-    .map(
+  const lines = [
+    ...changes.map(
       (change) =>
         `- ${formatRateChange(change)}`,
-    );
+    ),
+    ...tapTonChanges.map(
+      (change) =>
+        `- ${formatTapTonRateChange(change)}`,
+    ),
+  ].slice(0, 20);
 
-  if (changes.length > 20) {
+  if (totalChanges > 20) {
     lines.push(
-      `- ... e mais ${changes.length - 20} alteração(ões).`,
+      `- ... e mais ${totalChanges - 20} alteração(ões).`,
     );
   }
 
   return [
-    `🔄 ${changes.length} alteração(ões) detectada(s).`,
+    `🔄 ${totalChanges} alteração(ões) detectada(s).`,
     ...lines,
   ].join("\n");
 }
@@ -991,7 +1308,7 @@ function buildChangeSummary(
 function buildMetaFile(meta: Meta): string {
   return `export type TonRatesStatus = "success" | "error";
 
-export type TonRatesMeta = ${"{"}
+export type TonRatesMeta = {
   status: TonRatesStatus;
   fetchedAt: string;
   sourceRatesUpdatedAt: string | null;
@@ -999,12 +1316,17 @@ export type TonRatesMeta = ${"{"}
   plans: number;
   megaTiers: number;
   blackTiers: number;
+  tapTonConfigs: number;
   configs: number;
   installmentsPerCreditConfig: number;
   message?: string;
-${"}"};
+};
 
-export const tonRatesMeta: TonRatesMeta = ${JSON.stringify(meta, null, 2)};
+export const tonRatesMeta: TonRatesMeta = ${JSON.stringify(
+    meta,
+    null,
+    2,
+  )};
 `;
 }
 
@@ -1071,7 +1393,7 @@ async function update() {
 
   const page = await browser.newPage();
 
-  let bestPlans: TonPlanRecord[] | null = null;
+  let bestPlans: ScrapedPlan[] | null = null;
   let bestScore = -1;
 
   page.on(
@@ -1143,6 +1465,7 @@ async function update() {
 
   validateConfigs(
     built.configs,
+    built.tapTonConfigs,
     built.megaTiers,
     built.blackTiers,
   );
@@ -1150,9 +1473,13 @@ async function update() {
   const fetchedAt = nowIso();
 
   const newRatesContent =
-    buildRatesFile(built.configs);
+    buildRatesFile(
+      built.configs,
+      built.tapTonConfigs,
+    );
 
   let previousConfigs: TonRateConfig[] = [];
+  let previousTapTonConfigs: TapTonRateConfig[] = [];
   let ratesFileExists = true;
 
   try {
@@ -1166,6 +1493,11 @@ async function update() {
       parseExistingRateConfigs(
         previousRatesContent,
       );
+
+    previousTapTonConfigs =
+      parseExistingTapTonRateConfigs(
+        previousRatesContent,
+      );
   } catch {
     ratesFileExists = false;
   }
@@ -1175,9 +1507,18 @@ async function update() {
     built.configs,
   );
 
+  const tapTonChanges =
+    compareTapTonRateConfigs(
+      previousTapTonConfigs,
+      built.tapTonConfigs,
+    );
+
+  const totalChanges =
+    changes.length + tapTonChanges.length;
+
   const ratesChanged =
     !ratesFileExists ||
-    changes.length > 0;
+    totalChanges > 0;
 
   const meta: Meta = {
     status: "success",
@@ -1186,12 +1527,17 @@ async function update() {
       built.sourceRatesUpdatedAt,
     sourceConditionsUpdatedAt:
       built.sourceConditionsUpdatedAt,
-    plans: 10,
+    plans: 10 + 1,
     megaTiers: built.megaTiers.size,
     blackTiers: built.blackTiers.size,
+    tapTonConfigs:
+      built.tapTonConfigs.length,
     configs: built.configs.length,
     installmentsPerCreditConfig: 21,
-    message: buildChangeSummary(changes),
+    message: buildChangeSummary(
+      changes,
+      tapTonChanges,
+    ),
   };
 
   await fs.mkdir(
@@ -1200,35 +1546,41 @@ async function update() {
   );
 
   if (ratesChanged) {
-    /*
-     * Só atualiza o arquivo quando os valores realmente
-     * mudaram ou quando ainda não existe uma tabela local.
-     */
-    await fs.writeFile(
-      RATES_FILE,
-      newRatesContent,
-      "utf8",
-    );
+  /*
+   * Só atualiza o arquivo quando houver
+   * alteração nas taxas ou quando a tabela ainda
+   * não existir.
+   */
+  await fs.writeFile(
+    RATES_FILE,
+    newRatesContent,
+    "utf8",
+  );
 
-    console.log("\n🔄 ALTERAÇÕES NAS TAXAS");
-    console.log(buildChangeSummary(changes));
-  } else {
-    console.log(
-      "\n✅ Nenhuma alteração nas taxas.",
-    );
-    console.log(
-      "O arquivo data/ton-rates.ts não foi regravado.",
-    );
-  }
+  console.log(
+    "\n🔄 ALTERAÇÕES NAS TAXAS",
+  );
+
+  console.log(
+    buildChangeSummary(
+      changes,
+      tapTonChanges,
+    ),
+  );
+} else {
+  console.log(
+    "\n✅ Nenhuma alteração nas taxas.",
+  );
+
+  console.log(
+    "O arquivo data/ton-rates.ts não foi regravado.",
+  );
+}
 
   await writeMeta(meta);
 
   console.log("\n====================================");
-  console.log(
-    ratesChanged
-      ? "✅ TAXAS VERIFICADAS E ATUALIZADAS"
-      : "✅ TAXAS VERIFICADAS — SEM ALTERAÇÕES",
-  );
+  console.log("✅ TAXAS ATUALIZADAS COM SUCESSO");
   console.log("====================================");
   console.log(
     `Mega+: ${built.megaTiers.size} faixas`,
@@ -1237,7 +1589,10 @@ async function update() {
     `Black: ${built.blackTiers.size} faixas`,
   );
   console.log(
-    `Configurações: ${built.configs.length}`,
+    `TapTon: ${built.tapTonConfigs.length} configurações`,
+  );
+  console.log(
+    `Configurações: ${built.configs.length} (maquininhas)`,
   );
   console.log(
     `Taxas da Ton atualizadas em: ${
@@ -1266,6 +1621,7 @@ async function main() {
       plans: 0,
       megaTiers: 0,
       blackTiers: 0,
+      tapTonConfigs: 0,
       configs: 0,
       installmentsPerCreditConfig: 0,
       message,

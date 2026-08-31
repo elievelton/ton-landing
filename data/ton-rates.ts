@@ -1,4 +1,5 @@
 export type TonPlan = "ton-mega-plus" | "ton-black";
+export type TapTonPlan = "tap-ton";
 export type CardBrandGroup = "visa-master" | "elo-amex";
 export type Settlement = "same-day" | "one-business-day";
 
@@ -23,6 +24,12 @@ export type InstallmentRates = {
 export type TonRateConfig = {
   plan: TonPlan;
   salesTier: SalesTier;
+  brand: CardBrandGroup;
+  settlement: Settlement;
+  rates: InstallmentRates;
+};
+
+export type TapTonRateConfig = {
   brand: CardBrandGroup;
   settlement: Settlement;
   rates: InstallmentRates;
@@ -69,6 +76,45 @@ export const TON_RATE_NOTES = {
   megaPromotional: "Taxas promocionais válidas durante 30 dias ou até vender R$ 5 mil, o que vier primeiro.",
   black: "Taxas de acordo com suas vendas mensais.",
 } as const;
+
+export const tapTonRateConfigs: TapTonRateConfig[] = [
+  {
+    brand: "elo-amex",
+    settlement: "same-day",
+    rates: {
+      debit: 2.06,
+      credit: 4.27,
+      installments: [6.98, 7.78, 9.58, 9.78, 9.88, 11.18, 11.38, 12.04, 12.74, 13.44, 13.54, 14.18, 14.82, 15.46, 16.1, 16.74, 17.38, 18.02, 18.66, 19.3],
+    },
+  },
+  {
+    brand: "elo-amex",
+    settlement: "one-business-day",
+    rates: {
+      debit: 1.98,
+      credit: 4.24,
+      installments: [6.94, 7.74, 9.48, 9.74, 9.84, 11.14, 11.28, 11.98, 12.68, 13.38, 13.48, 14.12, 14.76, 15.4, 16.04, 16.68, 17.32, 17.96, 18.6, 19.24],
+    },
+  },
+  {
+    brand: "visa-master",
+    settlement: "same-day",
+    rates: {
+      debit: 0.87,
+      credit: 3.08,
+      installments: [5.79, 6.59, 8.39, 8.59, 8.69, 9.99, 10.19, 10.85, 11.55, 12.25, 12.35, 12.99, 13.63, 14.27, 14.91, 15.55, 16.19, 16.83, 17.47, 18.11],
+    },
+  },
+  {
+    brand: "visa-master",
+    settlement: "one-business-day",
+    rates: {
+      debit: 0.57,
+      credit: 3.05,
+      installments: [5.75, 6.55, 8.29, 8.55, 8.65, 9.95, 10.09, 10.79, 11.49, 12.19, 12.29, 12.93, 13.57, 14.21, 14.85, 15.49, 16.13, 16.77, 17.41, 18.05],
+    },
+  },
+];
 
 export const tonRateConfigs: TonRateConfig[] = [
   {
@@ -542,5 +588,18 @@ export function getInstallmentRate(
 export function getSalesTierOptionsForPlan(plan: TonPlan) {
   return salesTierOptions.filter(
     (option) => option.plan === plan,
+  );
+}
+
+export function getTapTonRate(
+  brand: CardBrandGroup,
+  settlement: Settlement,
+): InstallmentRates | null {
+  return (
+    tapTonRateConfigs.find(
+      (item) =>
+        item.brand === brand &&
+        item.settlement === settlement,
+    )?.rates ?? null
   );
 }

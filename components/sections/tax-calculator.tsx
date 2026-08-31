@@ -19,6 +19,7 @@ import {
   brandOptions,
   getInstallmentRate,
   getSalesTierOptionsForPlan,
+  getTapTonRate,
   getTonRate,
   installmentOptions,
   planOptions,
@@ -35,7 +36,12 @@ import { TrackedLink } from "@/components/shared/TrackedLink";
 const MACHINE_URL =
   "https://www.ton.com.br/maquininha/t3-smart?coupon=ELIEVELTOSILVAVC&userAnticipation=0&utm_medium=invite_share&utm_source=revendedor";
 
+const TON_PLANS_URL =
+  "https://www.ton.com.br/planos-e-taxas?coupon=ELIEVELTOSILVAVC&userAnticipation=0&utm_medium=invite_share&utm_source=revendedor";
+
 const MAX_SALE_VALUE = 10_000;
+
+type CalculatorMode = "machines" | "tap-ton";
 
 type ComparisonItem = {
   key: string;
@@ -230,6 +236,7 @@ function ComparisonRow({ item }: { item: ComparisonItem }) {
 }
 
 export default function TaxCalculator() {
+  const [mode, setMode] = useState<CalculatorMode>("machines");
   const [plan, setPlan] = useState<TonPlan>("ton-mega-plus");
 
   const [salesTier, setSalesTier] = useState<SalesTier>("promotional");
@@ -238,13 +245,15 @@ export default function TaxCalculator() {
 
   const [settlement, setSettlement] = useState<Settlement>("one-business-day");
 
-  const [installments, setInstallments] = useState(3);
+  const [installments, setInstallments] = useState(0);
 
   const [saleValue, setSaleValue] = useState("100");
 
   const [limitMessage, setLimitMessage] = useState(false);
 
   const isSaleValueEmpty = saleValue.trim() === "";
+  const isTapTon = mode === "tap-ton";
+
   const availableSalesTierOptions = useMemo(() => {
     return getSalesTierOptionsForPlan(plan);
   }, [plan]);
@@ -263,8 +272,12 @@ export default function TaxCalculator() {
   }, [saleValue]);
 
   const rates = useMemo(() => {
+    if (isTapTon) {
+      return getTapTonRate(brand, settlement);
+    }
+
     return getTonRate(plan, salesTier, brand, settlement);
-  }, [plan, salesTier, brand, settlement]);
+  }, [isTapTon, plan, salesTier, brand, settlement]);
 
   const currentRate = useMemo(() => {
     if (!rates) {
@@ -295,59 +308,73 @@ export default function TaxCalculator() {
       return [];
     }
 
-    const selectedKey =
-      installments === 0
-        ? "debit"
-        : installments === 1
-          ? "credit"
-          : installments === 12
-            ? "credit-12x"
-            : "other";
-
     const items: ComparisonItem[] = [];
 
-    // PIX — sempre aparece
-    items.push({
-      key: "pix",
-      label: "Pix",
-      rate: 0,
-      amount: numericSaleValue,
-      isPix: true,
-    });
+    // PIX — sempre aparece, exceto se no futuro passar a ser uma
+    // opção selecionável no campo principal.
+    if (installments !== -1) {
+      items.push({
+        key: "pix",
+        label: "Pix",
+        rate: 0,
+        amount: numericSaleValue,
+        isPix: true,
+      });
+    }
 
-    // DÉBITO
-    if (selectedKey !== "debit") {
+    // DÉBITO — remove do comparativo se estiver selecionado.
+    if (installments !== 0) {
       const rate = getInstallmentRate(rates, 0);
 
       items.push({
         key: "debit",
         label: "Débito",
         rate,
-        amount: numericSaleValue - numericSaleValue * (rate / 100),
+        amount:
+          numericSaleValue -
+          numericSaleValue * (rate / 100),
       });
     }
 
-    // CRÉDITO À VISTA
-    if (selectedKey !== "credit") {
+    // CRÉDITO À VISTA — remove do comparativo se estiver selecionado.
+    if (installments !== 1) {
       const rate = getInstallmentRate(rates, 1);
 
       items.push({
         key: "credit",
         label: "Crédito à vista",
         rate,
-        amount: numericSaleValue - numericSaleValue * (rate / 100),
+        amount:
+          numericSaleValue -
+          numericSaleValue * (rate / 100),
       });
     }
 
-    // CRÉDITO 12X
-    if (selectedKey !== "credit-12x") {
+    // CRÉDITO 3X — remove do comparativo se estiver selecionado.
+    if (installments !== 3) {
+      const rate = getInstallmentRate(rates, 3);
+
+      items.push({
+        key: "credit-3x",
+        label: "Crédito 3x",
+        rate,
+        amount:
+          numericSaleValue -
+          numericSaleValue * (rate / 100),
+      });
+    }
+
+    // CRÉDITO 12X — remove do comparativo se estiver selecionado.
+    if (installments !== 12) {
       const rate = getInstallmentRate(rates, 12);
 
       items.push({
         key: "credit-12x",
         label: "Crédito 12x",
         rate,
-        amount: numericSaleValue - numericSaleValue * (rate / 100),
+        amount:
+          numericSaleValue -
+          numericSaleValue * (rate / 100),
       });
     }
 
@@ -480,6 +507,51 @@ export default function TaxCalculator() {
         </div>
 
         {/* =====================================================
+            ALTERNADOR
+           ===================================================== */}
+
+        <div className="mb-8 flex justify-center sm:mb-10">
+          <div
+            className="
+              inline-flex rounded-full border border-border
+              bg-slate-100 p-1 shadow-sm
+            "
+            role="tablist"
+            aria-label="Tipo de calculadora"
+          >
+            <button
+              type="button"
+              role="tab"
+              aria-selected={!isTapTon}
+              onClick={() => setMode("machines")}
+              className={[
+                "rounded-full px-5 py-2.5 text-sm font-bold transition-all duration-200",
+                !isTapTon
+                  ? "bg-white text-primary shadow-sm"
+                  : "text-muted hover:text-foreground",
+              ].join(" ")}
+            >
+              Maquininhas
+            </button>
+
+            <button
+              type="button"
+              role="tab"
+              aria-selected={isTapTon}
+              onClick={() => setMode("tap-ton")}
+              className={[
+                "rounded-full px-5 py-2.5 text-sm font-bold transition-all duration-200",
+                isTapTon
+                  ? "bg-white text-primary shadow-sm"
+                  : "text-muted hover:text-foreground",
+              ].join(" ")}
+            >
+              TapTon
+            </button>
+          </div>
+        </div>
+
+        {/* =====================================================
             CARD PRINCIPAL
            ===================================================== */}
 
@@ -535,11 +607,15 @@ export default function TaxCalculator() {
 
                 <div className="min-w-0">
                   <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-muted">
-                    Plano
+                    {isTapTon ? "Forma de pagamento" : "Plano"}
                   </p>
 
                   <p className="truncate text-lg font-black text-foreground">
-                    {plan === "ton-mega-plus" ? "Ton Mega+" : "Ton Black"}
+                    {isTapTon
+                      ? "TapTon"
+                      : plan === "ton-mega-plus"
+                        ? "Ton Mega+"
+                        : "Ton Black"}
                   </p>
                 </div>
               </div>
@@ -548,85 +624,94 @@ export default function TaxCalculator() {
                 className="
                   shrink-0
                   rounded-full
-                  bg-orange-50
                   px-3 py-1.5
                   text-[10px]
                   font-black
-                  text-orange-600
-                "
+                  "
               >
-                20% OFF
+                {isTapTon ? (
+                  <span className="rounded-full bg-primary/10 px-3 py-1.5 text-primary">
+                    Grátis no celular
+                  </span>
+                ) : (
+                  <span className="rounded-full bg-orange-50 px-3 py-1.5 text-orange-600">
+                    20% OFF
+                  </span>
+                )}
               </div>
             </div>
 
             <div className="space-y-1 px-5 py-5 sm:px-7">
               {/* PLANO */}
 
-              <div className="border-b border-border pb-4">
-                <SelectField
-                  label="Plano"
-                  value={plan}
-                  onChange={(value) => setPlan(value as TonPlan)}
-                  options={planOptions.map((option) => ({
-                    value: option.value,
-                    label: option.available
-                      ? option.label
-                      : `${option.label} — em breve`,
-                  }))}
-                />
+              {!isTapTon && (
+                <div className="border-b border-border pb-4">
+                  <SelectField
+                    label="Plano"
+                    value={plan}
+                    onChange={(value) => setPlan(value as TonPlan)}
+                    options={planOptions.map((option) => ({
+                      value: option.value,
+                      label: option.available
+                        ? option.label
+                        : `${option.label} — em breve`,
+                    }))}
+                  />
 
-                <AnimatePresence>
-                  {plan === "ton-black" && (
-                    <motion.div
-                      initial={{
-                        opacity: 0,
-                        y: -4,
-                      }}
-                      animate={{
-                        opacity: 1,
-                        y: 0,
-                      }}
-                      exit={{
-                        opacity: 0,
-                        y: -4,
-                      }}
-                      className="
-          mt-3
-          rounded-xl
-          border border-orange-200
-          bg-orange-50
-          px-3.5 py-2.5
-        "
-                    >
-                      <p className="text-xs font-black text-orange-700">
-                        🟠 Exclusivo para MEI / PJ
-                      </p>
-
-                      <p className="mt-0.5 text-[11px] leading-4 text-orange-700/80">
-                        Disponível para empresas e MEIs.
-                      </p>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
+                  <AnimatePresence>
+                    {plan === "ton-black" && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -4 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -4 }}
+                        className="
+                          mt-3 rounded-xl border border-orange-200
+                          bg-orange-50 px-3.5 py-2.5
+                        "
+                      >
+                        <p className="text-xs font-black text-orange-700">
+                          🟠 Exclusivo para MEI / PJ
+                        </p>
+                        <p className="mt-0.5 text-[11px] leading-4 text-orange-700/80">
+                          Disponível para empresas e MEIs.
+                        </p>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              )}
 
               {/* VENDAS + RECEBIMENTO */}
 
-              <div className="grid gap-4 border-b border-border py-4 sm:grid-cols-2">
-                <SelectField
-                  label="Vendas mensais"
-                  value={salesTier}
-                  onChange={(value) => setSalesTier(value as SalesTier)}
-                  options={availableSalesTierOptions}
-                />
+              {isTapTon ? (
+                <div className="border-b border-border py-4">
+                  <SelectField
+                    label="Recebimento"
+                    value={settlement}
+                    onChange={(value) => setSettlement(value as Settlement)}
+                    options={settlementOptions}
+                  />
+                  <p className="mt-2 text-[10px] leading-4 text-muted">
+                    No TapTon, o plano é único e as taxas variam conforme o prazo de recebimento.
+                  </p>
+                </div>
+              ) : (
+                <div className="grid gap-4 border-b border-border py-4 sm:grid-cols-2">
+                  <SelectField
+                    label="Vendas mensais"
+                    value={salesTier}
+                    onChange={(value) => setSalesTier(value as SalesTier)}
+                    options={availableSalesTierOptions}
+                  />
 
-                <SelectField
-                  label="Recebimento"
-                  value={settlement}
-                  onChange={(value) => setSettlement(value as Settlement)}
-                  options={settlementOptions}
-                />
-              </div>
+                  <SelectField
+                    label="Recebimento"
+                    value={settlement}
+                    onChange={(value) => setSettlement(value as Settlement)}
+                    options={settlementOptions}
+                  />
+                </div>
+              )}
 
               {/* BANDEIRAS + PAGAMENTO */}
 
@@ -948,7 +1033,7 @@ export default function TaxCalculator() {
                 </h3>
 
                 <p className="text-xs leading-5 text-muted">
-                  Outras formas de recebimento do mesmo plano escolhido.
+                  Compare outras formas de pagamento usando o mesmo valor da venda.
                 </p>
               </div>
 
@@ -988,24 +1073,30 @@ export default function TaxCalculator() {
 
                   <div className="min-w-0">
                     <p className="text-base font-black text-foreground">
-                      Pague menos taxas e receba mais.
+                      {isTapTon
+                        ? "Venda pelo celular com o TapTon."
+                        : "Pague menos taxas e receba mais."}
                     </p>
 
                     <p className="mt-1 text-sm leading-6 text-muted">
-                      Use meu cupom e peça sua maquininha com 20% de desconto.
+                      {isTapTon
+                        ? "Transforme seu celular em maquininha e comece a vender."
+                        : "Use meu cupom e peça sua maquininha com 20% de desconto."}
                     </p>
                   </div>
                 </div>
 
                 <TrackedLink
-                  href={MACHINE_URL}
+                  href={isTapTon ? TON_PLANS_URL : MACHINE_URL}
                   target="_blank"
                   rel="noopener noreferrer"
                   tracking={{
                     event: "machine_click",
                     location: "tax_calculator",
                     destination: "checkout",
-                    label: "Pedir maquininha com 20% de desconto",
+                    label: isTapTon
+                          ? "Começar a usar o TapTon"
+                          : "Pedir maquininha com 20% de desconto",
                     product: "ton",
                     conversionStrength: "strong",
                   }}
@@ -1041,7 +1132,9 @@ export default function TaxCalculator() {
                 </TrackedLink>
 
                 <p className="mt-2 text-center text-[10px] text-muted">
-                  O desconto é aplicado pelo seu cupom ao acessar a Ton.
+                  {isTapTon
+                        ? "O TapTon é gratuito para baixar e usar."
+                        : "O desconto é aplicado pelo seu cupom ao acessar a Ton."}
                 </p>
               </div>
             </div>
@@ -1080,6 +1173,7 @@ export default function TaxCalculator() {
               </div>
 
               {/* PLANO */}
+              {!isTapTon && (
 
               <div className="mb-5">
                 <SelectField
@@ -1129,23 +1223,39 @@ export default function TaxCalculator() {
                 </AnimatePresence>
               </div>
 
+              )}
+
               {/* VENDAS + RECEBIMENTO */}
 
-              <div className="grid grid-cols-2 gap-4 border-t border-border pt-5">
-                <SelectField
-                  label="Vendas mensais"
-                  value={salesTier}
-                  onChange={(value) => setSalesTier(value as SalesTier)}
-                  options={availableSalesTierOptions}
-                />
+              {isTapTon ? (
+                <div className="border-t border-border pt-5">
+                  <SelectField
+                    label="Recebimento"
+                    value={settlement}
+                    onChange={(value) => setSettlement(value as Settlement)}
+                    options={settlementOptions}
+                  />
+                  <p className="mt-2 text-[10px] leading-4 text-muted">
+                    No TapTon, o plano é único e as taxas variam conforme o prazo de recebimento.
+                  </p>
+                </div>
+              ) : (
+                <div className="grid grid-cols-2 gap-4 border-t border-border pt-5">
+                  <SelectField
+                    label="Vendas mensais"
+                    value={salesTier}
+                    onChange={(value) => setSalesTier(value as SalesTier)}
+                    options={availableSalesTierOptions}
+                  />
 
-                <SelectField
-                  label="Recebimento"
-                  value={settlement}
-                  onChange={(value) => setSettlement(value as Settlement)}
-                  options={settlementOptions}
-                />
-              </div>
+                  <SelectField
+                    label="Recebimento"
+                    value={settlement}
+                    onChange={(value) => setSettlement(value as Settlement)}
+                    options={settlementOptions}
+                  />
+                </div>
+              )}
 
               {/* BANDEIRAS + PAGAMENTO */}
 
@@ -1613,7 +1723,7 @@ export default function TaxCalculator() {
                     </h3>
 
                     <p className="mt-1 text-xs leading-5 text-muted">
-                      Quando cai em sua conta usando o mesmo plano, mas em parcelamentos diferentes.
+                      Compare outras formas de pagamento usando o mesmo valor da venda.
                     </p>
                   </div>
 
@@ -1664,14 +1774,16 @@ export default function TaxCalculator() {
                     </div>
 
                     <TrackedLink
-                      href={MACHINE_URL}
+                      href={isTapTon ? TON_PLANS_URL : MACHINE_URL}
                       target="_blank"
                       rel="noopener noreferrer"
                       tracking={{
                         event: "machine_click",
                         location: "tax_calculator",
                         destination: "checkout",
-                        label: "Pedir maquininha com 20% de desconto",
+                        label: isTapTon
+                          ? "Começar a usar o TapTon"
+                          : "Pedir maquininha com 20% de desconto",
                         product: "ton",
                         conversionStrength: "strong",
                       }}
@@ -1695,7 +1807,9 @@ export default function TaxCalculator() {
                         active:translate-y-0
                       "
                     >
-                      Pedir maquininha com 20% de desconto
+                      {isTapTon
+                        ? "Começar a usar o TapTon"
+                        : "Pedir maquininha com 20% de desconto"}
                       <ArrowRight
                         className="
                           size-4
@@ -1707,7 +1821,9 @@ export default function TaxCalculator() {
                     </TrackedLink>
 
                     <p className="mt-2 text-center text-[10px] text-muted">
-                      O desconto é aplicado pelo seu cupom ao acessar a Ton.
+                      {isTapTon
+                        ? "O TapTon é gratuito para baixar e usar."
+                        : "O desconto é aplicado pelo seu cupom ao acessar a Ton."}
                     </p>
                   </div>
                 </div>
