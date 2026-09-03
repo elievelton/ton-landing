@@ -139,7 +139,7 @@ export function PromotionBanner() {
                 <p className="mt-3 text-sm leading-6 text-white/65 sm:text-base">
                   Adquira sua primeira maquininha Ton até{" "}
                   <strong className="font-bold text-white">
-                    30/08/2026
+                    30/09/2026
                   </strong>{" "}
                   e, após receber a máquina, tenha{" "}
                   <strong className="font-bold text-white">
@@ -155,7 +155,7 @@ export function PromotionBanner() {
 
                 <p className="mt-1 text-sm leading-6 text-white/65 sm:text-base">
                   É simples: compre sua primeira maquininha usando nosso link
-                  e cupom de desconto até dia 30/08/2026, ative sua máquina e venda 10.000 em 30 dias após a ativação. Veja os passos abaixo!
+                  e cupom de desconto até dia 30/09/2026, ative sua máquina e venda 10.000 em 30 dias após a ativação. Veja os passos abaixo!
                 </p>
 
               </div>
