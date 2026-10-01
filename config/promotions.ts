@@ -25,7 +25,7 @@ export const activePromotion = {
 }
 //Aqui é usado para ativar a promoção, colocar a data de validade da promoção
 export const PROMOTION_END = new Date(
-  "2026-09-30T23:59:59-03:00"
+  "2026-10-31T23:59:59-03:00"
 ).getTime()
 
 export function isPromotionActive() {
