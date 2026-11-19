@@ -61,7 +61,7 @@ const intents: IntentOption[] = [
     id: "buy_machine",
     title: "Já decidi que quero comprar a máquina Ton",
     description:
-      "Quero só meu cupom de 20% para comprar mais barato.",
+      "Aproveite 30% OFF com meu cupom exclusivo nesta Black Friday.",
     strength: "strong",
     href: siteConfig.links.catalog,
     external: true,
@@ -475,7 +475,7 @@ export function IntentRouter() {
                         {isStrong && (
                           <div className="relative z-10 mt-0.5 flex shrink-0 items-center">
                             <span className="rounded-full bg-orange-500 px-2 py-0.5 text-[9px] font-black uppercase tracking-wide text-white shadow-sm shadow-orange-500/20">
-                              20% OFF
+                              Black Friday 30% OFF
                             </span>
                           </div>
                         )}
