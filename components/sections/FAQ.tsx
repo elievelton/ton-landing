@@ -142,7 +142,7 @@ export function FAQPurchaseCTA({
 
           <p className="mt-1 text-sm leading-6 text-muted">
             Aproveite meu cupom exclusivo e peça sua maquininha Ton com
-            <strong className="text-foreground"> ${getCouponPercentLabel()}% de desconto</strong>.
+            <strong className="text-foreground"> {getCouponPercentLabel()}% de desconto</strong>.
           </p>
         </div>
       </div>
@@ -156,13 +156,13 @@ export function FAQPurchaseCTA({
           event: "cta_click",
           location,
           destination: "catalog",
-          label: "Pedir maquininha Ton com ${getCouponPercentLabel()}% de desconto",
+          label: `Pedir maquininha Ton com ${getCouponPercentLabel()}% de desconto`,
           product: "ton",
           conversionStrength: "medium",
         }}
         className="group relative mt-4 flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl bg-orange-500 px-4 py-3.5 text-sm font-extrabold text-white shadow-lg shadow-orange-500/20 transition-all duration-300 hover:-translate-y-0.5 hover:bg-orange-600 hover:shadow-xl hover:shadow-orange-500/30 active:translate-y-0"
       >
-        <span>Quero minha maquininha com ${getCouponPercentLabel()}% OFF</span>
+        <span>Quero minha maquininha com {getCouponPercentLabel()}% OFF</span>
         <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" />
       </TrackedLink>
     </div>
@@ -399,7 +399,7 @@ export function FAQ() {
                 </p>
 
                 <p className="mt-1 text-sm text-muted">
-                  Veja as maquininhas disponíveis e aproveite meu cupom de ${getCouponPercentLabel()}% OFF.
+                  Veja as maquininhas disponíveis e aproveite meu cupom de {getCouponPercentLabel()}% OFF.
                 </p>
               </div>
             </div>
@@ -413,12 +413,12 @@ export function FAQ() {
                 event: "cta_click",
                 location: "faq_coupon",
                 destination: "catalog",
-                label: "Ver maquininhas com ${getCouponPercentLabel()}% de desconto",
+                label: `Ver maquininhas com ${getCouponPercentLabel()}% de desconto`,
                 conversionStrength: "medium",
               }}
               className="group inline-flex w-full items-center justify-center gap-2 rounded-xl bg-orange-500 px-5 py-3 text-sm font-extrabold text-white shadow-lg shadow-orange-500/20 transition-all duration-300 hover:-translate-y-0.5 hover:bg-orange-600 hover:shadow-xl hover:shadow-orange-500/30 sm:w-auto"
             >
-              ${getCouponPercentLabel()}% OFF Aqui
+              {getCouponPercentLabel()}% OFF Aqui
 
               <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" />
             </TrackedLink>
@@ -458,7 +458,7 @@ function SecondMachineCTA() {
           event: "machine_click",
           location: "faq_redundancy",
           destination: "catalog",
-          label: "Quero uma segunda máquina Ton com ${getCouponPercentLabel()}% de desconto",
+          label: `Quero uma segunda máquina Ton com ${getCouponPercentLabel()}% de desconto`,
           product: "ton",
           conversionStrength: "strong",
         }}
@@ -489,7 +489,7 @@ function SecondMachineCTA() {
         />
 
         <span className="relative z-10">
-          Quero minha segunda máquina com ${getCouponPercentLabel()}% OFF
+          Quero minha segunda máquina com {getCouponPercentLabel()}% OFF
         </span>
 
         <ArrowRight
@@ -520,7 +520,7 @@ function PaymentLinkCTA() {
           <p className="mt-1 text-sm leading-6 text-muted">
             Com o Link de Pagamento, você pode cobrar à distância e oferecer mais
             opções para o seu cliente. E com meu cupom, você ainda pode pedir sua
-            maquininha Ton com ${getCouponPercentLabel()}% de desconto.
+            maquininha Ton com {getCouponPercentLabel()}% de desconto.
           </p>
         </div>
       </div>
@@ -534,7 +534,7 @@ function PaymentLinkCTA() {
           event: "cta_click",
           location: "faq_link_payment",
           destination: "catalog",
-          label: "Pedir maquininha Ton com ${getCouponPercentLabel()}% de desconto",
+          label: `Pedir maquininha Ton com ${getCouponPercentLabel()}% de desconto`,
           product: "ton",
           conversionStrength: "medium",
         }}
@@ -552,7 +552,7 @@ function PaymentLinkCTA() {
         "
       >
         <span className="relative z-10">
-          Quero minha maquininha com ${getCouponPercentLabel()}% OFF
+          Quero minha maquininha com {getCouponPercentLabel()}% OFF
         </span>
 
         <ArrowRight
