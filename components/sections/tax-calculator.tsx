@@ -615,7 +615,7 @@ export default function TaxCalculator() {
                       ? "TapTon"
                       : plan === "ton-mega-plus"
                         ? "Ton Mega+"
-                        : "Ton Black"}
+                        : "Ton Top"}
                   </p>
                 </div>
               </div>
@@ -659,7 +659,7 @@ export default function TaxCalculator() {
                   />
 
                   <AnimatePresence>
-                    {plan === "ton-black" && (
+                    {plan === "ton-top" && (
                       <motion.div
                         initial={{ opacity: 0, y: -4 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -1189,7 +1189,7 @@ export default function TaxCalculator() {
                 />
 
                 <AnimatePresence>
-                  {plan === "ton-black" && (
+                  {plan === "ton-top" && (
                     <motion.div
                       initial={{
                         opacity: 0,
@@ -1543,7 +1543,7 @@ export default function TaxCalculator() {
                     </p>
 
                     <p className="mt-0.5 text-sm font-extrabold text-primary">
-                      Conheça mais Detalhes Sobre os Planos Mega+ e Black
+                      Conheça mais Detalhes Sobre os Planos Mega+ e Top
                     </p>
                   </div>
 
