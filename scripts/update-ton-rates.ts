@@ -20,84 +20,27 @@ const EXPECTED_MEGA_TIERS = [
   "Acima de R$ 30 mil",
 ];
 
-const EXPECTED_BLACK_TIERS = [
-  "Até R$ 20 mil",
-  "Acima de R$ 20 mil",
-  "Acima de R$ 40 mil",
-  "Acima de R$ 80 mil",
+const EXPECTED_TOP_TIERS = [
+  "Até R$ 6 mil", "De R$ 6 mil a R$ 10 mil", "De R$ 10 mil a R$ 20 mil",
+  "De R$ 20 mil a R$ 30 mil", "Acima de R$ 30 mil",
 ];
-
-const TIER_MAP: Record<string, {
-  plan: "ton-mega-plus" | "ton-black";
-  salesTier:
-    | "promotional"
-    | "up-to-3000"
-    | "3000-6000"
-    | "6000-10000"
-    | "10000-30000"
-    | "over-30000"
-    | "up-to-20000"
-    | "over-20000"
-    | "over-40000"
-    | "over-80000";
-}> = {
-  "Período Promocional": {
-    plan: "ton-mega-plus",
-    salesTier: "promotional",
-  },
-  "Até R$ 3 mil": {
-    plan: "ton-mega-plus",
-    salesTier: "up-to-3000",
-  },
-  "De R$ 3 mil a R$ 6 mil": {
-    plan: "ton-mega-plus",
-    salesTier: "3000-6000",
-  },
-  "De R$ 6 mil a R$ 10 mil": {
-    plan: "ton-mega-plus",
-    salesTier: "6000-10000",
-  },
-  "De R$ 10 mil a R$ 30 mil": {
-    plan: "ton-mega-plus",
-    salesTier: "10000-30000",
-  },
-  "Acima de R$ 30 mil": {
-    plan: "ton-mega-plus",
-    salesTier: "over-30000",
-  },
-  "Até R$ 20 mil": {
-    plan: "ton-black",
-    salesTier: "up-to-20000",
-  },
-  "Acima de R$ 20 mil": {
-    plan: "ton-black",
-    salesTier: "over-20000",
-  },
-  "Acima de R$ 40 mil": {
-    plan: "ton-black",
-    salesTier: "over-40000",
-  },
-  "Acima de R$ 80 mil": {
-    plan: "ton-black",
-    salesTier: "over-80000",
-  },
-};
-
-type TonPlan = "ton-mega-plus" | "ton-black";
+type TonPlan = "ton-mega-plus" | "ton-top";
 type CardBrandGroup = "visa-master" | "elo-amex";
 type Settlement = "same-day" | "one-business-day";
-
-type SalesTier =
-  | "promotional"
-  | "up-to-3000"
-  | "3000-6000"
-  | "6000-10000"
-  | "10000-30000"
-  | "over-30000"
-  | "up-to-20000"
-  | "over-20000"
-  | "over-40000"
-  | "over-80000";
+type SalesTier = "promotional" | "up-to-3000" | "3000-6000" | "6000-10000" | "10000-30000" | "over-30000" | "top-up-to-6000" | "top-6000-10000" | "top-10000-20000" | "top-20000-30000" | "top-over-30000";
+const TIER_MAP: Record<string, { plan: TonPlan; salesTier: SalesTier }> = {
+  "Ton Mega+|Período Promocional": { plan: "ton-mega-plus", salesTier: "promotional" },
+  "Ton Mega+|Até R$ 3 mil": { plan: "ton-mega-plus", salesTier: "up-to-3000" },
+  "Ton Mega+|De R$ 3 mil a R$ 6 mil": { plan: "ton-mega-plus", salesTier: "3000-6000" },
+  "Ton Mega+|De R$ 6 mil a R$ 10 mil": { plan: "ton-mega-plus", salesTier: "6000-10000" },
+  "Ton Mega+|De R$ 10 mil a R$ 30 mil": { plan: "ton-mega-plus", salesTier: "10000-30000" },
+  "Ton Mega+|Acima de R$ 30 mil": { plan: "ton-mega-plus", salesTier: "over-30000" },
+  "Ton Top|Até R$ 6 mil": { plan: "ton-top", salesTier: "top-up-to-6000" },
+  "Ton Top|De R$ 6 mil a R$ 10 mil": { plan: "ton-top", salesTier: "top-6000-10000" },
+  "Ton Top|De R$ 10 mil a R$ 20 mil": { plan: "ton-top", salesTier: "top-10000-20000" },
+  "Ton Top|De R$ 20 mil a R$ 30 mil": { plan: "ton-top", salesTier: "top-20000-30000" },
+  "Ton Top|Acima de R$ 30 mil": { plan: "ton-top", salesTier: "top-over-30000" },
+};
 
 type InstallmentRates = {
   debit: number;
@@ -126,7 +69,7 @@ type Meta = {
   sourceConditionsUpdatedAt: string | null;
   plans: number;
   megaTiers: number;
-  blackTiers: number;
+  topTiers: number;
   tapTonConfigs: number;
   configs: number;
   installmentsPerCreditConfig: number;
@@ -237,8 +180,8 @@ function scorePlans(plans: ScrapedPlan[]): number {
     (plan) => plan?.name === "Ton Mega+",
   );
 
-  const hasBlack = transactional.some(
-    (plan) => plan?.name === "Ton Black",
+  const hasTop = transactional.some(
+    (plan) => plan?.name === "Ton Top",
   );
 
   const hasTapTon = plans.some(
@@ -251,7 +194,7 @@ function scorePlans(plans: ScrapedPlan[]): number {
     transactional.length * 1000 +
     tierLabels.size * 100 +
     (hasMega ? 5000 : 0) +
-    (hasBlack ? 5000 : 0) +
+    (hasTop ? 5000 : 0) +
     (hasTapTon ? 3000 : 0)
   );
 }
@@ -440,14 +383,14 @@ function buildConfigs(
   configs: TonRateConfig[];
   tapTonConfigs: TapTonRateConfig[];
   megaTiers: Set<string>;
-  blackTiers: Set<string>;
+  topTiers: Set<string>;
   sourceRatesUpdatedAt: string | null;
   sourceConditionsUpdatedAt: string | null;
 } {
   const configs: TonRateConfig[] = [];
   const tapTonConfigs: TapTonRateConfig[] = [];
   const megaTiers = new Set<string>();
-  const blackTiers = new Set<string>();
+  const topTiers = new Set<string>();
 
   let sourceRatesUpdatedAt: string | null = null;
   let sourceConditionsUpdatedAt: string | null = null;
@@ -538,7 +481,7 @@ function buildConfigs(
       continue;
     }
 
-    if (name !== "Ton Mega+" && name !== "Ton Black") {
+    if (name !== "Ton Mega+" && name !== "Ton Top") {
       continue;
     }
 
@@ -546,9 +489,9 @@ function buildConfigs(
       plan?.tierLabel ?? "",
     );
 
-    const tier = TIER_MAP[tierLabel];
+    const tier = TIER_MAP[`${name}|${tierLabel}`];
 
-    if (!tier || tier.plan !== (name === "Ton Mega+" ? "ton-mega-plus" : "ton-black")) {
+    if (!tier || tier.plan !== (name === "Ton Mega+" ? "ton-mega-plus" : "ton-top")) {
       throw new Error(
         `Faixa não reconhecida para ${name}: "${tierLabel}"`,
       );
@@ -557,7 +500,7 @@ function buildConfigs(
     if (name === "Ton Mega+") {
       megaTiers.add(tierLabel);
     } else {
-      blackTiers.add(tierLabel);
+      topTiers.add(tierLabel);
     }
 
     if (plan?.updated_at) {
@@ -642,7 +585,7 @@ function buildConfigs(
     configs,
     tapTonConfigs,
     megaTiers,
-    blackTiers,
+    topTiers,
     sourceRatesUpdatedAt,
     sourceConditionsUpdatedAt,
   };
@@ -652,7 +595,7 @@ function validateConfigs(
   configs: TonRateConfig[],
   tapTonConfigs: TapTonRateConfig[],
   megaTiers: Set<string>,
-  blackTiers: Set<string>,
+  topTiers: Set<string>,
 ) {
   if (megaTiers.size !== EXPECTED_MEGA_TIERS.length) {
     throw new Error(
@@ -660,9 +603,9 @@ function validateConfigs(
     );
   }
 
-  if (blackTiers.size !== EXPECTED_BLACK_TIERS.length) {
+  if (topTiers.size !== EXPECTED_TOP_TIERS.length) {
     throw new Error(
-      `Black incompleto: esperado ${EXPECTED_BLACK_TIERS.length} faixas, encontrado ${blackTiers.size}.`,
+      `Top incompleto: esperado ${EXPECTED_TOP_TIERS.length} faixas, encontrado ${topTiers.size}.`,
     );
   }
 
@@ -674,10 +617,10 @@ function validateConfigs(
     }
   }
 
-  for (const expected of EXPECTED_BLACK_TIERS) {
-    if (!blackTiers.has(expected)) {
+  for (const expected of EXPECTED_TOP_TIERS) {
+    if (!topTiers.has(expected)) {
       throw new Error(
-        `Faixa do Black ausente: ${expected}`,
+        `Faixa do Top ausente: ${expected}`,
       );
     }
   }
@@ -717,7 +660,7 @@ function validateConfigs(
   }
 
   const expectedConfigs =
-    10 * 2 * 2;
+    11 * 2 * 2;
 
   if (configs.length !== expectedConfigs) {
     throw new Error(
@@ -809,7 +752,7 @@ function buildRatesFile(
   },`,
   );
 
-  return `export type TonPlan = "ton-mega-plus" | "ton-black";
+  return `export type TonPlan = "ton-mega-plus" | "ton-top";
 export type TapTonPlan = "tap-ton";
 export type CardBrandGroup = "visa-master" | "elo-amex";
 export type Settlement = "same-day" | "one-business-day";
@@ -821,10 +764,11 @@ export type SalesTier =
   | "6000-10000"
   | "10000-30000"
   | "over-30000"
-  | "up-to-20000"
-  | "over-20000"
-  | "over-40000"
-  | "over-80000";
+  | "top-up-to-6000"
+  | "top-6000-10000"
+  | "top-10000-20000"
+  | "top-20000-30000"
+  | "top-over-30000";
 
 export type InstallmentRates = {
   debit: number;
@@ -858,7 +802,7 @@ export const brandOptions = [
 
 export const planOptions = [
   { value: "ton-mega-plus" as const, label: "Ton Mega+", available: true },
-  { value: "ton-black" as const, label: "Ton Black", available: true },
+  { value: "ton-top" as const, label: "Ton Top", available: true },
 ];
 
 export const salesTierOptions = [
@@ -868,10 +812,11 @@ export const salesTierOptions = [
   { value: "6000-10000" as const, label: "De R$ 6 mil a R$ 10 mil", plan: "ton-mega-plus" as const },
   { value: "10000-30000" as const, label: "De R$ 10 mil a R$ 30 mil", plan: "ton-mega-plus" as const },
   { value: "over-30000" as const, label: "Acima de R$ 30 mil", plan: "ton-mega-plus" as const },
-  { value: "up-to-20000" as const, label: "Até R$ 20 mil", plan: "ton-black" as const },
-  { value: "over-20000" as const, label: "Acima de R$ 20 mil", plan: "ton-black" as const },
-  { value: "over-40000" as const, label: "Acima de R$ 40 mil", plan: "ton-black" as const },
-  { value: "over-80000" as const, label: "Acima de R$ 80 mil", plan: "ton-black" as const },
+  { value: "top-up-to-6000" as const, label: "Até R$ 6 mil", plan: "ton-top" as const },
+  { value: "top-6000-10000" as const, label: "De R$ 6 mil a R$ 10 mil", plan: "ton-top" as const },
+  { value: "top-10000-20000" as const, label: "De R$ 10 mil a R$ 20 mil", plan: "ton-top" as const },
+  { value: "top-20000-30000" as const, label: "De R$ 20 mil a R$ 30 mil", plan: "ton-top" as const },
+  { value: "top-over-30000" as const, label: "Acima de R$ 30 mil", plan: "ton-top" as const },
 ];
 
 export const installmentOptions = [
@@ -885,7 +830,7 @@ export const installmentOptions = [
 
 export const TON_RATE_NOTES = {
   megaPromotional: "Taxas promocionais válidas durante 30 dias ou até vender R$ 5 mil, o que vier primeiro.",
-  black: "Taxas de acordo com suas vendas mensais.",
+  top: "Taxas de acordo com suas vendas mensais.",
 } as const;
 
 export const tapTonRateConfigs: TapTonRateConfig[] = [
@@ -1242,7 +1187,7 @@ function formatRateChange(
   return [
     change.config.plan === "ton-mega-plus"
       ? "Mega+"
-      : "Black",
+      : "Top",
     change.config.salesTier,
     change.config.brand,
     change.config.settlement,
@@ -1315,7 +1260,7 @@ export type TonRatesMeta = {
   sourceConditionsUpdatedAt: string | null;
   plans: number;
   megaTiers: number;
-  blackTiers: number;
+  topTiers: number;
   tapTonConfigs: number;
   configs: number;
   installmentsPerCreditConfig: number;
@@ -1467,7 +1412,7 @@ async function update() {
     built.configs,
     built.tapTonConfigs,
     built.megaTiers,
-    built.blackTiers,
+    built.topTiers,
   );
 
   const fetchedAt = nowIso();
@@ -1527,9 +1472,9 @@ async function update() {
       built.sourceRatesUpdatedAt,
     sourceConditionsUpdatedAt:
       built.sourceConditionsUpdatedAt,
-    plans: 10 + 1,
+    plans: 12,
     megaTiers: built.megaTiers.size,
-    blackTiers: built.blackTiers.size,
+    topTiers: built.topTiers.size,
     tapTonConfigs:
       built.tapTonConfigs.length,
     configs: built.configs.length,
@@ -1586,7 +1531,7 @@ async function update() {
     `Mega+: ${built.megaTiers.size} faixas`,
   );
   console.log(
-    `Black: ${built.blackTiers.size} faixas`,
+    `Top: ${built.topTiers.size} faixas`,
   );
   console.log(
     `TapTon: ${built.tapTonConfigs.length} configurações`,
@@ -1620,7 +1565,7 @@ async function main() {
       sourceConditionsUpdatedAt: null,
       plans: 0,
       megaTiers: 0,
-      blackTiers: 0,
+      topTiers: 0,
       tapTonConfigs: 0,
       configs: 0,
       installmentsPerCreditConfig: 0,
