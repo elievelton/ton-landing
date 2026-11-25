@@ -93,10 +93,10 @@ const faqs = [
     type: "second-machine",
   },
   {
-    question: "Qual é o melhor plano da Ton: Mega+ ou Black?",
+    question: "Qual é a diferença entre os planos Ton Mega+ e Ton Top?",
     id: "faq-planos",
     answer:
-      "O melhor plano depende do seu volume de vendas, mas a comparação das taxas mostra alguns padrões interessantes.\n\nAté cerca de R$ 6 mil por mês, o Ton Black pode ter vantagem em algumas situações, principalmente dependendo da forma de pagamento escolhida.\n\nEntre R$ 6 mil e R$ 10 mil, existe uma faixa de transição: em algumas modalidades o Mega+ passa a oferecer taxas melhores, enquanto em outras o Black continua competitivo.\n\nDe R$ 10 mil até menos de R$ 20 mil por mês, o Ton Mega+ tende a levar vantagem, especialmente nas condições de recebimento em 1 dia útil.\n\nAcima de R$ 20 mil por mês, o Ton Black passa a ser muito mais competitivo e, em várias das principais condições, apresenta taxas menores que o Mega+.\n\nO Black possui ainda faixas específicas para vendas acima de R$ 20 mil, R$ 40 mil e R$ 80 mil, enquanto o Mega+ possui suas próprias faixas de crescimento.\n\nMas não existe uma resposta única: a melhor opção também depende da bandeira do cartão, do número de parcelas e de quando você quer receber.",
+      "O Ton Mega+ está disponível para pessoas físicas e jurídicas (CPF e CNPJ) e possui uma condição promocional inicial, válida durante 30 dias ou até atingir R$ 5 mil em vendas, conforme as regras do plano. Depois desse período, as taxas passam a acompanhar as faixas de faturamento.\n\nO Ton Top é exclusivo para MEI e empresas com CNPJ. Ele possui cinco faixas de faturamento mensal: até R$ 6 mil, de R$ 6 mil a R$ 10 mil, de R$ 10 mil a R$ 20 mil, de R$ 20 mil a R$ 30 mil e acima de R$ 30 mil.\n\nAs taxas do Ton Top também variam conforme a bandeira do cartão e o prazo de recebimento. Por isso, não existe um único percentual que represente todas as situações. Selecione o plano, informe sua faixa de vendas, a bandeira e o prazo na calculadora para consultar as taxas correspondentes e comparar os valores.",
     type: "plan-comparison",
   },  {
     question: "Qual maquininha Ton é melhor para o meu negócio?",
@@ -757,7 +757,7 @@ function PlanComparisonCTA() {
         href="#calculadora"
         className="group mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3 text-sm font-extrabold text-white shadow-lg shadow-primary/20 transition-all duration-300 hover:-translate-y-0.5 hover:bg-primary-dark hover:shadow-xl hover:shadow-primary/30 sm:w-auto"
       >
-        Comparar Mega+ e Black na calculadora
+        Comparar Mega+ e Top na calculadora
 
         <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" />
       </a>
