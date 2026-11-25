@@ -57,9 +57,9 @@ export const plans: Plan[] = [
       "Plano Ton Top com faixas de taxas definidas conforme o volume mensal de vendas.",
 
     rates: {
-      debit: "2,28%",
-      credit: "5,48%",
-      credit12x: "18,28%",
+      debit: "Variável",
+      credit: "Variável",
+      credit12x: "Variável",
     },
 
     rateNote:
