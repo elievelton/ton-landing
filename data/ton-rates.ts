@@ -1,4 +1,4 @@
-export type TonPlan = "ton-mega-plus" | "ton-black";
+export type TonPlan = "ton-mega-plus" | "ton-top" | "ton-black";
 export type TapTonPlan = "tap-ton";
 export type CardBrandGroup = "visa-master" | "elo-amex";
 export type Settlement = "same-day" | "one-business-day";
@@ -13,7 +13,12 @@ export type SalesTier =
   | "up-to-20000"
   | "over-20000"
   | "over-40000"
-  | "over-80000";
+  | "over-80000"
+  | "top-up-to-6000"
+  | "top-6000-10000"
+  | "top-10000-20000"
+  | "top-20000-30000"
+  | "top-over-30000";
 
 export type InstallmentRates = {
   debit: number;
@@ -47,7 +52,7 @@ export const brandOptions = [
 
 export const planOptions = [
   { value: "ton-mega-plus" as const, label: "Ton Mega+", available: true },
-  { value: "ton-black" as const, label: "Ton Black", available: true },
+  { value: "ton-top" as const, label: "Ton Top", available: true },
 ];
 
 export const salesTierOptions = [
@@ -57,10 +62,11 @@ export const salesTierOptions = [
   { value: "6000-10000" as const, label: "De R$ 6 mil a R$ 10 mil", plan: "ton-mega-plus" as const },
   { value: "10000-30000" as const, label: "De R$ 10 mil a R$ 30 mil", plan: "ton-mega-plus" as const },
   { value: "over-30000" as const, label: "Acima de R$ 30 mil", plan: "ton-mega-plus" as const },
-  { value: "up-to-20000" as const, label: "Até R$ 20 mil", plan: "ton-black" as const },
-  { value: "over-20000" as const, label: "Acima de R$ 20 mil", plan: "ton-black" as const },
-  { value: "over-40000" as const, label: "Acima de R$ 40 mil", plan: "ton-black" as const },
-  { value: "over-80000" as const, label: "Acima de R$ 80 mil", plan: "ton-black" as const },
+  { value: "top-up-to-6000" as const, label: "Até R$ 6 mil", plan: "ton-top" as const },
+  { value: "top-6000-10000" as const, label: "De R$ 6 mil a R$ 10 mil", plan: "ton-top" as const },
+  { value: "top-10000-20000" as const, label: "De R$ 10 mil a R$ 20 mil", plan: "ton-top" as const },
+  { value: "top-20000-30000" as const, label: "De R$ 20 mil a R$ 30 mil", plan: "ton-top" as const },
+  { value: "top-over-30000" as const, label: "Acima de R$ 30 mil", plan: "ton-top" as const },
 ];
 
 export const installmentOptions = [
