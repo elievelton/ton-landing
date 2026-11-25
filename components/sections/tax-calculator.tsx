@@ -670,10 +670,10 @@ export default function TaxCalculator() {
                         "
                       >
                         <p className="text-xs font-black text-orange-700">
-                          🟠 Exclusivo para MEI / PJ
+                          Taxas conforme suas vendas mensais
                         </p>
                         <p className="mt-0.5 text-[11px] leading-4 text-orange-700/80">
-                          Disponível para empresas e MEIs.
+                          As condições variam por faixa de faturamento, bandeira e prazo de recebimento.
                         </p>
                       </motion.div>
                     )}
@@ -1212,11 +1212,11 @@ export default function TaxCalculator() {
         "
                     >
                       <p className="text-xs font-black text-orange-700">
-                        🟠 Exclusivo para MEI / PJ
+                        Taxas conforme suas vendas mensais
                       </p>
 
                       <p className="mt-0.5 text-[11px] leading-4 text-orange-700/80">
-                        Disponível para empresas e MEIs.
+                        As condições variam por faixa de faturamento, bandeira e prazo de recebimento.
                       </p>
                     </motion.div>
                   )}
