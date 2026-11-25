@@ -39,13 +39,13 @@ export function Consultant() {
             <div>
               <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-sm font-bold text-primary">
                 <Handshake className="size-4" />
-                Vantagem de comprar Com o Cupom de 20%
+                Vantagem de comprar Com o Cupom de 30%
               </div>
 
               <h2 className="mt-6 max-w-xl text-3xl font-bold tracking-tight text-foreground sm:text-4xl lg:text-5xl">
                 Como garantir o preço da Ton {" "}
                 <span className="text-primary">
-                  + 20% de desconto extra
+                  + 30% de desconto extra
                 </span>
               </h2>
 
@@ -62,7 +62,7 @@ export function Consultant() {
               <p className="mt-4 max-w-xl text-base leading-7 text-muted sm:text-lg">
                 Além da promoção da Ton, você ainda pode receber{" "}
                 <strong className="text-orange-500">
-                  20% de desconto adicional
+                  30% de desconto adicional
                 </strong>{" "}
                 com meu cupom, nas condições aplicáveis.
               </p>
@@ -72,11 +72,11 @@ export function Consultant() {
   <p className="text-base font-bold leading-7 text-foreground sm:text-lg">
     O desconto da Ton vem primeiro.{" "}
     <span className="text-primary">
-      Com meu cupom, você ganha mais 20% de desconto
+      Com meu cupom, você ganha mais 30% de desconto
     </span>{" "}
     e pode chegar a aproximadamente{" "}
     <span className="text-xl font-black text-orange-500 sm:text-2xl">
-      78% OFF
+      80% OFF
     </span>{" "}
     no valor da maquininha.
   </p>
@@ -108,7 +108,7 @@ export function Consultant() {
 
                   <div>
                     <p className="font-semibold text-foreground">
-                      Mais 20% de desconto
+                      Mais 30% de desconto
                     </p>
 
                     <p className="mt-1 text-sm leading-6 text-muted">
@@ -276,7 +276,7 @@ export function Consultant() {
                     </div>
 
                     <p className="mt-2 text-3xl font-extrabold text-orange-500">
-                      -20%
+                      -30%
                     </p>
 
                     <div className="mt-3 border-t border-orange-500/10 pt-3">
@@ -285,7 +285,7 @@ export function Consultant() {
                       </p>
 
                       <p className="mt-1 text-xl font-bold text-orange-600">
-                        - R$ 38,94
+                        - R$ 58,41
                       </p>
                     </div>
                   </div>
@@ -305,7 +305,7 @@ export function Consultant() {
                     </p>
 
                     <p className="relative mt-2 text-4xl font-extrabold tracking-tight sm:text-5xl">
-                      R$ 155,77
+                      R$ 136,30
                     </p>
 
                     <p className="relative mt-2 text-xs font-medium text-white/80">
@@ -320,11 +320,11 @@ export function Consultant() {
                     </p>
 
                     <p className="mt-2 text-3xl font-extrabold text-orange-600">
-                      R$ 515,66
+                      R$ 535,13
                     </p>
 
                     <p className="mt-2 text-xs leading-5 text-muted">
-                      De R$ 671,43 por apenas R$ 155,77 no exemplo apresentado.
+                      De R$ 671,43 por apenas R$ 136,30 no exemplo apresentado.
                     </p>
                   </div>
                   
@@ -335,7 +335,7 @@ export function Consultant() {
                   <p className="text-sm font-semibold text-foreground">
                     Primeiro a Ton dá o desconto.{" "}
                     <span className="text-primary">
-                      Depois você economiza mais 20%.
+                      Depois você economiza mais 30%.
                     </span>
                   </p>
                 </div>
@@ -343,7 +343,7 @@ export function Consultant() {
                 {/* Aviso */}
                 <p className="mt-3 text-center text-[10px] leading-4 text-muted">
                   * Exemplo ilustrativo considerando desconto promocional de
-                  71% e, em seguida, desconto adicional de 20%. Preços,
+                  71% e, em seguida, desconto adicional de 30%. Preços,
                   percentuais e condições promocionais podem sofrer alterações.
                 </p>
               </div>
