@@ -258,14 +258,17 @@ export default function TaxCalculator() {
     return getSalesTierOptionsForPlan(plan);
   }, [plan]);
 
-  useEffect(() => {
-    const options = getSalesTierOptionsForPlan(plan);
-    const currentExists = options.some((option) => option.value === salesTier);
+  // Mantém uma faixa válida no mesmo render da troca de plano.
+  // Isso evita consultar Ton Top com a faixa "promotional" do Mega+.
+  const selectedSalesTier = useMemo(() => {
+    const currentExists = availableSalesTierOptions.some(
+      (option) => option.value === salesTier,
+    );
 
-    if (!currentExists && options.length > 0) {
-      setSalesTier(options[0].value);
-    }
-  }, [plan, salesTier]);
+    return currentExists
+      ? salesTier
+      : availableSalesTierOptions[0]?.value ?? salesTier;
+  }, [availableSalesTierOptions, salesTier]);
 
   const numericSaleValue = useMemo(() => {
     return Math.min(MAX_SALE_VALUE, parseSaleValue(saleValue));
@@ -276,8 +279,8 @@ export default function TaxCalculator() {
       return getTapTonRate(brand, settlement);
     }
 
-    return getTonRate(plan, salesTier, brand, settlement);
-  }, [isTapTon, plan, salesTier, brand, settlement]);
+    return getTonRate(plan, selectedSalesTier, brand, settlement);
+  }, [isTapTon, plan, selectedSalesTier, brand, settlement]);
 
   const currentRate = useMemo(() => {
     if (!rates) {
@@ -699,7 +702,7 @@ export default function TaxCalculator() {
                 <div className="grid gap-4 border-b border-border py-4 sm:grid-cols-2">
                   <SelectField
                     label="Vendas mensais"
-                    value={salesTier}
+                    value={selectedSalesTier}
                     onChange={(value) => setSalesTier(value as SalesTier)}
                     options={availableSalesTierOptions}
                   />
