@@ -1,5 +1,5 @@
 export const activePromotion = {
-  enabled: true,
+  enabled: false,
 
   badge: "Benefício extra",
 

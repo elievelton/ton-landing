@@ -11,7 +11,6 @@ import {
 import { Container } from "@/components/shared/Container"
 import { CouponCopy } from "@/components/shared/CouponCopy"
 import { FadeIn } from "@/components/shared/FadeIn"
-import { OfferCountdown } from "@/components/shared/OfferCountdown"
 import { TrackedLink } from "@/components/shared/TrackedLink"
 import { Button } from "@/components/ui/button"
 import { siteConfig } from "@/config/site"
@@ -306,11 +305,6 @@ export function Hero() {
                     </strong>{" "}
                     aplicado no valor promocional final.
                   </p>
-
-                  {/* Contador de Oferta */}
-                  <div className="mt-3">
-                    <OfferCountdown />
-                  </div>
 
                   {/* Campo do Cupom */}
                   <div className="mt-3 flex flex-col items-center gap-1.5">

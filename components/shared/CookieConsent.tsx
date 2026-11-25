@@ -147,6 +147,7 @@ export function CookieConsent() {
     setAdvertising(preferences.advertising)
 
     updateGoogleConsent(preferences)
+    updateMicrosoftConsent(preferences)
 
     window.dispatchEvent(
       new CustomEvent("cookie-consent-updated", {
