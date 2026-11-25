@@ -15,8 +15,12 @@ import { OfferCountdown } from "@/components/shared/OfferCountdown"
 import { TrackedLink } from "@/components/shared/TrackedLink"
 import { Button } from "@/components/ui/button"
 import { siteConfig } from "@/config/site"
+import { getCouponPercentLabel } from "@/config/coupon"
+import { getMachinePrice } from "@/config/machine-prices"
 
 export function Hero() {
+  const couponPercent = getCouponPercentLabel()
+  const featuredPrice = getMachinePrice("mega-t3-smart")
   return (
     <section id="hero" className="relative overflow-hidden bg-background">
       {/* Elementos decorativos de fundo */}
@@ -39,14 +43,14 @@ export function Hero() {
               <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-2 text-sm font-semibold text-primary">
                 <BadgeCheck className="size-4 shrink-0" />
 
-                <span>🔥 +30% OFF com meu cupom exclusivo</span>
+                <span>🔥 +{couponPercent}% OFF com meu cupom exclusivo</span>
               </div>
 
               {/* Título */}
               <h1 className="max-w-3xl break-words text-3xl font-extrabold tracking-tight text-foreground sm:text-5xl lg:text-6xl xl:text-6xl hyphens-auto">
                 Maquininha Ton com{" "}
                 <span className="gradient-text inline-block">
-                  +30% de desconto
+                  +{couponPercent}% de desconto
                 </span>{" "}
                 sobre o preço promocional
               </h1>
@@ -60,7 +64,7 @@ export function Hero() {
                   primeiro, a Ton aplica o desconto promocional disponível.
                 </span>{" "}
                 <span className="font-semibold text-primary">
-                  Depois, você economiza mais 30% sobre esse valor usando
+                  Depois, você economiza mais {couponPercent}% sobre esse valor usando
                   meu cupom exclusivo.
                 </span>
               </p>
@@ -86,7 +90,7 @@ export function Hero() {
                     event: "cta_click",
                     location: "hero",
                     destination: "catalog",
-                    label: "Ativar 30% de desconto e ver modelos",
+                    label: "Ativar {couponPercent}% de desconto e ver modelos",
                     conversionStrength: "medium",
                   }}
                   className="w-full sm:w-auto"
@@ -95,7 +99,7 @@ export function Hero() {
                     size="lg"
                     className="h-13 w-full gap-2 px-6 text-base font-bold shadow-lg shadow-primary/20 hover:shadow-primary/30 sm:w-auto"
                   >
-                    Ativar +30% OFF e ver modelos
+                    Ativar +{couponPercent}% OFF e ver modelos
 
                     <ArrowRight className="size-5" />
                   </Button>
@@ -215,7 +219,7 @@ export function Hero() {
                 <div className="flex items-center gap-2">
                   <BadgeCheck className="size-4 text-primary" />
 
-                  +30% OFF Automático
+                  +{couponPercent}% OFF Automático
                 </div>
               </div>
             </div>
@@ -277,19 +281,19 @@ export function Hero() {
                   </p>
 
                   <h2 className="mt-1 text-lg font-extrabold tracking-tight text-foreground sm:text-xl">
-                    T3 Smart com +30% OFF usando meu cupom
+                    T3 Smart Mega+ com +{couponPercent}% OFF usando meu cupom
                   </h2>
 
                   {/* Ancoragem Visual de Preço */}
                   <div className="my-2.5 rounded-xl border border-primary/15 bg-primary/5 px-3 py-2">
                     <span className="block text-xs text-muted-foreground line-through">
-                      De R$ 671,43
+                      De {featuredPrice?.original}
                     </span>
 
                     <span className="text-sm font-extrabold text-foreground">
                       Por apenas{" "}
                       <span className="text-base text-primary">
-                        R$ 153,50
+                        {featuredPrice?.current}
                       </span>
                     </span>
                   </div>
@@ -297,7 +301,7 @@ export function Hero() {
                   <p className="mx-auto text-xs leading-relaxed text-muted-foreground">
                     Desconto promocional da Ton +{" "}
                     <strong className="font-bold text-primary">
-                      30% extra
+                      {couponPercent}% extra
                     </strong>{" "}
                     aplicado no valor promocional final.
                   </p>
@@ -318,7 +322,7 @@ export function Hero() {
 
                   {/* CTA da T3 Smart */}
                   <TrackedLink
-                    href={siteConfig.links.machines.t3Smart}
+                    href={siteConfig.links.catalog}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="mt-4 block"
@@ -326,7 +330,7 @@ export function Hero() {
                       event: "machine_click",
                       location: "hero",
                       destination: "checkout",
-                      label: "Adicionar T3 Smart ao carrinho com 30% OFF",
+                      label: "Ver T3 Smart Mega+ no catálogo com {couponPercent}% OFF",
                       product: "t3_smart",
                       conversionStrength: "strong",
                     }}
@@ -335,7 +339,7 @@ export function Hero() {
                       size="lg"
                       className="h-12 w-full gap-2 text-sm font-bold shadow-lg shadow-primary/20 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-primary/30"
                     >
-                      Adicionar ao carrinho com +30% OFF
+                      Ver oferta com +{couponPercent}% OFF
 
                       <ArrowRight className="size-4" />
                     </Button>
