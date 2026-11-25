@@ -50,11 +50,11 @@ export const plans: Plan[] = [
   },
 
   {
-    id: "black",
-    name: "Ton Black",
-    shortName: "Black",
+    id: "top",
+    name: "Ton Top",
+    shortName: "Top",
     description:
-      "Plano disponível pelo programa de parceiros Ton como uma alternativa para diferentes perfis de negócio.",
+      "Plano Ton Top com faixas de taxas definidas conforme o volume mensal de vendas.",
 
     rates: {
       debit: "2,28%",
@@ -63,10 +63,10 @@ export const plans: Plan[] = [
     },
 
     rateNote:
-      "Condições destinadas a MEI e PJ.",
+      "Taxas organizadas por faixa de faturamento mensal.",
 
     benefits: [
-      "Oferta disponível por meio de parceiros Ton",
+      "Plano Ton Top",
       "Alternativa ao plano Mega+",
       "Condições próprias de taxas e recebimento",
     ],
