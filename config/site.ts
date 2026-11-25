@@ -26,7 +26,7 @@ export const siteConfig = {
     "taxas Ton",
     "planos Ton",
     "Ton Mega+",
-    "Ton Black",
+    "Ton Top",
     "TapTon",
     "máquina de cartão para MEI",
   ],
