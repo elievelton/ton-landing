@@ -2,6 +2,12 @@ name: Atualizar taxas Ton
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - "scripts/update-ton-rates.ts"
+      - ".github/workflows/update-ton-rates.yml"
   schedule:
     # 08:00 no horário de Brasília (UTC-3)
     - cron: "0 11 * * *"
