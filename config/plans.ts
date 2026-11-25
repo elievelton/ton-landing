@@ -54,21 +54,22 @@ export const plans: Plan[] = [
     name: "Ton Top",
     shortName: "Top",
     description:
-      "Plano Ton Top com faixas de taxas definidas conforme o volume mensal de vendas.",
+      "Plano exclusivo para MEI e empresas com CNPJ, com taxas que variam conforme o faturamento mensal, a bandeira e o prazo de recebimento.",
 
     rates: {
-      debit: "Variável",
-      credit: "Variável",
-      credit12x: "Variável",
+      debit: "1,09%",
+      credit: "2,82%",
+      credit12x: "10,88%",
     },
 
     rateNote:
-      "Taxas organizadas por faixa de faturamento mensal.",
+      "Referência para Visa/Mastercard, recebimento na hora e faturamento acima de R$ 30 mil/mês. Consulte as demais faixas e condições na calculadora.",
 
     benefits: [
-      "Plano Ton Top",
-      "Alternativa ao plano Mega+",
-      "Condições próprias de taxas e recebimento",
+      "Exclusivo para MEI e empresas com CNPJ",
+      "Cinco faixas de faturamento: até R$ 6 mil, R$ 6–10 mil, R$ 10–20 mil, R$ 20–30 mil e acima de R$ 30 mil",
+      "Taxas variam conforme bandeira e prazo de recebimento",
+      "Consulte as condições na calculadora de taxas",
     ],
 
     recommended: false,
