@@ -33,7 +33,7 @@ export function Machines() {
             {/* Dica de reforço do cupom em tom alaranjado */}
             <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-orange-500/30 bg-orange-500/10 px-4 py-1.5 text-xs font-semibold text-orange-600">
               <Sparkles className="size-3.5 text-orange-500" />
-              <span>O cupom de 20% de desconto extra é aplicado automaticamente ao clicar nos botões de adicionar no carrinho.</span>
+              <span>O cupom de 30% de desconto extra é aplicado automaticamente ao clicar nos botões de adicionar no carrinho.</span>
             </div>
           </div>
         </FadeIn>
