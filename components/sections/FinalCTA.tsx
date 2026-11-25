@@ -60,7 +60,7 @@ export function FinalCTA() {
                 Aproveite as condições promocionais da Ton e, nas ofertas
                 aplicáveis, tenha ainda{" "}
                 <strong className="font-bold text-green-300">
-                  20% de desconto adicional
+                  30% de desconto adicional
                 </strong>{" "}
                 utilizando meu cupom.
               </p>
@@ -84,7 +84,7 @@ export function FinalCTA() {
 
                 <Benefit
                   icon={<BadgePercent className="size-4" />}
-                  text="+20% com cupom"
+                  text="+30% com cupom"
                   highlight
                 />
               </div>
