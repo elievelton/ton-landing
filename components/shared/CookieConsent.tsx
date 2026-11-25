@@ -33,6 +33,14 @@ const REJECT_OPTIONAL: ConsentPreferences = {
   advertising: false,
 }
 
+function updateMicrosoftConsent(preferences: ConsentPreferences) {
+  window.uetq?.push("consent", "update", {
+    ad_storage: preferences.advertising
+      ? "granted"
+      : "denied",
+  })
+}
+
 function updateGoogleConsent(preferences: ConsentPreferences) {
   if (!window.gtag) {
     return
@@ -86,6 +94,7 @@ export function CookieConsent() {
         setAdvertising(preferences.advertising)
 
         updateGoogleConsent(preferences)
+    updateMicrosoftConsent(preferences)
       } catch {
         window.localStorage.removeItem(STORAGE_KEY)
         setVisible(true)
