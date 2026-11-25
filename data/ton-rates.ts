@@ -1,4 +1,4 @@
-export type TonPlan = "ton-mega-plus" | "ton-top" | "ton-black";
+export type TonPlan = "ton-mega-plus" | "ton-top";
 export type TapTonPlan = "tap-ton";
 export type CardBrandGroup = "visa-master" | "elo-amex";
 export type Settlement = "same-day" | "one-business-day";
@@ -10,10 +10,6 @@ export type SalesTier =
   | "6000-10000"
   | "10000-30000"
   | "over-30000"
-  | "up-to-20000"
-  | "over-20000"
-  | "over-40000"
-  | "over-80000"
   | "top-up-to-6000"
   | "top-6000-10000"
   | "top-10000-20000"
@@ -80,7 +76,7 @@ export const installmentOptions = [
 
 export const TON_RATE_NOTES = {
   megaPromotional: "Taxas promocionais válidas durante 30 dias ou até vender R$ 5 mil, o que vier primeiro.",
-  black: "Taxas de acordo com suas vendas mensais.",
+  top: "Taxas de acordo com suas vendas mensais.",
 } as const;
 
 export const tapTonRateConfigs: TapTonRateConfig[] = [
@@ -123,182 +119,6 @@ export const tapTonRateConfigs: TapTonRateConfig[] = [
 ];
 
 export const tonRateConfigs: TonRateConfig[] = [
-  {
-    plan: "ton-black",
-    salesTier: "over-20000",
-    brand: "elo-amex",
-    settlement: "one-business-day",
-    rates: {
-      debit: 2.07,
-      credit: 4.64,
-      installments: [6.08, 6.68, 7.27, 7.86, 8.45, 9.04, 9.62, 10.19, 10.75, 11.32, 11.87, 14.87, 15.46, 16.08, 16.73, 17.4, 18.09, 18.73, 19.37, 20.01],
-    },
-  },
-  {
-    plan: "ton-black",
-    salesTier: "over-20000",
-    brand: "elo-amex",
-    settlement: "same-day",
-    rates: {
-      debit: 2.28,
-      credit: 5.48,
-      installments: [10.88, 11.98, 12.58, 13.28, 13.98, 14.98, 15.58, 16.18, 16.88, 17.88, 18.28, 21.28, 22.13, 23.02, 23.94, 24.89, 25.89, 26.53, 27.17, 27.81],
-    },
-  },
-  {
-    plan: "ton-black",
-    salesTier: "over-20000",
-    brand: "visa-master",
-    settlement: "one-business-day",
-    rates: {
-      debit: 0.84,
-      credit: 2.88,
-      installments: [4.21, 4.82, 5.43, 6.04, 6.63, 7.23, 7.81, 8.4, 8.97, 9.55, 10.11, 13.11, 13.63, 14.18, 14.75, 15.34, 15.95, 16.59, 17.23, 17.87],
-    },
-  },
-  {
-    plan: "ton-black",
-    salesTier: "over-20000",
-    brand: "visa-master",
-    settlement: "same-day",
-    rates: {
-      debit: 2.28,
-      credit: 5.48,
-      installments: [10.88, 11.98, 12.58, 13.28, 13.98, 14.98, 15.58, 16.18, 16.88, 17.88, 18.28, 21.28, 22.13, 23.02, 23.94, 24.89, 25.89, 26.53, 27.17, 27.81],
-    },
-  },
-  {
-    plan: "ton-black",
-    salesTier: "over-40000",
-    brand: "elo-amex",
-    settlement: "one-business-day",
-    rates: {
-      debit: 1.97,
-      credit: 4.55,
-      installments: [5.94, 6.49, 7.04, 7.59, 8.14, 8.68, 9.22, 9.75, 10.28, 10.8, 11.32, 14.32, 14.89, 15.49, 16.11, 16.75, 17.42, 18.06, 18.7, 19.34],
-    },
-  },
-  {
-    plan: "ton-black",
-    salesTier: "over-40000",
-    brand: "elo-amex",
-    settlement: "same-day",
-    rates: {
-      debit: 2.28,
-      credit: 5.48,
-      installments: [10.88, 11.98, 12.58, 13.28, 13.98, 14.98, 15.58, 16.18, 16.88, 17.88, 18.28, 21.28, 22.13, 23.02, 23.94, 24.89, 25.89, 26.53, 27.17, 27.81],
-    },
-  },
-  {
-    plan: "ton-black",
-    salesTier: "over-40000",
-    brand: "visa-master",
-    settlement: "one-business-day",
-    rates: {
-      debit: 0.78,
-      credit: 2.78,
-      installments: [4.07, 4.64, 5.2, 5.76, 6.31, 6.86, 7.41, 7.95, 8.48, 9.02, 9.55, 12.55, 13.05, 13.57, 14.12, 14.68, 15.27, 15.91, 16.55, 17.19],
-    },
-  },
-  {
-    plan: "ton-black",
-    salesTier: "over-40000",
-    brand: "visa-master",
-    settlement: "same-day",
-    rates: {
-      debit: 2.28,
-      credit: 5.48,
-      installments: [10.88, 11.98, 12.58, 13.28, 13.98, 14.98, 15.58, 16.18, 16.88, 17.88, 18.28, 21.28, 22.13, 23.02, 23.94, 24.89, 25.89, 26.53, 27.17, 27.81],
-    },
-  },
-  {
-    plan: "ton-black",
-    salesTier: "over-80000",
-    brand: "elo-amex",
-    settlement: "one-business-day",
-    rates: {
-      debit: 1.87,
-      credit: 4.45,
-      installments: [5.8, 6.31, 6.82, 7.32, 7.82, 8.33, 8.82, 9.31, 9.8, 10.28, 10.76, 13.76, 14.31, 14.88, 15.48, 16.1, 16.74, 17.38, 18.02, 18.66],
-    },
-  },
-  {
-    plan: "ton-black",
-    salesTier: "over-80000",
-    brand: "elo-amex",
-    settlement: "same-day",
-    rates: {
-      debit: 2.28,
-      credit: 5.48,
-      installments: [10.88, 11.98, 12.58, 13.28, 13.98, 14.98, 15.58, 16.18, 16.88, 17.88, 18.28, 21.28, 22.13, 23.02, 23.94, 24.89, 25.89, 26.53, 27.17, 27.81],
-    },
-  },
-  {
-    plan: "ton-black",
-    salesTier: "over-80000",
-    brand: "visa-master",
-    settlement: "one-business-day",
-    rates: {
-      debit: 0.74,
-      credit: 2.68,
-      installments: [3.93, 4.45, 4.97, 5.48, 5.98, 6.5, 6.98, 7.5, 7.98, 8.48, 8.98, 11.98, 12.46, 12.96, 13.48, 14.01, 14.58, 15.22, 15.86, 16.5],
-    },
-  },
-  {
-    plan: "ton-black",
-    salesTier: "over-80000",
-    brand: "visa-master",
-    settlement: "same-day",
-    rates: {
-      debit: 2.28,
-      credit: 5.48,
-      installments: [10.88, 11.98, 12.58, 13.28, 13.98, 14.98, 15.58, 16.18, 16.88, 17.88, 18.28, 21.28, 22.13, 23.02, 23.94, 24.89, 25.89, 26.53, 27.17, 27.81],
-    },
-  },
-  {
-    plan: "ton-black",
-    salesTier: "up-to-20000",
-    brand: "elo-amex",
-    settlement: "one-business-day",
-    rates: {
-      debit: 2.57,
-      credit: 4.9,
-      installments: [6.46, 7.19, 7.91, 8.62, 9.32, 10.02, 10.71, 11.4, 12.07, 12.74, 13.4, 16.4, 17.06, 17.74, 18.45, 19.19, 19.95, 20.59, 21.23, 21.87],
-    },
-  },
-  {
-    plan: "ton-black",
-    salesTier: "up-to-20000",
-    brand: "elo-amex",
-    settlement: "same-day",
-    rates: {
-      debit: 2.28,
-      credit: 5.48,
-      installments: [10.88, 11.98, 12.58, 13.28, 13.98, 14.98, 15.58, 16.18, 16.88, 17.88, 18.28, 21.28, 22.13, 23.02, 23.94, 24.89, 25.89, 26.53, 27.17, 27.81],
-    },
-  },
-  {
-    plan: "ton-black",
-    salesTier: "up-to-20000",
-    brand: "visa-master",
-    settlement: "one-business-day",
-    rates: {
-      debit: 1.36,
-      credit: 3.14,
-      installments: [5.38, 6.11, 6.84, 7.56, 8.27, 8.98, 9.68, 10.37, 11.05, 11.73, 12.39, 15.39, 16.01, 16.65, 17.31, 18, 18.72, 19.36, 20, 20.64],
-    },
-  },
-  {
-    plan: "ton-black",
-    salesTier: "up-to-20000",
-    brand: "visa-master",
-    settlement: "same-day",
-    rates: {
-      debit: 2.28,
-      credit: 5.48,
-      installments: [10.88, 11.98, 12.58, 13.28, 13.98, 14.98, 15.58, 16.18, 16.88, 17.88, 18.28, 21.28, 22.13, 23.02, 23.94, 24.89, 25.89, 26.53, 27.17, 27.81],
-    },
-  },
   {
     plan: "ton-mega-plus",
     salesTier: "10000-30000",
@@ -561,6 +381,226 @@ export const tonRateConfigs: TonRateConfig[] = [
       debit: 1.98,
       credit: 4.86,
       installments: [10.86, 12.24, 13.59, 14.92, 16.22, 17.5, 18.76, 19.99, 21.19, 21.39, 21.99, 23.03, 24.15, 24.45, 25.95, 26.58, 27.58, 28.08, 28.58, 29.08],
+    },
+  },
+  {
+    plan: "ton-top",
+    salesTier: "top-10000-20000",
+    brand: "elo-amex",
+    settlement: "one-business-day",
+    rates: {
+      debit: 2.47,
+      credit: 4.27,
+      installments: [6.77, 7.5, 8.23, 8.95, 9.64, 10.32, 11.09, 11.63, 12.26, 13.14, 13.24, 15.83, 17.24, 18.39, 19.3, 19.49, 19.62, 22.52, 23.02, 23.52],
+    },
+  },
+  {
+    plan: "ton-top",
+    salesTier: "top-10000-20000",
+    brand: "elo-amex",
+    settlement: "same-day",
+    rates: {
+      debit: 2.5,
+      credit: 4.3,
+      installments: [7.57, 8.9, 9.98, 10.24, 10.29, 10.42, 11.19, 11.73, 12.36, 13.16, 13.28, 16.13, 17.54, 18.99, 19.62, 19.75, 19.65, 23.97, 24.47, 24.97],
+    },
+  },
+  {
+    plan: "ton-top",
+    salesTier: "top-10000-20000",
+    brand: "visa-master",
+    settlement: "one-business-day",
+    rates: {
+      debit: 1.18,
+      credit: 2.98,
+      installments: [5.33, 6.06, 6.79, 7.51, 8.2, 8.88, 9.65, 10.19, 10.67, 10.89, 10.95, 13.54, 14.95, 16.1, 17.01, 17.2, 17.33, 20.23, 20.73, 21.23],
+    },
+  },
+  {
+    plan: "ton-top",
+    salesTier: "top-10000-20000",
+    brand: "visa-master",
+    settlement: "same-day",
+    rates: {
+      debit: 1.21,
+      credit: 3.01,
+      installments: [6.13, 7.46, 8.54, 8.8, 8.85, 8.98, 9.75, 10.29, 10.77, 10.91, 10.99, 13.84, 15.25, 16.7, 17.33, 17.46, 17.36, 21.68, 22.18, 22.68],
+    },
+  },
+  {
+    plan: "ton-top",
+    salesTier: "top-20000-30000",
+    brand: "elo-amex",
+    settlement: "one-business-day",
+    rates: {
+      debit: 2.13,
+      credit: 4.08,
+      installments: [5.65, 6.26, 6.87, 7.48, 8.07, 9.52, 10.79, 11.33, 11.96, 12.84, 13.17, 15.63, 17.04, 18.19, 19.1, 19.29, 19.38, 22.02, 22.52, 23.02],
+    },
+  },
+  {
+    plan: "ton-top",
+    salesTier: "top-20000-30000",
+    brand: "elo-amex",
+    settlement: "same-day",
+    rates: {
+      debit: 2.43,
+      credit: 4.14,
+      installments: [7.15, 8.26, 8.87, 9.48, 10.07, 10.39, 11.16, 11.7, 12.22, 13.08, 13.21, 15.68, 17.09, 18.54, 19.17, 19.3, 19.41, 23.52, 24.02, 24.52],
+    },
+  },
+  {
+    plan: "ton-top",
+    salesTier: "top-20000-30000",
+    brand: "visa-master",
+    settlement: "one-business-day",
+    rates: {
+      debit: 0.84,
+      credit: 2.79,
+      installments: [4.21, 4.82, 5.43, 6.04, 6.63, 8.08, 9.35, 9.89, 10.37, 10.59, 10.88, 13.34, 14.75, 15.9, 16.81, 17, 17.09, 19.73, 20.23, 20.73],
+    },
+  },
+  {
+    plan: "ton-top",
+    salesTier: "top-20000-30000",
+    brand: "visa-master",
+    settlement: "same-day",
+    rates: {
+      debit: 1.14,
+      credit: 2.85,
+      installments: [5.71, 6.82, 7.43, 8.04, 8.63, 8.95, 9.72, 10.26, 10.63, 10.83, 10.92, 13.39, 14.8, 16.25, 16.88, 17.01, 17.12, 21.23, 21.73, 22.23],
+    },
+  },
+  {
+    plan: "ton-top",
+    salesTier: "top-6000-10000",
+    brand: "elo-amex",
+    settlement: "one-business-day",
+    rates: {
+      debit: 2.57,
+      credit: 4.44,
+      installments: [6.87, 7.6, 8.33, 9.05, 9.72, 10.42, 11.12, 11.81, 12.64, 13.88, 13.97, 16.62, 17.54, 18.44, 19.44, 19.54, 20.39, 23.02, 23.52, 24.02],
+    },
+  },
+  {
+    plan: "ton-top",
+    salesTier: "top-6000-10000",
+    brand: "elo-amex",
+    settlement: "same-day",
+    rates: {
+      debit: 2.6,
+      credit: 4.53,
+      installments: [8.25, 9.54, 10.4, 10.55, 10.72, 12.45, 12.87, 13, 13.22, 13.92, 13.99, 16.8, 17.82, 19.2, 20.18, 20.38, 20.42, 24.18, 25.27, 25.77],
+    },
+  },
+  {
+    plan: "ton-top",
+    salesTier: "top-6000-10000",
+    brand: "visa-master",
+    settlement: "one-business-day",
+    rates: {
+      debit: 1.28,
+      credit: 3.15,
+      installments: [5.43, 6.16, 6.89, 7.61, 8.28, 8.98, 9.68, 10.37, 11.05, 11.63, 11.68, 14.33, 15.25, 16.15, 17.15, 17.25, 18.1, 20.73, 21.23, 21.73],
+    },
+  },
+  {
+    plan: "ton-top",
+    salesTier: "top-6000-10000",
+    brand: "visa-master",
+    settlement: "same-day",
+    rates: {
+      debit: 1.31,
+      credit: 3.24,
+      installments: [6.81, 8.1, 8.96, 9.11, 9.28, 11.01, 11.43, 11.56, 11.63, 11.67, 11.7, 14.51, 15.53, 16.91, 17.89, 18.09, 18.13, 21.89, 22.98, 23.48],
+    },
+  },
+  {
+    plan: "ton-top",
+    salesTier: "top-over-30000",
+    brand: "elo-amex",
+    settlement: "one-business-day",
+    rates: {
+      debit: 2.08,
+      credit: 4.04,
+      installments: [5.62, 6.23, 6.84, 7.43, 8.02, 9.39, 10.76, 11.3, 11.93, 12.81, 13.14, 15.6, 17.01, 18.16, 19.07, 18.5, 19.2, 21.99, 22.49, 22.99],
+    },
+  },
+  {
+    plan: "ton-top",
+    salesTier: "top-over-30000",
+    brand: "elo-amex",
+    settlement: "same-day",
+    rates: {
+      debit: 2.38,
+      credit: 4.11,
+      installments: [7.12, 8.23, 8.84, 9.45, 10.03, 10.36, 11.13, 11.67, 12.19, 13.05, 13.17, 15.65, 17.06, 18.51, 19.14, 19.2, 19.23, 23.49, 23.99, 24.49],
+    },
+  },
+  {
+    plan: "ton-top",
+    salesTier: "top-over-30000",
+    brand: "visa-master",
+    settlement: "one-business-day",
+    rates: {
+      debit: 0.79,
+      credit: 2.75,
+      installments: [4.18, 4.79, 5.4, 5.99, 6.58, 7.95, 9.32, 9.86, 10.34, 10.56, 10.85, 13.31, 14.72, 15.87, 16.78, 16.21, 16.91, 19.7, 20.2, 20.7],
+    },
+  },
+  {
+    plan: "ton-top",
+    salesTier: "top-over-30000",
+    brand: "visa-master",
+    settlement: "same-day",
+    rates: {
+      debit: 1.09,
+      credit: 2.82,
+      installments: [5.68, 6.79, 7.4, 8.01, 8.59, 8.92, 9.69, 10.23, 10.6, 10.8, 10.88, 13.36, 14.77, 16.22, 16.85, 16.91, 16.94, 21.2, 21.7, 22.2],
+    },
+  },
+  {
+    plan: "ton-top",
+    salesTier: "top-up-to-6000",
+    brand: "elo-amex",
+    settlement: "one-business-day",
+    rates: {
+      debit: 3.19,
+      credit: 5.36,
+      installments: [11.51, 12.89, 14.24, 15.57, 16.87, 18.15, 19.41, 20.64, 21.99, 22.85, 23.89, 25.03, 26.15, 26.45, 27.95, 28.58, 29.58, 30.08, 30.58, 31.08],
+    },
+  },
+  {
+    plan: "ton-top",
+    salesTier: "top-up-to-6000",
+    brand: "elo-amex",
+    settlement: "same-day",
+    rates: {
+      debit: 3.45,
+      credit: 6.3,
+      installments: [14.05, 15.64, 17.19, 19.14, 20.21, 22.19, 23.67, 24.76, 25.04, 25.75, 25.86, 28.38, 29.14, 29.88, 30.64, 31.39, 31.42, 31.72, 32.02, 32.32],
+    },
+  },
+  {
+    plan: "ton-top",
+    salesTier: "top-up-to-6000",
+    brand: "visa-master",
+    settlement: "one-business-day",
+    rates: {
+      debit: 1.9,
+      credit: 4.07,
+      installments: [10.07, 11.45, 12.8, 14.13, 15.43, 16.71, 17.97, 19.2, 20.4, 20.6, 21.6, 22.74, 23.86, 24.16, 25.66, 26.29, 27.29, 27.79, 28.29, 28.79],
+    },
+  },
+  {
+    plan: "ton-top",
+    salesTier: "top-up-to-6000",
+    brand: "visa-master",
+    settlement: "same-day",
+    rates: {
+      debit: 2.16,
+      credit: 5.01,
+      installments: [12.61, 14.2, 15.75, 17.7, 18.77, 20.75, 22.23, 23.32, 23.45, 23.5, 23.57, 26.09, 26.85, 27.59, 28.35, 29.1, 29.13, 29.43, 29.73, 30.03],
     },
   },
 ];
