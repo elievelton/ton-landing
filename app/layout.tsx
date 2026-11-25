@@ -142,7 +142,7 @@ export default function RootLayout({
   <Footer />
 
   <BackToTop />
-  {ENABLE_SOCIAL_PROOF && <SocialProofToast />
+  {ENABLE_SOCIAL_PROOF && <SocialProofToast />}
   <CookieConsent />
 </body>
     </html>
