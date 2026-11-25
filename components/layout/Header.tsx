@@ -15,6 +15,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 import { siteConfig } from "@/config/site"
+import { getCouponPercentLabel } from "@/config/coupon"
 import {
   isPromotionActive,
 } from "@/config/promotions"
@@ -27,7 +28,7 @@ const navigation = [
     href: "#calculadora",
     highlight: true,
   },
-  { label: "Como ganhar 30% OFF", href: "#consultor" },
+  { label: `Como ganhar ${getCouponPercentLabel()}% OFF`, href: "#consultor" },
   { label: "Sobre mim", href: "#quem-somos" },
   { label: "FAQ", href: "#duvidas" },
 ]
