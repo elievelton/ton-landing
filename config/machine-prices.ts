@@ -33,7 +33,7 @@ export function getMachinePrice(id: string) {
 
   const discount = config.couponEligible ? getCouponDiscount() : 0
   const currentPrice = roundCurrency(config.priceBeforeCoupon * (1 - discount))
-  const installmentPrice = roundCurrency(currentPrice / config.installments)
+  const installmentPrice = Math.floor((currentPrice / config.installments + Number.EPSILON) * 100) / 100
 
   return {
     original: formatBRL(config.originalPrice),
