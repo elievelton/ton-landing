@@ -14,8 +14,15 @@ import { FadeIn } from "@/components/shared/FadeIn"
 import { TrackedLink } from "@/components/shared/TrackedLink"
 import { Button } from "@/components/ui/button"
 import { siteConfig } from "@/config/site"
+import { getCouponPercentLabel } from "@/config/coupon"
+import { formatBRL, getMachinePrice } from "@/config/machine-prices"
 
 export function Consultant() {
+  const couponPercent = getCouponPercentLabel()
+  const examplePrice = getMachinePrice("mega-t3-smart")!
+  const originalPrice = 671.43
+  const totalSavings = originalPrice - examplePrice.amount
+  const totalDiscountPercent = Math.round((totalSavings / originalPrice) * 100)
   return (
     <section
       id="consultor"
@@ -39,13 +46,13 @@ export function Consultant() {
             <div>
               <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-sm font-bold text-primary">
                 <Handshake className="size-4" />
-                Vantagem de comprar Com o Cupom de 30%
+                Vantagem de comprar Com o Cupom de {couponPercent}%
               </div>
 
               <h2 className="mt-6 max-w-xl text-3xl font-bold tracking-tight text-foreground sm:text-4xl lg:text-5xl">
                 Como garantir o preço da Ton {" "}
                 <span className="text-primary">
-                  + 30% de desconto extra
+                  + {couponPercent}% de desconto extra
                 </span>
               </h2>
 
@@ -62,7 +69,7 @@ export function Consultant() {
               <p className="mt-4 max-w-xl text-base leading-7 text-muted sm:text-lg">
                 Além da promoção da Ton, você ainda pode receber{" "}
                 <strong className="text-orange-500">
-                  30% de desconto adicional
+                  {couponPercent}% de desconto adicional
                 </strong>{" "}
                 com meu cupom, nas condições aplicáveis.
               </p>
@@ -72,11 +79,11 @@ export function Consultant() {
   <p className="text-base font-bold leading-7 text-foreground sm:text-lg">
     O desconto da Ton vem primeiro.{" "}
     <span className="text-primary">
-      Com meu cupom, você ganha mais 30% de desconto
+      Com meu cupom, você ganha mais {couponPercent}% de desconto
     </span>{" "}
     e pode chegar a aproximadamente{" "}
     <span className="text-xl font-black text-orange-500 sm:text-2xl">
-      80% OFF
+      {totalDiscountPercent}% OFF
     </span>{" "}
     no valor da maquininha.
   </p>
@@ -108,7 +115,7 @@ export function Consultant() {
 
                   <div>
                     <p className="font-semibold text-foreground">
-                      Mais 30% de desconto
+                      Mais {couponPercent}% de desconto
                     </p>
 
                     <p className="mt-1 text-sm leading-6 text-muted">
@@ -231,7 +238,7 @@ export function Consultant() {
                     </p>
 
                     <p className="mt-1 text-2xl font-extrabold tracking-tight text-foreground">
-                      R$ 671,43
+                      {formatBRL(originalPrice)}
                     </p>
                   </div>
 
@@ -260,7 +267,7 @@ export function Consultant() {
                       </p>
 
                       <p className="mt-1 text-xl font-bold text-foreground">
-                        R$ 194,71
+                        {formatBRL(examplePrice.beforeCoupon)}
                       </p>
                     </div>
                   </div>
@@ -276,16 +283,16 @@ export function Consultant() {
                     </div>
 
                     <p className="mt-2 text-3xl font-extrabold text-orange-500">
-                      -30%
+                      -{couponPercent}%
                     </p>
 
                     <div className="mt-3 border-t border-orange-500/10 pt-3">
                       <p className="text-xs text-muted">
-                        Sobre R$ 194,71
+                        Sobre {formatBRL(examplePrice.beforeCoupon)}
                       </p>
 
                       <p className="mt-1 text-xl font-bold text-orange-600">
-                        - R$ 58,41
+                        - {formatBRL(examplePrice.couponSavings)}
                       </p>
                     </div>
                   </div>
@@ -305,7 +312,7 @@ export function Consultant() {
                     </p>
 
                     <p className="relative mt-2 text-4xl font-extrabold tracking-tight sm:text-5xl">
-                      R$ 136,30
+                      {examplePrice.current}
                     </p>
 
                     <p className="relative mt-2 text-xs font-medium text-white/80">
@@ -320,11 +327,11 @@ export function Consultant() {
                     </p>
 
                     <p className="mt-2 text-3xl font-extrabold text-orange-600">
-                      R$ 535,13
+                      {formatBRL(totalSavings)}
                     </p>
 
                     <p className="mt-2 text-xs leading-5 text-muted">
-                      De R$ 671,43 por apenas R$ 136,30 no exemplo apresentado.
+                      De {formatBRL(originalPrice)} por apenas {examplePrice.current} no exemplo apresentado.
                     </p>
                   </div>
                   
@@ -335,7 +342,7 @@ export function Consultant() {
                   <p className="text-sm font-semibold text-foreground">
                     Primeiro a Ton dá o desconto.{" "}
                     <span className="text-primary">
-                      Depois você economiza mais 30%.
+                      Depois você economiza mais {couponPercent}%.
                     </span>
                   </p>
                 </div>
@@ -343,7 +350,7 @@ export function Consultant() {
                 {/* Aviso */}
                 <p className="mt-3 text-center text-[10px] leading-4 text-muted">
                   * Exemplo ilustrativo considerando desconto promocional de
-                  71% e, em seguida, desconto adicional de 30%. Preços,
+                  71% e, em seguida, desconto adicional de {couponPercent}%. Preços,
                   percentuais e condições promocionais podem sofrer alterações.
                 </p>
               </div>
