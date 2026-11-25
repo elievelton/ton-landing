@@ -116,7 +116,7 @@ export function PromotionBanner() {
                 </span>
 
                 <span>
-                  Além dos descontos promocionais e do meu cupom de 20% OFF
+                  Além dos descontos promocionais e do meu cupom de 30% OFF
                 </span>
               </div>
 
