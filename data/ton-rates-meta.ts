@@ -15,15 +15,15 @@ export type TonRatesMeta = {
 };
 
 export const tonRatesMeta: TonRatesMeta = {
-  "status": "success",
+  "status": "error",
   "fetchedAt": "2026-11-02T20:35:10.892Z",
   "sourceRatesUpdatedAt": "2026-10-01T12:40:34.054Z",
   "sourceConditionsUpdatedAt": "2026-10-01T12:40:34.054Z",
   "plans": 11,
   "megaTiers": 6,
-  "topTiers": 4,
+  "topTiers": 0,
   "tapTonConfigs": 4,
-  "configs": 40,
+  "configs": 0,
   "installmentsPerCreditConfig": 21,
-  "message": "Nenhuma alteração nas taxas."
+  "message": "Estrutura do Ton Top preparada; aguardando a primeira execução bem-sucedida do scraper para substituir os dados antigos."
 };
