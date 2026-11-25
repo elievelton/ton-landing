@@ -1,0 +1,53 @@
+name: Notificar alterações do site no Telegram
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - "data/ton-rates.ts"
+      - "data/ton-rates-meta.ts"
+
+permissions:
+  contents: read
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar histórico do commit
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 2
+
+      - name: Enviar resumo para o Telegram
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          COMMIT_SHA: ${{ github.sha }}
+          COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
+          REPOSITORY: ${{ github.repository }}
+          COMPARE_URL: ${{ github.event.compare }}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if [[ -z "${TELEGRAM_BOT_TOKEN:-}" || -z "${TELEGRAM_CHAT_ID:-}" ]]; then
+            echo "Secrets TELEGRAM_BOT_TOKEN e/ou TELEGRAM_CHAT_ID não configurados."
+            exit 1
+          fi
+
+          FILES="$(git diff-tree --no-commit-id --name-only -r "$COMMIT_SHA" | head -30)"
+          if [[ -z "$FILES" ]]; then
+            FILES="Não foi possível identificar os arquivos alterados."
+          fi
+
+          SHORT_SHA="${COMMIT_SHA:0:7}"
+          COMMIT_URL="https://github.com/$REPOSITORY/commit/$COMMIT_SHA"
+          MESSAGE="$(printf '🔔 Alteração estrutural no site\n\nCommit: %s\n%s\n\nArquivos alterados:\n%s\n\nCommit: %s' "$SHORT_SHA" "$COMMIT_MESSAGE" "$FILES" "$COMMIT_URL")"
+
+          curl --fail-with-body --silent --show-error \
+            --request POST \
+            --url "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage" \
+            --data-urlencode "chat_id=$TELEGRAM_CHAT_ID" \
+            --data-urlencode "text=$MESSAGE"
