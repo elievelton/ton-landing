@@ -16,6 +16,7 @@ import { siteConfig } from "@/config/site"
 import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics"
 import { MicrosoftUET } from "@/components/analytics/MicrosoftUET"
 import { SocialProofBar } from "@/components/shared/SocialProofBar"
+import { ENABLE_SOCIAL_PROOF } from "@/config/feature-flags"
 
 import "./globals.css"
 
@@ -130,7 +131,7 @@ export default function RootLayout({
   <MicrosoftUET />
   <StructuredData />
 
-  <SocialProofBar />
+  {ENABLE_SOCIAL_PROOF && <SocialProofBar />}
 
   <Header />
 
@@ -141,7 +142,7 @@ export default function RootLayout({
   <Footer />
 
   <BackToTop />
-  <SocialProofToast />
+  {ENABLE_SOCIAL_PROOF && <SocialProofToast />
   <CookieConsent />
 </body>
     </html>
