@@ -7,7 +7,7 @@ export type TonRatesMeta = {
   sourceConditionsUpdatedAt: string | null;
   plans: number;
   megaTiers: number;
-  blackTiers: number;
+  topTiers: number;
   tapTonConfigs: number;
   configs: number;
   installmentsPerCreditConfig: number;
@@ -21,7 +21,7 @@ export const tonRatesMeta: TonRatesMeta = {
   "sourceConditionsUpdatedAt": "2026-10-01T12:40:34.054Z",
   "plans": 11,
   "megaTiers": 6,
-  "blackTiers": 4,
+  "topTiers": 4,
   "tapTonConfigs": 4,
   "configs": 40,
   "installmentsPerCreditConfig": 21,
