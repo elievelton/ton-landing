@@ -118,7 +118,7 @@ export function Plans() {
                     {plan.shortName}
                   </h3>
 
-                  {plan.id === "ton-black" && (
+                  {plan.id === "top" && (
                     <div className="mt-3">
                       <span
                         className="inline-flex items-center rounded-full bg-orange-500/10 px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.08em] text-orange-600"
@@ -268,7 +268,7 @@ export function Plans() {
                       destination: "catalog",
                       label: plan.recommended
                         ? "Garantir o Mega+ com Desconto"
-                        : "Quero o Ton Black",
+                        : "Quero o Ton Top",
                       product: plan.id,
                       conversionStrength: "medium",
                     }}
@@ -286,7 +286,7 @@ export function Plans() {
                     >
                       {plan.recommended
                         ? "Garantir o Mega+ com Desconto"
-                        : "Quero o Ton Black"}
+                        : "Quero o Ton Top"}
 
                       <ArrowRight className="size-4" />
                     </Button>
@@ -398,7 +398,7 @@ export function Plans() {
     </p>
 
     <p className="mt-0.5 text-sm font-extrabold text-primary">
-      Conheça mais Detalhes Sobre os Planos Mega+ e Black
+      Conheça mais detalhes sobre os planos Mega+ e Top
     </p>
   </div>
 
