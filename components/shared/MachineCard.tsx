@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import type { Machine } from "@/config/machines"
 import { siteConfig } from "@/config/site"
 
-// Tabela de preços atualizada com o cupom de 20% de desconto
+// Tabela de preços atualizada com o cupom de 30% de desconto
 const MACHINE_PRICES: Record<
   string,
   { original: string; current: string; installments: string; perInstallment: string }
@@ -58,8 +58,8 @@ export function MachineCard({ machine }: MachineCardProps) {
     machine.id === "t1"
       ? "Ton OFF 70%"
       : machine.id === "t3-smart"
-        ? "Ton 71% + 20% Cupom"
-        : "Ton 72% + 20% Cupom"
+        ? "Ton 71% + 30% Cupom"
+        : "Ton 72% + 30% Cupom"
 
   return (
     <article
