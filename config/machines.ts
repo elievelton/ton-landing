@@ -1,100 +1,119 @@
 export type Machine = {
   id: string
+  plan: "mega" | "top"
   name: string
   description: string
   image: string
   features: string[]
   featured: boolean
-
-  // Destaques comerciais opcionais
+  tonDiscount: number
+  couponEligible: boolean
   bestSeller?: boolean
-  discount?: string
   badge?: string
+  cnpjOnly?: boolean
 }
+
+const sharedSmartFeatures = [
+  "Tela touchscreen",
+  "Comprovante impresso",
+  "Pagamento por aproximação (NFC)",
+  "Conexão Wi-Fi e chip 4G",
+  "Frete grátis",
+  "Garantia vitalícia",
+  "Bateria de longa duração",
+]
+
+const sharedT3Features = [
+  "Comprovante impresso",
+  "Pagamento por aproximação (NFC)",
+  "Conexão Wi-Fi e chip",
+  "Frete grátis",
+  "Garantia vitalícia",
+  "Bateria para vendas no dia a dia",
+]
 
 export const machines: Machine[] = [
   {
-    id: "t3-smart",
-    name: "T3 Smart",
-    description:
-      "A solução mais completa para quem busca praticidade e uma experiência moderna nas vendas.",
+    id: "mega-t3-smart",
+    plan: "mega",
+    name: "T3 Smart Mega+",
+    description: "A maquininha Android, mais rápida e com melhor bateria.",
     image: "/images/machines/t3-smart.webp",
-    features: [
-      "Tela touchscreen (Diferencial)",
-      "Comprovante impresso",
-      "Pagamento por aproximação",
-      "Conexão Wi-Fi e chip",
-      "Internet grátis",
-      "Frete grátis",
-      "Garantia Vitalícia, quebrou trocou!",
-      "Bateria de Longa Duração",
-      "Parcele vendas em até 21x",
-    ],
+    features: sharedSmartFeatures,
     featured: true,
     bestSeller: true,
-    discount: "Até 71% OFF",
     badge: "Mais vendida",
+    tonDiscount: 71,
+    couponEligible: true,
   },
-
   {
-    id: "t3",
-    name: "T3",
-    description:
-      "Uma máquina completa para quem vende com frequência e precisa de agilidade no dia a dia.",
+    id: "mega-t3",
+    plan: "mega",
+    name: "T3 Mega+",
+    description: "A maquininha com comprovante impresso.",
     image: "/images/machines/t3.webp",
-    features: [
-      "Comprovante impresso",
-      "Pagamento por aproximação",
-      "Conexão Wi-Fi e chip",
-      "Bateria para vendas no dia a dia",
-      "Internet grátis",
-      "Garantia Vitalícia, quebrou trocou!",
-      "Frete grátis",
-      "Parcele vendas em até 21x",
-      "Faz tudo que a Smart faz, mas sem touchscreen ",
-    ],
+    features: sharedT3Features,
     featured: true,
-    discount: "Até 72% OFF",
+    tonDiscount: 72,
+    couponEligible: true,
   },
-
   {
-    id: "t2",
-    name: "T2",
-    description:
-      "Compacta e prática para quem precisa levar a maquininha para diferentes lugares.",
+    id: "mega-t2",
+    plan: "mega",
+    name: "T2 Mega+",
+    description: "A maquininha compacta que está sempre com você.",
     image: "/images/machines/t2.webp",
     features: [
-      "Leve design compacto",
-      "Pagamento por aproximação",
-      "Conexão Wi-Fi e chip",
-      "Comprovante digital",
-      "Internet grátis",
-      "Garantia Vitalícia, quebrou trocou!",
+      "Comprovante por SMS",
+      "Pagamento por aproximação (NFC)",
+      "Conexão Wi-Fi e chip 3G",
+      "Aceita Pix na maquininha",
       "Frete grátis",
-      "Parcele vendas em até 12x",
-      "Seu Diferencia é ser Portatil"
+      "Garantia vitalícia",
     ],
     featured: false,
-    discount: "Até 72% OFF",
+    tonDiscount: 72,
+    couponEligible: true,
   },
-
   {
-    id: "t1",
-    name: "T1",
-    description:
-      "Uma opção simples para quem está começando a aceitar pagamentos com cartão.",
+    id: "mega-t1",
+    plan: "mega",
+    name: "T1 Mega+",
+    description: "A maquininha compacta que conecta com o seu celular.",
     image: "/images/machines/t1.webp",
     features: [
-      "Compacta e leve",
-      "Pagamento por aproximação",
-      "Comprovante digital",
       "Precisa de celular com internet",
-      "Garantia Vitalícia, quebrou trocou!",
+      "Comprovante por SMS",
+      "Pagamento por aproximação (NFC)",
       "Frete grátis",
-      "Parcele vendas em até 12x",
-      "Ideal para começar, baixo investimento",
+      "Garantia vitalícia",
     ],
     featured: false,
-    discount: "Até 70% OFF",
+    tonDiscount: 70,
+    couponEligible: false,
+  },
+  {
+    id: "top-t3-smart",
+    plan: "top",
+    name: "T3 Smart Top",
+    description: "A maquininha Android, mais rápida e com melhor bateria.",
+    image: "/images/machines/t3-smart.webp",
+    features: sharedSmartFeatures,
+    featured: true,
+    tonDiscount: 73,
+    couponEligible: true,
+    cnpjOnly: true,
+  },
+  {
+    id: "top-t3",
+    plan: "top",
+    name: "T3 Top",
+    description: "A maquininha com comprovante impresso.",
+    image: "/images/machines/t3.webp",
+    features: sharedT3Features,
+    featured: false,
+    tonDiscount: 72,
+    couponEligible: true,
+    cnpjOnly: true,
   },
 ]
