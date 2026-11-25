@@ -15,6 +15,7 @@ import {
 } from "lucide-react"
 
 import { siteConfig } from "@/config/site"
+import { ENABLE_SOCIAL_PROOF } from "@/config/feature-flags"
 import {
   isPromotionActive,
 } from "@/config/promotions"
@@ -173,6 +174,10 @@ function registerFinalIntent(intent: IntentOption) {
 function registerStrongIntentInCounter(
   intent: IntentOption,
 ) {
+  if (!ENABLE_SOCIAL_PROOF) {
+    return
+  }
+
   if (
     intent.id !== "buy_machine" &&
     intent.id !== "resell"
