@@ -21,6 +21,9 @@ import { getMachinePrice } from "@/config/machine-prices"
 export function Hero() {
   const couponPercent = getCouponPercentLabel()
   const featuredPrice = getMachinePrice("mega-t3-smart")
+  const featuredTotalDiscount = featuredPrice
+    ? Math.round((1 - featuredPrice.amount / 671.43) * 100)
+    : 0
   return (
     <section id="hero" className="relative overflow-hidden bg-background">
       {/* Elementos decorativos de fundo */}
@@ -252,7 +255,7 @@ export function Hero() {
                     <span className="absolute inset-0 animate-ping rounded-full bg-primary/20" />
 
                     <span className="relative inline-flex rounded-full border border-primary/20 bg-primary/10 px-3 py-1.5 text-[11px] font-extrabold text-primary">
-                      Até 77% OFF
+                      Até {featuredTotalDiscount}% OFF
                     </span>
                   </div>
                 </div>
@@ -330,7 +333,7 @@ export function Hero() {
                       event: "machine_click",
                       location: "hero",
                       destination: "checkout",
-                      label: "Ver T3 Smart Mega+ no catálogo com {couponPercent}% OFF",
+                      label: `Ver T3 Smart Mega+ no catálogo com ${couponPercent}% OFF`,
                       product: "t3_smart",
                       conversionStrength: "strong",
                     }}
