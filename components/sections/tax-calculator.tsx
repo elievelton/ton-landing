@@ -1092,7 +1092,7 @@ export default function TaxCalculator() {
                     <p className="mt-1 text-sm leading-6 text-muted">
                       {isTapTon
                         ? "Transforme seu celular em maquininha e comece a vender."
-                        : "Use meu cupom e peça sua maquininha com {getCouponPercentLabel()}% de desconto."}
+                        : `Use meu cupom e peça sua maquininha com ${getCouponPercentLabel()}% de desconto.`}
                     </p>
                   </div>
                 </div>
@@ -1107,7 +1107,7 @@ export default function TaxCalculator() {
                     destination: "checkout",
                     label: isTapTon
                           ? "Começar a usar o TapTon"
-                          : "Pedir maquininha com {getCouponPercentLabel()}% de desconto",
+                          : `Pedir maquininha com ${getCouponPercentLabel()}% de desconto`,
                     product: "ton",
                     conversionStrength: "strong",
                   }}
@@ -1804,7 +1804,7 @@ export default function TaxCalculator() {
                         destination: "checkout",
                         label: isTapTon
                           ? "Começar a usar o TapTon"
-                          : "Pedir maquininha com {getCouponPercentLabel()}% de desconto",
+                          : `Pedir maquininha com ${getCouponPercentLabel()}% de desconto`,
                         product: "ton",
                         conversionStrength: "strong",
                       }}
@@ -1830,7 +1830,7 @@ export default function TaxCalculator() {
                     >
                       {isTapTon
                         ? "Começar a usar o TapTon"
-                        : "Pedir maquininha com {getCouponPercentLabel()}% de desconto"}
+                        : `Pedir maquininha com ${getCouponPercentLabel()}% de desconto`}
                       <ArrowRight
                         className="
                           size-4
