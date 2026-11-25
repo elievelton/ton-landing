@@ -20,6 +20,7 @@ import {
 import { Container } from "@/components/shared/Container"
 import { FadeIn } from "@/components/shared/FadeIn"
 import { siteConfig } from "@/config/site"
+import { getCouponPercentLabel } from "@/config/coupon"
 import { CouponCopy } from "@/components/shared/CouponCopy"
 import { TrackedLink } from "@/components/shared/TrackedLink"
 
@@ -55,12 +56,12 @@ const faqs = [
       "Não, as maquininhas Ton são sem mensalidades, você só vai pagar quando ultilizar ela e pequenas taxas de acordo com o plano que escolheu no ato da compra",
   },
   {
-    question: "Como funciona o desconto adicional de 30%?",
+    question: `Como funciona o desconto adicional de ${getCouponPercentLabel()}%?`,
     id: "faq-desconto-20",
-    answer: `Primeiro é aplicado o preço promocional disponibilizado pela Ton. Depois, nas condições aplicáveis, você ainda pode utilizar meu cupom ${siteConfig.coupon} para obter 30% de desconto adicional. Ou seja: o segundo desconto é aplicado sobre o valor que já está com a promoção da Ton.`,
+    answer: `Primeiro é aplicado o preço promocional disponibilizado pela Ton. Depois, nas condições aplicáveis, você ainda pode utilizar meu cupom ${siteConfig.coupon} para obter ${getCouponPercentLabel()}% de desconto adicional. Ou seja: o segundo desconto é aplicado sobre o valor que já está com a promoção da Ton.`,
   },
   {
-    question: "Como saber se meu cupom de 30% foi aplicado?",
+    question: `Como saber se meu cupom de ${getCouponPercentLabel()}% foi aplicado?`,
     id: "faq-cupom-aplicado",
     answer: "",
     type: "coupon",
@@ -141,7 +142,7 @@ export function FAQPurchaseCTA({
 
           <p className="mt-1 text-sm leading-6 text-muted">
             Aproveite meu cupom exclusivo e peça sua maquininha Ton com
-            <strong className="text-foreground"> 30% de desconto</strong>.
+            <strong className="text-foreground"> ${getCouponPercentLabel()}% de desconto</strong>.
           </p>
         </div>
       </div>
@@ -155,13 +156,13 @@ export function FAQPurchaseCTA({
           event: "cta_click",
           location,
           destination: "catalog",
-          label: "Pedir maquininha Ton com 30% de desconto",
+          label: "Pedir maquininha Ton com ${getCouponPercentLabel()}% de desconto",
           product: "ton",
           conversionStrength: "medium",
         }}
         className="group relative mt-4 flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl bg-orange-500 px-4 py-3.5 text-sm font-extrabold text-white shadow-lg shadow-orange-500/20 transition-all duration-300 hover:-translate-y-0.5 hover:bg-orange-600 hover:shadow-xl hover:shadow-orange-500/30 active:translate-y-0"
       >
-        <span>Quero minha maquininha com 30% OFF</span>
+        <span>Quero minha maquininha com ${getCouponPercentLabel()}% OFF</span>
         <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" />
       </TrackedLink>
     </div>
@@ -398,7 +399,7 @@ export function FAQ() {
                 </p>
 
                 <p className="mt-1 text-sm text-muted">
-                  Veja as maquininhas disponíveis e aproveite meu cupom de 30% OFF.
+                  Veja as maquininhas disponíveis e aproveite meu cupom de ${getCouponPercentLabel()}% OFF.
                 </p>
               </div>
             </div>
@@ -412,12 +413,12 @@ export function FAQ() {
                 event: "cta_click",
                 location: "faq_coupon",
                 destination: "catalog",
-                label: "Ver maquininhas com 30% de desconto",
+                label: "Ver maquininhas com ${getCouponPercentLabel()}% de desconto",
                 conversionStrength: "medium",
               }}
               className="group inline-flex w-full items-center justify-center gap-2 rounded-xl bg-orange-500 px-5 py-3 text-sm font-extrabold text-white shadow-lg shadow-orange-500/20 transition-all duration-300 hover:-translate-y-0.5 hover:bg-orange-600 hover:shadow-xl hover:shadow-orange-500/30 sm:w-auto"
             >
-              30% OFF Aqui
+              ${getCouponPercentLabel()}% OFF Aqui
 
               <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" />
             </TrackedLink>
@@ -457,7 +458,7 @@ function SecondMachineCTA() {
           event: "machine_click",
           location: "faq_redundancy",
           destination: "catalog",
-          label: "Quero uma segunda máquina Ton com 30% de desconto",
+          label: "Quero uma segunda máquina Ton com ${getCouponPercentLabel()}% de desconto",
           product: "ton",
           conversionStrength: "strong",
         }}
@@ -488,7 +489,7 @@ function SecondMachineCTA() {
         />
 
         <span className="relative z-10">
-          Quero minha segunda máquina com 30% OFF
+          Quero minha segunda máquina com ${getCouponPercentLabel()}% OFF
         </span>
 
         <ArrowRight
@@ -519,7 +520,7 @@ function PaymentLinkCTA() {
           <p className="mt-1 text-sm leading-6 text-muted">
             Com o Link de Pagamento, você pode cobrar à distância e oferecer mais
             opções para o seu cliente. E com meu cupom, você ainda pode pedir sua
-            maquininha Ton com 30% de desconto.
+            maquininha Ton com ${getCouponPercentLabel()}% de desconto.
           </p>
         </div>
       </div>
@@ -533,7 +534,7 @@ function PaymentLinkCTA() {
           event: "cta_click",
           location: "faq_link_payment",
           destination: "catalog",
-          label: "Pedir maquininha Ton com 30% de desconto",
+          label: "Pedir maquininha Ton com ${getCouponPercentLabel()}% de desconto",
           product: "ton",
           conversionStrength: "medium",
         }}
@@ -551,7 +552,7 @@ function PaymentLinkCTA() {
         "
       >
         <span className="relative z-10">
-          Quero minha maquininha com 30% OFF
+          Quero minha maquininha com ${getCouponPercentLabel()}% OFF
         </span>
 
         <ArrowRight
@@ -582,7 +583,7 @@ function MachineComparison() {
         { icon: CreditCard, text: "Parcelamento em até 12x" },
       ],
       product: "t1",
-      href: siteConfig.links.machines.t1,
+      href: siteConfig.links.catalog,
     },
     {
       name: "T2",
@@ -598,7 +599,7 @@ function MachineComparison() {
         { icon: CreditCard, text: "Parcelamento em até 12x" },
       ],
       product: "t2",
-      href: siteConfig.links.machines.t2,
+      href: siteConfig.links.catalog,
     },
     {
       name: "T3",
@@ -614,7 +615,7 @@ function MachineComparison() {
         { icon: CreditCard, text: "Parcelamento em até 21x" },
       ],
       product: "t3",
-      href: siteConfig.links.machines.t3,
+      href: siteConfig.links.catalog,
     },
     {
       name: "T3 Smart",
@@ -630,7 +631,7 @@ function MachineComparison() {
         { icon: CreditCard, text: "Parcelamento em até 21x" },
       ],
       product: "t3_smart",
-      href: siteConfig.links.machines.t3Smart,
+      href: siteConfig.links.catalog,
     },
   ]
 
