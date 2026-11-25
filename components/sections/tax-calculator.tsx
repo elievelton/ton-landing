@@ -1246,7 +1246,7 @@ export default function TaxCalculator() {
                 <div className="grid grid-cols-2 gap-4 border-t border-border pt-5">
                   <SelectField
                     label="Vendas mensais"
-                    value={salesTier}
+                    value={selectedSalesTier}
                     onChange={(value) => setSalesTier(value as SalesTier)}
                     options={availableSalesTierOptions}
                   />
