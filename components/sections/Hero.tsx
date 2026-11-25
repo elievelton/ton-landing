@@ -39,14 +39,14 @@ export function Hero() {
               <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-2 text-sm font-semibold text-primary">
                 <BadgeCheck className="size-4 shrink-0" />
 
-                <span>🔥 +20% OFF com meu cupom exclusivo</span>
+                <span>🔥 +30% OFF com meu cupom exclusivo</span>
               </div>
 
               {/* Título */}
               <h1 className="max-w-3xl break-words text-3xl font-extrabold tracking-tight text-foreground sm:text-5xl lg:text-6xl xl:text-6xl hyphens-auto">
                 Maquininha Ton com{" "}
                 <span className="gradient-text inline-block">
-                  +20% de desconto
+                  +30% de desconto
                 </span>{" "}
                 sobre o preço promocional
               </h1>
@@ -60,7 +60,7 @@ export function Hero() {
                   primeiro, a Ton aplica o desconto promocional disponível.
                 </span>{" "}
                 <span className="font-semibold text-primary">
-                  Depois, você economiza mais 20% sobre esse valor usando
+                  Depois, você economiza mais 30% sobre esse valor usando
                   meu cupom exclusivo.
                 </span>
               </p>
@@ -86,7 +86,7 @@ export function Hero() {
                     event: "cta_click",
                     location: "hero",
                     destination: "catalog",
-                    label: "Ativar 20% de desconto e ver modelos",
+                    label: "Ativar 30% de desconto e ver modelos",
                     conversionStrength: "medium",
                   }}
                   className="w-full sm:w-auto"
@@ -95,7 +95,7 @@ export function Hero() {
                     size="lg"
                     className="h-13 w-full gap-2 px-6 text-base font-bold shadow-lg shadow-primary/20 hover:shadow-primary/30 sm:w-auto"
                   >
-                    Ativar +20% OFF e ver modelos
+                    Ativar +30% OFF e ver modelos
 
                     <ArrowRight className="size-5" />
                   </Button>
@@ -215,7 +215,7 @@ export function Hero() {
                 <div className="flex items-center gap-2">
                   <BadgeCheck className="size-4 text-primary" />
 
-                  +20% OFF Automático
+                  +30% OFF Automático
                 </div>
               </div>
             </div>
@@ -277,7 +277,7 @@ export function Hero() {
                   </p>
 
                   <h2 className="mt-1 text-lg font-extrabold tracking-tight text-foreground sm:text-xl">
-                    T3 Smart com +20% OFF usando meu cupom
+                    T3 Smart com +30% OFF usando meu cupom
                   </h2>
 
                   {/* Ancoragem Visual de Preço */}
@@ -297,7 +297,7 @@ export function Hero() {
                   <p className="mx-auto text-xs leading-relaxed text-muted-foreground">
                     Desconto promocional da Ton +{" "}
                     <strong className="font-bold text-primary">
-                      20% extra
+                      30% extra
                     </strong>{" "}
                     aplicado no valor promocional final.
                   </p>
@@ -326,7 +326,7 @@ export function Hero() {
                       event: "machine_click",
                       location: "hero",
                       destination: "checkout",
-                      label: "Adicionar T3 Smart ao carrinho com 20% OFF",
+                      label: "Adicionar T3 Smart ao carrinho com 30% OFF",
                       product: "t3_smart",
                       conversionStrength: "strong",
                     }}
@@ -335,7 +335,7 @@ export function Hero() {
                       size="lg"
                       className="h-12 w-full gap-2 text-sm font-bold shadow-lg shadow-primary/20 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-primary/30"
                     >
-                      Adicionar ao carrinho com +20% OFF
+                      Adicionar ao carrinho com +30% OFF
 
                       <ArrowRight className="size-4" />
                     </Button>
