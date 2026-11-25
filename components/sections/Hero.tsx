@@ -21,9 +21,7 @@ import { getMachinePrice } from "@/config/machine-prices"
 export function Hero() {
   const couponPercent = getCouponPercentLabel()
   const featuredPrice = getMachinePrice("mega-t3-smart")
-  const featuredTotalDiscount = featuredPrice
-    ? Math.round((1 - featuredPrice.amount / 671.43) * 100)
-    : 0
+  const featuredTotalDiscount = 71
   return (
     <section id="hero" className="relative overflow-hidden bg-background">
       {/* Elementos decorativos de fundo */}
