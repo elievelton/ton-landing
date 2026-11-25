@@ -32,6 +32,7 @@ import {
 import { tonRatesMeta } from "@/data/ton-rates-meta";
 
 import { TrackedLink } from "@/components/shared/TrackedLink";
+import { getCouponPercentLabel } from "@/config/coupon";
 
 const MACHINE_URL =
   "https://www.ton.com.br/maquininha/t3-smart?coupon=ELIEVELTOSILVAVC&userAnticipation=0&utm_medium=invite_share&utm_source=revendedor";
@@ -638,7 +639,7 @@ export default function TaxCalculator() {
                   </span>
                 ) : (
                   <span className="rounded-full bg-orange-50 px-3 py-1.5 text-orange-600">
-                    20% OFF
+                    {getCouponPercentLabel()}% OFF
                   </span>
                 )}
               </div>
@@ -673,11 +674,18 @@ export default function TaxCalculator() {
                         "
                       >
                         <p className="text-xs font-black text-orange-700">
-                          Taxas conforme suas vendas mensais
+                          Exclusivo para MEI e empresas com CNPJ
                         </p>
                         <p className="mt-0.5 text-[11px] leading-4 text-orange-700/80">
-                          As condições variam por faixa de faturamento, bandeira e prazo de recebimento.
+                          Suas taxas mudam conforme faturamento, bandeira e prazo de recebimento.
                         </p>
+                        {rates && (
+                          <div className="mt-2 grid grid-cols-3 gap-2 text-center">
+                            <div className="rounded-lg bg-white/80 px-2 py-1.5"><strong className="block text-sm text-orange-800">{formatRate(getInstallmentRate(rates, 0))}%</strong><span className="text-[10px] text-orange-700">Débito</span></div>
+                            <div className="rounded-lg bg-white/80 px-2 py-1.5"><strong className="block text-sm text-orange-800">{formatRate(getInstallmentRate(rates, 1))}%</strong><span className="text-[10px] text-orange-700">Crédito</span></div>
+                            <div className="rounded-lg bg-white/80 px-2 py-1.5"><strong className="block text-sm text-orange-800">{formatRate(getInstallmentRate(rates, 12))}%</strong><span className="text-[10px] text-orange-700">Crédito 12x</span></div>
+                          </div>
+                        )}
                       </motion.div>
                     )}
                   </AnimatePresence>
@@ -1084,7 +1092,7 @@ export default function TaxCalculator() {
                     <p className="mt-1 text-sm leading-6 text-muted">
                       {isTapTon
                         ? "Transforme seu celular em maquininha e comece a vender."
-                        : "Use meu cupom e peça sua maquininha com 20% de desconto."}
+                        : "Use meu cupom e peça sua maquininha com {getCouponPercentLabel()}% de desconto."}
                     </p>
                   </div>
                 </div>
@@ -1099,7 +1107,7 @@ export default function TaxCalculator() {
                     destination: "checkout",
                     label: isTapTon
                           ? "Começar a usar o TapTon"
-                          : "Pedir maquininha com 20% de desconto",
+                          : "Pedir maquininha com {getCouponPercentLabel()}% de desconto",
                     product: "ton",
                     conversionStrength: "strong",
                   }}
@@ -1123,7 +1131,7 @@ export default function TaxCalculator() {
                         active:translate-y-0
                       "
                 >
-                  Pedir maquininha com 20% de desconto
+                  Pedir maquininha com {getCouponPercentLabel()}% de desconto
                   <ArrowRight
                     className="
                       size-4
@@ -1215,8 +1223,18 @@ export default function TaxCalculator() {
         "
                     >
                       <p className="text-xs font-black text-orange-700">
-                        Taxas conforme suas vendas mensais
+                        Exclusivo para MEI e empresas com CNPJ
                       </p>
+                      <p className="mt-0.5 text-[11px] leading-4 text-orange-700/80">
+                        Taxas atualizadas conforme faturamento, bandeira e prazo de recebimento.
+                      </p>
+                      {rates && (
+                        <div className="mt-2 grid grid-cols-3 gap-2 text-center">
+                          <div className="rounded-lg bg-white/80 px-2 py-1.5"><strong className="block text-sm text-orange-800">{formatRate(getInstallmentRate(rates, 0))}%</strong><span className="text-[10px] text-orange-700">Débito</span></div>
+                          <div className="rounded-lg bg-white/80 px-2 py-1.5"><strong className="block text-sm text-orange-800">{formatRate(getInstallmentRate(rates, 1))}%</strong><span className="text-[10px] text-orange-700">Crédito</span></div>
+                          <div className="rounded-lg bg-white/80 px-2 py-1.5"><strong className="block text-sm text-orange-800">{formatRate(getInstallmentRate(rates, 12))}%</strong><span className="text-[10px] text-orange-700">Crédito 12x</span></div>
+                        </div>
+                      )}
 
                       <p className="mt-0.5 text-[11px] leading-4 text-orange-700/80">
                         As condições variam por faixa de faturamento, bandeira e prazo de recebimento.
@@ -1770,7 +1788,7 @@ export default function TaxCalculator() {
                         </p>
 
                         <p className="mt-1 text-sm leading-6 text-muted">
-                          Use meu cupom e peça sua maquininha com 20% de
+                          Use meu cupom e peça sua maquininha com {getCouponPercentLabel()}% de
                           desconto.
                         </p>
                       </div>
@@ -1786,7 +1804,7 @@ export default function TaxCalculator() {
                         destination: "checkout",
                         label: isTapTon
                           ? "Começar a usar o TapTon"
-                          : "Pedir maquininha com 20% de desconto",
+                          : "Pedir maquininha com {getCouponPercentLabel()}% de desconto",
                         product: "ton",
                         conversionStrength: "strong",
                       }}
@@ -1812,7 +1830,7 @@ export default function TaxCalculator() {
                     >
                       {isTapTon
                         ? "Começar a usar o TapTon"
-                        : "Pedir maquininha com 20% de desconto"}
+                        : "Pedir maquininha com {getCouponPercentLabel()}% de desconto"}
                       <ArrowRight
                         className="
                           size-4
