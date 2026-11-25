@@ -16,6 +16,7 @@ import { FadeIn } from "@/components/shared/FadeIn"
 import { TrackedLink } from "@/components/shared/TrackedLink"
 import { Button } from "@/components/ui/button"
 import { siteConfig } from "@/config/site"
+import { getCouponPercentLabel } from "@/config/coupon"
 import {
   activePromotion,
   isPromotionActive,
@@ -116,7 +117,7 @@ export function PromotionBanner() {
                 </span>
 
                 <span>
-                  Além dos descontos promocionais e do meu cupom de 30% OFF
+                  Além dos descontos promocionais e do meu cupom de {getCouponPercentLabel()}% OFF
                 </span>
               </div>
 
