@@ -7,6 +7,10 @@ import type {
 } from "react"
 
 import confetti from "canvas-confetti"
+import {
+  ENABLE_CLICK_CELEBRATION,
+  ENABLE_SOCIAL_PROOF,
+} from "@/config/feature-flags"
 
 type ConversionStrength = "weak" | "medium" | "strong"
 
@@ -295,17 +299,19 @@ export function TrackedLink({
       )
     }
 
-    window.dispatchEvent(
-      new CustomEvent("social-proof", {
-        detail: {
-          message: getSocialProofMessage(),
-        },
-      }),
-    )
+    if (ENABLE_SOCIAL_PROOF) {
+      window.dispatchEvent(
+        new CustomEvent("social-proof", {
+          detail: {
+            message: getSocialProofMessage(),
+          },
+        }),
+      )
+    }
 
     onClick?.(event)
 
-    if (celebration && href) {
+    if (celebration && ENABLE_CLICK_CELEBRATION && href) {
       event.preventDefault()
 
       const rect =
