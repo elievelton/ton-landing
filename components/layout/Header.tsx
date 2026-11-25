@@ -27,7 +27,7 @@ const navigation = [
     href: "#calculadora",
     highlight: true,
   },
-  { label: "Como ganhar 20% OFF", href: "#consultor" },
+  { label: "Como ganhar 30% OFF", href: "#consultor" },
   { label: "Sobre mim", href: "#quem-somos" },
   { label: "FAQ", href: "#duvidas" },
 ]
