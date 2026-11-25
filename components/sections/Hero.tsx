@@ -93,7 +93,7 @@ export function Hero() {
                     event: "cta_click",
                     location: "hero",
                     destination: "catalog",
-                    label: "Ativar {couponPercent}% de desconto e ver modelos",
+                    label: `Ativar ${couponPercent}% de desconto e ver modelos`,
                     conversionStrength: "medium",
                   }}
                   className="w-full sm:w-auto"
