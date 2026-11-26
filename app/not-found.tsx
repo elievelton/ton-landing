@@ -214,7 +214,7 @@ export default function NotFound() {
                 <CheckCircle2 className="size-5 text-primary" />
 
                 <span className="font-medium">
-                  +{couponPercent}% OFF adicional com o cupom
+                  Frete Grátis para todo o Brasil
                 </span>
 
               </li>
