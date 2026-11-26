@@ -14,11 +14,9 @@ import { FadeIn } from "@/components/shared/FadeIn"
 import { TrackedLink } from "@/components/shared/TrackedLink"
 import { Button } from "@/components/ui/button"
 import { siteConfig } from "@/config/site"
-import { getCouponPercentLabel } from "@/config/coupon"
 import { getMachinePrice } from "@/config/machine-prices"
 
-export function Hero() {
-  const couponPercent = getCouponPercentLabel()
+export function Hero({ couponPercent }: { couponPercent: number }) {
   const featuredPrice = getMachinePrice("mega-t3-smart")
   const featuredTotalDiscount = 71
   return (
