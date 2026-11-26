@@ -192,13 +192,12 @@ export function Hero() {
                 <ShieldCheck className="mt-0.5 size-4 shrink-0 text-primary" />
 
                 <span>
-                  Ambiente seguro. Você será redirecionado para o site oficial
+                  Você será direcionado ao site oficial
                   da{" "}
                   <strong className="font-semibold text-foreground">
                     Ton (Grupo Stone)
                   </strong>{" "}
-                  para finalizar a compra com garantia de fábrica e frete
-                  grátis.
+                  para consultar as condições de compra, garantia e frete antes de finalizar o pedido.
                 </span>
               </div>
 
@@ -207,7 +206,7 @@ export function Hero() {
                 <div className="flex items-center gap-2">
                   <ShieldCheck className="size-4 text-primary" />
 
-                  Compra 100% Segura
+                  Compra no site oficial
                 </div>
 
                 <div className="flex items-center gap-2">
