@@ -12,10 +12,10 @@ type MachineCardProps = {
   machine: Machine
 }
 
-export function MachineCard({ machine }: MachineCardProps) {
+export function MachineCard({ machine, couponPercent }: MachineCardProps) {
   const isBestSeller = machine.bestSeller === true
-  const priceInfo = getMachinePrice(machine.id)
-  const couponLabel = getCouponPercentLabel()
+  const priceInfo = getMachinePrice(machine.id, couponPercent)
+  const couponLabel = couponPercent
   const discountLabel = machine.couponEligible
     ? `Ton ${machine.tonDiscount}% + ${couponLabel}% Cupom`
     : `Ton OFF ${machine.tonDiscount}%`
