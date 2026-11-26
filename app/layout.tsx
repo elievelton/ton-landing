@@ -14,6 +14,7 @@ import { StructuredData } from "@/components/shared/StructuredData"
 import { siteConfig } from "@/config/site"
 import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics"
 import { MicrosoftUET } from "@/components/analytics/MicrosoftUET"
+import { getCouponPercent } from "@/lib/coupon-settings"
 
 import "./globals.css"
 
@@ -113,11 +114,13 @@ export const metadata: Metadata = {
   },
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const couponPercent = await getCouponPercent()
+
   return (
     <html
       lang="pt-BR"
@@ -128,7 +131,7 @@ export default function RootLayout({
   <MicrosoftUET />
   <StructuredData />
 
-  <Header />
+  <Header couponPercent={couponPercent} />
 
   <main className="flex-1">
     {children}
