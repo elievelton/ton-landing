@@ -32,7 +32,6 @@ import {
 import { tonRatesMeta } from "@/data/ton-rates-meta";
 
 import { TrackedLink } from "@/components/shared/TrackedLink";
-import { useCouponPercent } from "@/hooks/use-coupon-percent";
 
 const MACHINE_URL =
   "https://www.ton.com.br/maquininha/t3-smart?coupon=ELIEVELTOSILVAVC&userAnticipation=0&utm_medium=invite_share&utm_source=revendedor";
@@ -236,8 +235,7 @@ function ComparisonRow({ item }: { item: ComparisonItem }) {
   );
 }
 
-export default function TaxCalculator() {
-  const couponPercent = useCouponPercent();
+export default function TaxCalculator({ couponPercent }: { couponPercent: number }) {
   const [mode, setMode] = useState<CalculatorMode>("machines");
   const [plan, setPlan] = useState<TonPlan>("ton-mega-plus");
 
