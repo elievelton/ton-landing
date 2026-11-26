@@ -13,6 +13,8 @@ import TaxCalculator from "@/components/sections/tax-calculator"
 import { IntentRouter } from "@/components/sections/IntentRouter"
 import { getCouponPercent } from "@/lib/coupon-settings"
 
+export const dynamic = "force-dynamic"
+
 export default async function Home() {
   const couponPercent = await getCouponPercent()
 
