@@ -1,7 +1,7 @@
 import { Redis } from "@upstash/redis"
+import { DEFAULT_COUPON_PERCENT } from "@/config/coupon-defaults"
 
 export const COUPON_SETTINGS_KEY = "ton:settings:coupon-percent"
-export const DEFAULT_COUPON_PERCENT = 30
 
 const redis = new Redis({
   url: process.env.KV_REST_API_URL!,
