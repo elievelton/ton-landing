@@ -29,7 +29,7 @@ const faqs = [
     question: "É seguro comprar nesse site?",
     id: "faq-seguranca",
     answer:
-      "Sim, é 100% seguro. Este site é um canal parceiro de indicação e divulgação de ofertas da Ton. Disponibilizamos cupons de desconto exclusivos para ajudar você a economizar na compra da sua maquininha.\nFunciona assim: nós apenas disponibilizamos o cupom e direcionamos você para a oferta. Nada relacionado a pagamentos acontece neste site, e nós não solicitamos nem armazenamos seus dados financeiros.\nAo clicar em qualquer botão de desconto deste site, você será redirecionado para o site oficial da Ton. O desconto normalmente é aplicado automaticamente ao acessar a compra pelos nossos links. Antes de finalizar, confira o resumo do pedido para confirmar o desconto. Caso ele não apareça, você poderá inserir o cupom manualmente.\nA compra, o pagamento, a emissão da nota fiscal, a entrega, a garantia de fábrica e o atendimento são realizados diretamente pela Ton (Grupo Stone), dentro do ambiente oficial da empresa.\nVocê encontra seu cupom de desconto aqui, mas conclui sua compra diretamente no site oficial da Ton, com toda a segurança do ambiente oficial da empresa!",
+      "Este site é um canal parceiro de indicação e divulgação de ofertas da Ton. Aqui você encontra informações, comparações e um cupom de desconto.\nA compra não é realizada neste site. Ao clicar em um link de oferta, você será direcionado ao ambiente oficial da Ton, onde poderá consultar o produto, as condições de pagamento, o frete e a garantia.\nNão solicitamos dados de cartão ou senhas neste site. Antes de concluir o pedido, confira no ambiente da Ton o produto escolhido, o desconto aplicado e o valor final da compra.",
   },
   {
     question: "Preciso ter CNPJ para comprar uma maquininha Ton?",
@@ -41,7 +41,7 @@ const faqs = [
     question: "Estou com nome sujo posso comprar uma maquininha?",
     id: "faq-nome-sujo",
     answer:
-      "Sim, a empresa Ton não faz consulta para saber o estado do seu nome, pode comprar com tranquilidade ",
+      "As condições de cadastro e aprovação são definidas pela Ton e podem variar conforme a análise realizada pela empresa. Ter restrições no CPF não garante aprovação nem significa, por si só, que o cadastro será recusado. Consulte as condições diretamente nos canais oficiais da Ton antes de comprar.",
   },
   {
     question: "Preciso ter conta para comprar uma maquininha?",
@@ -70,7 +70,7 @@ const faqs = [
     question: "A garantia das maquininhas é vitalícia?",
     id: "faq-garantia",
     answer:
-      "A Ton oferece garantia vitalícia para as maquininhas elegíveis, conforme as regras e condições da empresa. Isso significa mais tranquilidade para quem pretende utilizar a máquina por bastante tempo. Resumindo, quebrou a Ton troca por outra nova, pois o que matém o sucesso da Ton é o seu sucesso!",
+      "A Ton informa que as maquininhas funcionam em regime de comodato e contam com garantia vitalícia durante a parceria. A cobertura inclui suporte para problemas técnicos e defeitos de fabricação. Em situações de roubo ou furto, a empresa exige a apresentação de boletim de ocorrência. Consulte a Central de Ajuda da Ton para conhecer os procedimentos e condições de atendimento.",
   },
   {
     question: "O frete é grátis?",
@@ -82,7 +82,7 @@ const faqs = [
     question: "Quando recebo o dinheiro das minhas vendas?",
     id: "faq-recebimento",
     answer:
-      "Vai depender do plano que você escolher no ato da compra, mas em regra você recebe seus pagamento com 1 dia útil, mesmo que você parcele em 12x o dinheiro cai em sua conta em 1 dia útil",
+      "O prazo depende da opção de recebimento escolhida no aplicativo e das condições da sua conta. A Ton informa opções de recebimento em 1 dia útil ou em até 1 minuto. A opção de recebimento em até 1 minuto exige uma Conta Ton aprovada e que não existam contratos em aberto com outras instituições financeiras. As taxas também podem variar conforme o prazo escolhido. Confira as opções e os custos atualizados no aplicativo antes de vender.",
   },
   {
     question:
