@@ -17,7 +17,7 @@ import { siteConfig } from "@/config/site"
 import { getMachinePrice } from "@/config/machine-prices"
 
 export function Hero({ couponPercent }: { couponPercent: number }) {
-  const featuredPrice = getMachinePrice("mega-t3-smart")
+  const featuredPrice = getMachinePrice("mega-t3-smart", couponPercent)
   const featuredTotalDiscount = 71
   return (
     <section id="hero" className="relative overflow-hidden bg-background">
