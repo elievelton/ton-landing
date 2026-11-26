@@ -11,13 +11,16 @@ import { FinalCTA } from "@/components/sections/FinalCTA"
 import { PromotionBanner } from "@/components/sections/PromotionBanner"
 import TaxCalculator from "@/components/sections/tax-calculator"
 import { IntentRouter } from "@/components/sections/IntentRouter"
+import { getCouponPercent } from "@/lib/coupon-settings"
 
-export default function Home() {
+export default async function Home() {
+  const couponPercent = await getCouponPercent()
+
   return (
     <>
     <IntentRouter />
-      <Hero />
-      <PromotionBanner />
+      <Hero couponPercent={couponPercent} />
+      <PromotionBanner couponPercent={couponPercent} />
       <Benefits />
       <Machines />
       <AcceptedBrands />
@@ -27,7 +30,7 @@ export default function Home() {
       <Consultant />
       <About />
       <FAQ />
-      <FinalCTA />
+      <FinalCTA couponPercent={couponPercent} />
     </>
   )
 }
