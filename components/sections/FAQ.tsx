@@ -20,7 +20,6 @@ import {
 import { Container } from "@/components/shared/Container"
 import { FadeIn } from "@/components/shared/FadeIn"
 import { siteConfig } from "@/config/site"
-import { useCouponPercent } from "@/hooks/use-coupon-percent"
 import { CouponCopy } from "@/components/shared/CouponCopy"
 import { TrackedLink } from "@/components/shared/TrackedLink"
 
@@ -125,10 +124,11 @@ Na hora de pagar, o cliente acessa o link e escolhe uma das formas de pagamento 
 
 export function FAQPurchaseCTA({
   location,
+  couponPercent,
 }: {
   location: string
+  couponPercent: number
 }) {
-  const couponPercent = useCouponPercent()
 
   return (
     <div className="mt-6 overflow-hidden rounded-2xl border border-orange-500/20 bg-orange-500/5 p-4 sm:p-5">
@@ -171,8 +171,7 @@ export function FAQPurchaseCTA({
   )
 }
 
-export function FAQ() {
-  const couponPercent = useCouponPercent()
+export function FAQ({ couponPercent }: { couponPercent: number }) {
   const faqs = getFaqs(couponPercent)
   const [openIndex, setOpenIndex] = useState<number | null>(0)
 
@@ -361,7 +360,7 @@ export function FAQ() {
                               {faq.answer}
                             </p>
 
-                            <SecondMachineCTA />
+                            <SecondMachineCTA couponPercent={couponPercent} />
                           </>
                         ) : faq.type === "payment-link" ? (
                           <>
@@ -369,7 +368,7 @@ export function FAQ() {
                               {faq.answer}
                             </p>
 
-                            <PaymentLinkCTA />
+                            <PaymentLinkCTA couponPercent={couponPercent} />
                           </>
                         ) : (
                           <>
@@ -377,7 +376,7 @@ export function FAQ() {
                               {faq.answer}
                             </p>
 
-                            <FAQPurchaseCTA location={faq.id} />
+                            <FAQPurchaseCTA location={faq.id} couponPercent={couponPercent} />
                           </>
                         )}
                       </div>
@@ -434,7 +433,6 @@ export function FAQ() {
 }
 
 function SecondMachineCTA() {
-  const couponPercent = useCouponPercent()
   return (
     <div className="mt-6 overflow-hidden rounded-2xl border border-primary/20 bg-primary/[0.04] p-4 sm:p-5">
       <div className="flex items-start gap-3">
@@ -510,7 +508,6 @@ function SecondMachineCTA() {
 }
 
 function PaymentLinkCTA() {
-  const couponPercent = useCouponPercent()
   return (
     <div className="mt-6 overflow-hidden rounded-2xl border border-primary/20 bg-primary/[0.04] p-4 sm:p-5">
       <div className="flex items-start gap-3">
