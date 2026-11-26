@@ -15,13 +15,14 @@ import {
 import { TrackedLink } from "@/components/shared/TrackedLink"
 import { Button } from "@/components/ui/button"
 import { siteConfig } from "@/config/site"
+import { DEFAULT_COUPON_PERCENT } from "@/config/coupon-defaults"
 import { CouponCopy } from "@/components/shared/CouponCopy"
 
 
 
 export default function NotFound() {
   const [redirecting, setRedirecting] = useState(false)
-  const [couponPercent, setCouponPercent] = useState(30)
+  const [couponPercent, setCouponPercent] = useState(DEFAULT_COUPON_PERCENT)
 
   useEffect(() => {
     fetch("/api/coupon", { cache: "no-store" })
