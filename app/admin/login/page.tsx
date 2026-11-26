@@ -41,7 +41,7 @@ export default function AdminLoginPage() {
         return
       }
 
-      router.replace("/admin/logs")
+      router.replace("/admin/coupon")
       router.refresh()
     } catch {
       setError(
@@ -65,7 +65,7 @@ export default function AdminLoginPage() {
           </h1>
 
           <p className="mt-2 text-sm text-slate-400">
-            Acesse os logs do site.
+            Gerencie o cupom e consulte os logs.
           </p>
         </div>
 
@@ -131,7 +131,7 @@ export default function AdminLoginPage() {
             >
               {loading
                 ? "Entrando..."
-                : "Acessar logs"}
+                : "Acessar painel"}
             </button>
           </form>
         </div>
