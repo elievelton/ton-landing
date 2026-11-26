@@ -2,10 +2,10 @@ import { Container } from "@/components/shared/Container"
 import { FadeIn } from "@/components/shared/FadeIn"
 import { MachineCard } from "@/components/shared/MachineCard"
 import { machines } from "@/config/machines"
-import { getCouponPercentLabel } from "@/config/coupon"
+
 import { ShieldCheck, Sparkles } from "lucide-react"
 
-export function Machines() {
+export function Machines({ couponPercent }: { couponPercent: number }) {
   const megaMachines = machines.filter((machine) => machine.plan === "mega")
   const topMachines = machines.filter((machine) => machine.plan === "top")
   const couponPercent = getCouponPercentLabel()
@@ -39,7 +39,7 @@ export function Machines() {
           <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
             {megaMachines.map((machine, index) => (
               <FadeIn key={machine.id} delay={index * 0.06} className="h-full">
-                <MachineCard machine={machine} />
+                <MachineCard machine={machine} couponPercent={couponPercent} />
               </FadeIn>
             ))}
           </div>
