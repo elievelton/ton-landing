@@ -1,0 +1,1 @@
+export const DEFAULT_COUPON_PERCENT = 30
