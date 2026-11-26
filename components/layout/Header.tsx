@@ -15,26 +15,14 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 import { siteConfig } from "@/config/site"
-import { getCouponPercentLabel } from "@/config/coupon"
+import { useCouponPercent } from "@/hooks/use-coupon-percent"
 import {
   isPromotionActive,
 } from "@/config/promotions"
 
-const navigation = [
-  { label: "Máquinas", href: "#maquinas" },
-  { label: "Planos", href: "#planos" },
-  {
-    label: "Calculadora de Taxas",
-    href: "#calculadora",
-    highlight: true,
-  },
-  { label: `Como ganhar ${getCouponPercentLabel()}% OFF`, href: "#consultor" },
-  { label: "Sobre mim", href: "#quem-somos" },
-  { label: "FAQ", href: "#duvidas" },
-]
 
 export function Header() {
-  const [menuOpen, setMenuOpen] = useState(false)
+  const couponPercent = useCouponPercent()\n  const navigation = [\n    { label: "Máquinas", href: "#maquinas" },\n    { label: "Planos", href: "#planos" },\n    { label: "Calculadora de Taxas", href: "#calculadora", highlight: true },\n    { label: `Como ganhar ${couponPercent}% OFF`, href: "#consultor" },\n    { label: "Sobre mim", href: "#quem-somos" },\n    { label: "FAQ", href: "#duvidas" },\n  ]\n  const [menuOpen, setMenuOpen] = useState(false)
   const [promotionVisible, setPromotionVisible] =
     useState(false)
 
