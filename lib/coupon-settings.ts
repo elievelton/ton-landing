@@ -10,6 +10,8 @@ const redis = new Redis({
 
 export async function getCouponPercent(): Promise<number> {
   const value = await redis.get<number | string>(COUPON_SETTINGS_KEY)
+  if (value === null || value === undefined) return DEFAULT_COUPON_PERCENT
+
   const percent = Number(value)
 
   if (!Number.isInteger(percent) || percent < 0 || percent > 100) {
