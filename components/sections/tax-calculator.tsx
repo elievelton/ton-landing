@@ -32,7 +32,7 @@ import {
 import { tonRatesMeta } from "@/data/ton-rates-meta";
 
 import { TrackedLink } from "@/components/shared/TrackedLink";
-import { getCouponPercentLabel } from "@/config/coupon";
+import { useCouponPercent } from "@/hooks/use-coupon-percent";
 
 const MACHINE_URL =
   "https://www.ton.com.br/maquininha/t3-smart?coupon=ELIEVELTOSILVAVC&userAnticipation=0&utm_medium=invite_share&utm_source=revendedor";
@@ -236,7 +236,7 @@ function ComparisonRow({ item }: { item: ComparisonItem }) {
   );
 }
 
-export default function TaxCalculator() {
+export default function TaxCalculator() {\n  const couponPercent = useCouponPercent();
   const [mode, setMode] = useState<CalculatorMode>("machines");
   const [plan, setPlan] = useState<TonPlan>("ton-mega-plus");
 
@@ -639,7 +639,7 @@ export default function TaxCalculator() {
                   </span>
                 ) : (
                   <span className="rounded-full bg-orange-50 px-3 py-1.5 text-orange-600">
-                    {getCouponPercentLabel()}% OFF
+                    {couponPercent}% OFF
                   </span>
                 )}
               </div>
@@ -1092,7 +1092,7 @@ export default function TaxCalculator() {
                     <p className="mt-1 text-sm leading-6 text-muted">
                       {isTapTon
                         ? "Transforme seu celular em maquininha e comece a vender."
-                        : `Use meu cupom e peça sua maquininha com ${getCouponPercentLabel()}% de desconto.`}
+                        : `Use meu cupom e peça sua maquininha com ${couponPercent}% de desconto.`}
                     </p>
                   </div>
                 </div>
@@ -1107,7 +1107,7 @@ export default function TaxCalculator() {
                     destination: "checkout",
                     label: isTapTon
                           ? "Começar a usar o TapTon"
-                          : `Pedir maquininha com ${getCouponPercentLabel()}% de desconto`,
+                          : `Pedir maquininha com ${couponPercent}% de desconto`,
                     product: "ton",
                     conversionStrength: "strong",
                   }}
@@ -1131,7 +1131,7 @@ export default function TaxCalculator() {
                         active:translate-y-0
                       "
                 >
-                  Pedir maquininha com {getCouponPercentLabel()}% de desconto
+                  Pedir maquininha com {couponPercent}% de desconto
                   <ArrowRight
                     className="
                       size-4
@@ -1788,7 +1788,7 @@ export default function TaxCalculator() {
                         </p>
 
                         <p className="mt-1 text-sm leading-6 text-muted">
-                          Use meu cupom e peça sua maquininha com {getCouponPercentLabel()}% de
+                          Use meu cupom e peça sua maquininha com {couponPercent}% de
                           desconto.
                         </p>
                       </div>
@@ -1804,7 +1804,7 @@ export default function TaxCalculator() {
                         destination: "checkout",
                         label: isTapTon
                           ? "Começar a usar o TapTon"
-                          : `Pedir maquininha com ${getCouponPercentLabel()}% de desconto`,
+                          : `Pedir maquininha com ${couponPercent}% de desconto`,
                         product: "ton",
                         conversionStrength: "strong",
                       }}
@@ -1830,7 +1830,7 @@ export default function TaxCalculator() {
                     >
                       {isTapTon
                         ? "Começar a usar o TapTon"
-                        : `Pedir maquininha com ${getCouponPercentLabel()}% de desconto`}
+                        : `Pedir maquininha com ${couponPercent}% de desconto`}
                       <ArrowRight
                         className="
                           size-4
