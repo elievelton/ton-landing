@@ -236,7 +236,8 @@ function ComparisonRow({ item }: { item: ComparisonItem }) {
   );
 }
 
-export default function TaxCalculator() {\n  const couponPercent = useCouponPercent();
+export default function TaxCalculator() {
+  const couponPercent = useCouponPercent();
   const [mode, setMode] = useState<CalculatorMode>("machines");
   const [plan, setPlan] = useState<TonPlan>("ton-mega-plus");
 
