@@ -9,14 +9,18 @@ const redis = new Redis({
 })
 
 export async function getCouponPercent(): Promise<number> {
-  const value = await redis.get<number | string>(COUPON_SETTINGS_KEY)
-  if (value === null || value === undefined) return DEFAULT_COUPON_PERCENT
+  try {
+    const value = await redis.get<number | string>(COUPON_SETTINGS_KEY)
+    if (value === null || value === undefined) return DEFAULT_COUPON_PERCENT
 
-  const percent = Number(value)
+    const percent = Number(value)
+    if (!Number.isInteger(percent) || percent < 0 || percent > 100) {
+      return DEFAULT_COUPON_PERCENT
+    }
 
-  if (!Number.isInteger(percent) || percent < 0 || percent > 100) {
+    return percent
+  } catch (error) {
+    console.error("Erro ao carregar percentual do cupom:", error)
     return DEFAULT_COUPON_PERCENT
   }
-
-  return percent
 }
