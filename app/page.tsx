@@ -27,11 +27,11 @@ export default async function Home() {
       <Machines couponPercent={couponPercent} />
       <AcceptedBrands />
       <Plans />
-      <TaxCalculator />
+      <TaxCalculator couponPercent={couponPercent} />
       <TapTon />
       <Consultant couponPercent={couponPercent} />
       <About />
-      <FAQ />
+      <FAQ couponPercent={couponPercent} />
       <FinalCTA couponPercent={couponPercent} />
     </>
   )
