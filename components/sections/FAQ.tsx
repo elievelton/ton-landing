@@ -128,6 +128,8 @@ export function FAQPurchaseCTA({
 }: {
   location: string
 }) {
+  const couponPercent = useCouponPercent()
+
   return (
     <div className="mt-6 overflow-hidden rounded-2xl border border-orange-500/20 bg-orange-500/5 p-4 sm:p-5">
       <div className="flex items-start gap-3">
@@ -170,6 +172,8 @@ export function FAQPurchaseCTA({
 }
 
 export function FAQ() {
+  const couponPercent = useCouponPercent()
+  const faqs = getFaqs(couponPercent)
   const [openIndex, setOpenIndex] = useState<number | null>(0)
 
   useEffect(() => {
@@ -429,7 +433,8 @@ export function FAQ() {
   )
 }
 
-function SecondMachineCTA() {\n  const couponPercent = useCouponPercent()
+function SecondMachineCTA() {
+  const couponPercent = useCouponPercent()
   return (
     <div className="mt-6 overflow-hidden rounded-2xl border border-primary/20 bg-primary/[0.04] p-4 sm:p-5">
       <div className="flex items-start gap-3">
@@ -504,7 +509,8 @@ function SecondMachineCTA() {\n  const couponPercent = useCouponPercent()
   )
 }
 
-function PaymentLinkCTA() {\n  const couponPercent = useCouponPercent()
+function PaymentLinkCTA() {
+  const couponPercent = useCouponPercent()
   return (
     <div className="mt-6 overflow-hidden rounded-2xl border border-primary/20 bg-primary/[0.04] p-4 sm:p-5">
       <div className="flex items-start gap-3">
@@ -567,7 +573,7 @@ function PaymentLinkCTA() {\n  const couponPercent = useCouponPercent()
   )
 }
 
-function MachineComparison() {\n  const couponPercent = useCouponPercent()
+function MachineComparison() {
   const machines = [
     {
       name: "T1",
@@ -742,7 +748,7 @@ function MachineComparison() {\n  const couponPercent = useCouponPercent()
   )
 }
 
-function PlanComparisonCTA() {\n  const couponPercent = useCouponPercent()
+function PlanComparisonCTA() {
   return (
     <div className="mt-5 rounded-2xl border border-primary/20 bg-primary/5 p-4">
       <p className="text-sm font-bold text-foreground">
