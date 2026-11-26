@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import Image from "next/image"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { motion } from "framer-motion"
 import {
   AlertCircle,
@@ -15,11 +15,22 @@ import {
 import { TrackedLink } from "@/components/shared/TrackedLink"
 import { Button } from "@/components/ui/button"
 import { siteConfig } from "@/config/site"
+import { CouponCopy } from "@/components/shared/CouponCopy"
 
 
 
 export default function NotFound() {
   const [redirecting, setRedirecting] = useState(false)
+  const [couponPercent, setCouponPercent] = useState(30)
+
+  useEffect(() => {
+    fetch("/api/coupon", { cache: "no-store" })
+      .then((response) => response.ok ? response.json() : null)
+      .then((data) => {
+        if (typeof data?.percent === "number") setCouponPercent(data.percent)
+      })
+      .catch(() => undefined)
+  }, [])
   return (
     <main className="relative flex min-h-screen items-center justify-center overflow-hidden bg-white px-6 py-20">
 
@@ -95,7 +106,7 @@ export default function NotFound() {
             </p>
 
             <p className="text-4xl font-black text-white">
-              72%
+              71%
             </p>
 
             <p className="text-xs font-semibold tracking-widest text-white">
@@ -160,7 +171,7 @@ export default function NotFound() {
             <br />
 
             Mas seus descontos exclusivos continuam disponíveis e
-            podem economizar até <strong>72%</strong> na compra da sua
+            podem economizar até <strong>71%</strong> na compra da sua
             próxima maquininha.
           </p>
 
@@ -193,7 +204,7 @@ export default function NotFound() {
                 <CheckCircle2 className="size-5 text-primary" />
 
                 <span className="font-medium">
-                  Até <strong>72% OFF</strong> nas maquininhas
+                  Até <strong>71% OFF</strong> nas maquininhas
                 </span>
 
               </li>
@@ -203,7 +214,7 @@ export default function NotFound() {
                 <CheckCircle2 className="size-5 text-primary" />
 
                 <span className="font-medium">
-                  Frete Grátis para todo o Brasil
+                  +{couponPercent}% OFF adicional com o cupom
                 </span>
 
               </li>
@@ -228,7 +239,7 @@ export default function NotFound() {
 
               </li>
 
-            </ul>
+            </ul>\n\n            <div className="mt-6 rounded-2xl border border-primary/20 bg-white p-4 text-center">\n              <p className="text-sm font-semibold text-gray-700">Copie seu cupom e aproveite {couponPercent}% de desconto adicional</p>\n              <div className="mt-3 flex justify-center"><CouponCopy location="404" /></div>\n            </div>
 
           </div>
                     {/* Botões */}
