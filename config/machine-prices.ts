@@ -27,11 +27,11 @@ export function formatBRL(value: number): string {
   }).format(value)
 }
 
-export function getMachinePrice(id: string) {
+export function getMachinePrice(id: string, couponPercent: number) {
   const config = MACHINE_PRICES[id]
   if (!config) return null
 
-  const discount = config.couponEligible ? getCouponDiscount() : 0
+  const discount = config.couponEligible ? couponPercent / 100 : 0
   const currentPrice = roundCurrency(config.priceBeforeCoupon * (1 - discount))
   const installmentPrice = Math.floor((currentPrice / config.installments + Number.EPSILON) * 100) / 100
 
