@@ -1,5 +1,3 @@
-import { getCouponDiscount } from "@/config/coupon"
-
 type MachinePriceConfig = {
   originalPrice: number
   priceBeforeCoupon: number
