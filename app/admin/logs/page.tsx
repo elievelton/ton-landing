@@ -1,7 +1,8 @@
-import { createHash } from "node:crypto"
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
+import Link from "next/link"
 import { Redis } from "@upstash/redis"
+import { isValidAdminSession, ADMIN_SESSION_COOKIE } from "@/lib/admin-auth"
 
 const redis = new Redis({
   url: process.env.KV_REST_API_URL!,
@@ -10,9 +11,6 @@ const redis = new Redis({
 
 const LOG_KEY = "ton:logs:recent"
 const MAX_LOGS = 100
-
-const SESSION_COOKIE =
-  "ton_admin_session"
 
 type LogType =
   | "affiliate_click"
@@ -65,47 +63,9 @@ const LOG_TYPES: Record<
   },
 }
 
-function createSessionValue(
-  user: string,
-  password: string
-) {
-  return createHash("sha256")
-    .update(`${user}:${password}`)
-    .digest("hex")
-}
-
 async function isAuthenticated() {
-  const configuredUser =
-    process.env.LOG_ADMIN_USER
-
-  const configuredPassword =
-    process.env.LOG_ADMIN_PASSWORD
-
-  if (
-    !configuredUser ||
-    !configuredPassword
-  ) {
-    return false
-  }
-
   const cookieStore = await cookies()
-
-  const session =
-    cookieStore.get(
-      SESSION_COOKIE
-    )?.value
-
-  if (!session) {
-    return false
-  }
-
-  const expected =
-    createSessionValue(
-      configuredUser,
-      configuredPassword
-    )
-
-  return session === expected
+  return isValidAdminSession(cookieStore.get(ADMIN_SESSION_COOKIE)?.value)
 }
 
 async function getLogs(): Promise<
@@ -168,7 +128,7 @@ export default async function AdminLogsPage() {
           </div>
         </div>
 
-        <div className="overflow-hidden rounded-xl border border-slate-800 bg-slate-900">
+        <nav className="mb-6 flex gap-3 text-sm">\n          <Link href="/admin/coupon" className="rounded-lg border border-slate-700 px-4 py-2 text-slate-300 hover:bg-slate-900">Cupom</Link>\n          <Link href="/admin/logs" className="rounded-lg bg-slate-800 px-4 py-2 font-semibold text-white">Logs</Link>\n        </nav>\n\n        <div className="overflow-hidden rounded-xl border border-slate-800 bg-slate-900">
           {logs.length === 0 ? (
             <div className="px-6 py-12 text-center">
               <p className="text-lg font-medium">
