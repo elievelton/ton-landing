@@ -20,12 +20,12 @@ import {
 } from "@/config/promotions"
 
 
-export function Header({ couponPercent }: { couponPercent: number }) {
+export function Header() {
   const navigation = [
     { label: "Máquinas", href: "#maquinas" },
     { label: "Planos", href: "#planos" },
     { label: "Calculadora de Taxas", href: "#calculadora", highlight: true },
-    { label: `Como ganhar ${couponPercent}% OFF`, href: "#consultor" },
+    { label: "Como usar meu cupom", href: "#consultor" },
     { label: "Sobre mim", href: "#quem-somos" },
     { label: "FAQ", href: "#duvidas" },
   ]
