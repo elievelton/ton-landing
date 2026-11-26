@@ -21,7 +21,7 @@ export async function GET(request: NextRequest) {
 
   try {
     const stored = await redis.get<number | string>(COUPON_SETTINGS_KEY)
-    const percent = Number(stored)
+    const percent = stored === null || stored === undefined ? DEFAULT_COUPON_PERCENT : Number(stored)
     return NextResponse.json({
       percent: Number.isInteger(percent) && percent >= 0 && percent <= 100
         ? percent
