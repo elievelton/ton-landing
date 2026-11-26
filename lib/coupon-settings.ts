@@ -1,5 +1,6 @@
 import { Redis } from "@upstash/redis"
 import { DEFAULT_COUPON_PERCENT } from "@/config/coupon-defaults"
+export { DEFAULT_COUPON_PERCENT } from "@/config/coupon-defaults"
 
 export const COUPON_SETTINGS_KEY = "ton:settings:coupon-percent"
 
