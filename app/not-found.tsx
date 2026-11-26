@@ -239,7 +239,11 @@ export default function NotFound() {
 
               </li>
 
-            </ul>\n\n            <div className="mt-6 rounded-2xl border border-primary/20 bg-white p-4 text-center">\n              <p className="text-sm font-semibold text-gray-700">Copie seu cupom e aproveite {couponPercent}% de desconto adicional</p>\n              <div className="mt-3 flex justify-center"><CouponCopy location="404" /></div>\n            </div>
+            </ul>
+
+            <div className="mt-6 rounded-2xl border border-primary/20 bg-white p-4 text-center">\n              <p className="text-sm font-semibold text-gray-700">Copie seu cupom e aproveite {couponPercent}% de desconto adicional</p>
+              <div className="mt-3 flex justify-center"><CouponCopy location="404" /></div>
+            </div>
 
           </div>
                     {/* Botões */}
