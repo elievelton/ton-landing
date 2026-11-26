@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server"
-import { getCouponPercent } from "@/lib/coupon-settings"
+import { DEFAULT_COUPON_PERCENT, getCouponPercent } from "@/lib/coupon-settings"
 
 export const dynamic = "force-dynamic"
 
@@ -10,7 +10,7 @@ export async function GET() {
     })
   } catch (error) {
     console.error("Erro ao consultar percentual do cupom:", error)
-    return NextResponse.json({ percent: 30 }, {
+    return NextResponse.json({ percent: DEFAULT_COUPON_PERCENT }, {
       headers: { "Cache-Control": "no-store, max-age=0" },
     })
   }
