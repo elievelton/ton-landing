@@ -1,8 +1,8 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { DEFAULT_COUPON_PERCENT } from "@/config/coupon-defaults"
 
-const DEFAULT_COUPON_PERCENT = 30
 
 export function useCouponPercent() {
   const [couponPercent, setCouponPercent] = useState(DEFAULT_COUPON_PERCENT)
