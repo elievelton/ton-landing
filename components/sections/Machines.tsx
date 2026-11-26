@@ -8,7 +8,6 @@ import { ShieldCheck, Sparkles } from "lucide-react"
 export function Machines({ couponPercent }: { couponPercent: number }) {
   const megaMachines = machines.filter((machine) => machine.plan === "mega")
   const topMachines = machines.filter((machine) => machine.plan === "top")
-  const couponPercent = getCouponPercentLabel()
 
   return (
     <section id="maquinas" className="relative bg-background py-20 sm:py-24 lg:py-28">
