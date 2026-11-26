@@ -15,14 +15,12 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 import { siteConfig } from "@/config/site"
-import { useCouponPercent } from "@/hooks/use-coupon-percent"
 import {
   isPromotionActive,
 } from "@/config/promotions"
 
 
-export function Header() {
-  const couponPercent = useCouponPercent()
+export function Header({ couponPercent }: { couponPercent: number }) {
   const navigation = [
     { label: "Máquinas", href: "#maquinas" },
     { label: "Planos", href: "#planos" },
