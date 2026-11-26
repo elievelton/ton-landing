@@ -24,12 +24,12 @@ export default async function Home() {
       <Hero couponPercent={couponPercent} />
       <PromotionBanner couponPercent={couponPercent} />
       <Benefits />
-      <Machines />
+      <Machines couponPercent={couponPercent} />
       <AcceptedBrands />
       <Plans />
       <TaxCalculator />
       <TapTon />
-      <Consultant />
+      <Consultant couponPercent={couponPercent} />
       <About />
       <FAQ />
       <FinalCTA couponPercent={couponPercent} />
