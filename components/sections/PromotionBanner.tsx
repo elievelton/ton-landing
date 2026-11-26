@@ -16,7 +16,6 @@ import { FadeIn } from "@/components/shared/FadeIn"
 import { TrackedLink } from "@/components/shared/TrackedLink"
 import { Button } from "@/components/ui/button"
 import { siteConfig } from "@/config/site"
-import { getCouponPercentLabel } from "@/config/coupon"
 import {
   activePromotion,
   isPromotionActive,
@@ -50,7 +49,7 @@ function pad(value: number) {
   return value.toString().padStart(2, "0")
 }
 
-export function PromotionBanner() {
+export function PromotionBanner({ couponPercent }: { couponPercent: number }) {
   const [countdown, setCountdown] = useState<Countdown | null>(null)
 
   useEffect(() => {
@@ -117,7 +116,7 @@ export function PromotionBanner() {
                 </span>
 
                 <span>
-                  Além dos descontos promocionais e do meu cupom de {getCouponPercentLabel()}% OFF
+                  Além dos descontos promocionais e do meu cupom de {couponPercent}% OFF
                 </span>
               </div>
 
