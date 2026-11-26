@@ -12,9 +12,8 @@ import { FadeIn } from "@/components/shared/FadeIn"
 import { TrackedLink } from "@/components/shared/TrackedLink"
 import { Button } from "@/components/ui/button"
 import { siteConfig } from "@/config/site"
-import { getCouponPercentLabel } from "@/config/coupon"
 
-export function FinalCTA() {
+export function FinalCTA({ couponPercent }: { couponPercent: number }) {
   return (
     <section
       aria-label="Chamada final"
@@ -61,7 +60,7 @@ export function FinalCTA() {
                 Aproveite as condições promocionais da Ton e, nas ofertas
                 aplicáveis, tenha ainda{" "}
                 <strong className="font-bold text-green-300">
-                  {getCouponPercentLabel()}% de desconto adicional
+                  {couponPercent}% de desconto adicional
                 </strong>{" "}
                 utilizando meu cupom.
               </p>
@@ -85,7 +84,7 @@ export function FinalCTA() {
 
                 <Benefit
                   icon={<BadgePercent className="size-4" />}
-                  text={`+${getCouponPercentLabel()}% com cupom`}
+                  text={`+${couponPercent}% com cupom`}
                   highlight
                 />
               </div>
