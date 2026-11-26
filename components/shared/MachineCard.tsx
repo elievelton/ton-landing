@@ -5,11 +5,11 @@ import { TrackedLink } from "@/components/shared/TrackedLink"
 import { Button } from "@/components/ui/button"
 import type { Machine } from "@/config/machines"
 import { siteConfig } from "@/config/site"
-import { getCouponPercentLabel } from "@/config/coupon"
 import { getMachinePrice } from "@/config/machine-prices"
 
 type MachineCardProps = {
   machine: Machine
+  couponPercent: number
 }
 
 export function MachineCard({ machine, couponPercent }: MachineCardProps) {
