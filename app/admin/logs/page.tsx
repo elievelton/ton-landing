@@ -128,7 +128,12 @@ export default async function AdminLogsPage() {
           </div>
         </div>
 
-        <nav className="mb-6 flex gap-3 text-sm">\n          <Link href="/admin/coupon" className="rounded-lg border border-slate-700 px-4 py-2 text-slate-300 hover:bg-slate-900">Cupom</Link>\n          <Link href="/admin/logs" className="rounded-lg bg-slate-800 px-4 py-2 font-semibold text-white">Logs</Link>\n        </nav>\n\n        <div className="overflow-hidden rounded-xl border border-slate-800 bg-slate-900">
+        <nav className="mb-6 flex gap-3 text-sm">
+          <Link href="/admin/coupon" className="rounded-lg border border-slate-700 px-4 py-2 text-slate-300 hover:bg-slate-900">Cupom</Link>
+          <Link href="/admin/logs" className="rounded-lg bg-slate-800 px-4 py-2 font-semibold text-white">Logs</Link>
+        </nav>
+
+        <div className="overflow-hidden rounded-xl border border-slate-800 bg-slate-900">
           {logs.length === 0 ? (
             <div className="px-6 py-12 text-center">
               <p className="text-lg font-medium">
