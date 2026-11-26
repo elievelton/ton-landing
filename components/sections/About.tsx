@@ -1,14 +1,12 @@
 import {
   ArrowRight,
-  Award,
+
   BadgePercent,
   BriefcaseBusiness,
   Code2,
   Mail,
   MessageCircle,
-  Quote,
   ShieldCheck,
-  Star,
 } from "lucide-react"
 
 import Image from "next/image"
@@ -18,76 +16,6 @@ import { FadeIn } from "@/components/shared/FadeIn"
 import { TrackedLink } from "@/components/shared/TrackedLink"
 import { Button } from "@/components/ui/button"
 import { siteConfig } from "@/config/site"
-
-// Notas oficiais de reputação
-const RATING_METRICS = [
-  {
-    score: "9.4",
-    max: "/10",
-    label: "Reclame Aqui",
-    badge: "Selo RA1000",
-    description: "Excelente reputação no atendimento",
-  },
-  {
-    score: "4.8",
-    max: "/5",
-    label: "Google Play",
-    badge: "+1M downloads",
-    description: "Avaliação do app Android",
-  },
-  {
-    score: "4.9",
-    max: "/5",
-    label: "App Store",
-    badge: "Top Avaliado",
-    description: "Avaliação do app iOS",
-  },
-]
-
-// Depoimentos dos clientes (6 itens para simetria perfeita no grid)
-const TESTIMONIALS = [
-  {
-    quote:
-      "Em uma venda que precisei fazer de emergência, onde minha maquininha estava sem bateria, fiz a instalação do TapTon e na hora já consegui efetuar a venda, que maravilha.",
-    author: "Diego Belleboni",
-    role: "Vendeu com o TapTon",
-    rating: 5,
-  },
-  {
-    quote:
-      "A máquina é muito boa, todas as vezes que precisei em relação a algum problema com ela, os funcionários me atenderam com a maior satisfação. Na minha opinião isso só acontece pelo jeito como a empresa trata os funcionários.",
-    author: "Andréia",
-    role: "Vendeu com a Maquininha Ton",
-    rating: 5,
-  },
-  {
-    quote:
-      "Encantados! É assim que nos sentimos. Mais do que o fornecimento de serviços competente e eficiente. O suporte no dia a dia, o atendimento cuidadoso e carinhoso, o respeito ao cliente, faz com que tenhamos a certeza que essa é uma parceria de verdade!",
-    author: "Simone Viana",
-    role: "Utilizou o suporte do Ton",
-    rating: 5,
-  },
-  {
-    quote: "Muito seguro, recomendo e as taxas são as melhores.",
-    author: "Ana Paula Pereira Alves",
-    role: "Vendeu com o TapTon",
-    rating: 5,
-  },
-  {
-    quote:
-      "No início não aceitava cartões e cheguei até a perder alguns clientes mas com a aceitação de cartão consegui resgatá-los e também conquistar novos clientes. Tudo transparente e suporte ao cliente resolve tudo com facilidade.",
-    author: "Everton",
-    role: "Vendeu com a Maquininha Ton",
-    rating: 5,
-  },
-  {
-    quote:
-      "Desde o início o serviço me surpreendeu pela rapidez no atendimento e por notar que as pessoas que me atendiam sabiam o que estavam fazendo! E o principal! Nada mudou com o decorrer dos meses, continuo muito satisfeita.",
-    author: "Maria Lígia",
-    role: "Utilizou o suporte do Ton",
-    rating: 5,
-  },
-]
 
 export function About() {
   return (
@@ -333,101 +261,6 @@ export function About() {
           </FadeIn>
         </div>
 
-        {/* PARTE 2: PROVA SOCIAL E REPUTAÇÃO TON */}
-        <div className="mt-20 border-t border-border/80 pt-16 sm:mt-24 sm:pt-20">
-          <FadeIn>
-            <div className="mx-auto max-w-3xl text-center">
-              <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-xs font-bold text-primary sm:text-sm">
-                <Award className="size-4 shrink-0" />
-                <span>PROVA SOCIAL E REPUTAÇÃO</span>
-              </div>
-
-              <h3 className="text-2xl font-black tracking-tight text-foreground sm:text-3xl lg:text-4xl">
-                Por que nossos clientes amam o Ton?
-              </h3>
-
-              <p className="mt-3 text-sm text-muted-foreground sm:text-base">
-                Veja as notas de reputação nos principais canais e os
-                depoimentos de quem usa no dia a dia.
-              </p>
-            </div>
-          </FadeIn>
-
-          {/* Métricas Reclame Aqui e App Stores */}
-          <div className="mt-10 grid gap-4 sm:grid-cols-3">
-            {RATING_METRICS.map((metric, index) => (
-              <FadeIn key={metric.label} delay={index * 0.1}>
-                <div className="relative flex flex-col items-center justify-center rounded-2xl border border-primary/15 bg-white p-5 text-center shadow-sm transition-all duration-300 hover:border-primary/30 hover:shadow-md">
-                  <div className="inline-block rounded-full bg-orange-500/10 px-3 py-0.5 text-[10px] font-bold text-orange-600">
-                    {metric.badge}
-                  </div>
-
-                  <div className="mt-2 flex items-baseline gap-1">
-                    <span className="text-3xl font-black tracking-tight text-foreground sm:text-4xl">
-                      {metric.score}
-                    </span>
-
-                    <span className="text-xs font-bold text-muted-foreground">
-                      {metric.max}
-                    </span>
-                  </div>
-
-                  <h4 className="mt-1 text-sm font-bold text-foreground">
-                    {metric.label}
-                  </h4>
-
-                  <p className="mt-0.5 text-[11px] text-muted-foreground">
-                    {metric.description}
-                  </p>
-                </div>
-              </FadeIn>
-            ))}
-          </div>
-
-          {/* Grid de Depoimentos (6 Cards - Simétrico) */}
-          <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-            {TESTIMONIALS.map((item, index) => (
-              <FadeIn key={index} delay={index * 0.08}>
-                <div className="group relative flex h-full flex-col justify-between rounded-2xl border border-border bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-md">
-                  <div>
-                    <div className="flex items-center gap-1 text-amber-400">
-                      {Array.from({ length: item.rating }).map((_, i) => (
-                        <Star
-                          key={i}
-                          className="size-3.5 fill-amber-400"
-                        />
-                      ))}
-                    </div>
-
-                    <div className="relative mt-3">
-                      <Quote className="absolute -left-2 -top-2 size-6 text-primary/10 transition-colors group-hover:text-primary/20" />
-
-                      <p className="relative z-10 text-xs leading-relaxed text-foreground/90 italic">
-                        &quot;{item.quote}&quot;
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="mt-5 flex items-center gap-3 border-t border-border/60 pt-3">
-                    <div className="flex size-8 items-center justify-center rounded-full bg-primary/10 text-xs font-extrabold text-primary">
-                      {item.author.charAt(0)}
-                    </div>
-
-                    <div>
-                      <h5 className="text-xs font-bold text-foreground">
-                        {item.author}
-                      </h5>
-
-                      <p className="text-[11px] font-medium text-primary">
-                        {item.role}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </FadeIn>
-            ))}
-          </div>
-        </div>
       </Container>
     </section>
   )
