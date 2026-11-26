@@ -15,7 +15,6 @@ import {
 } from "lucide-react"
 
 import { siteConfig } from "@/config/site"
-import { ENABLE_SOCIAL_PROOF } from "@/config/feature-flags"
 import {
   isPromotionActive,
 } from "@/config/promotions"
@@ -171,32 +170,6 @@ function registerFinalIntent(intent: IntentOption) {
   )
 }
 
-function registerStrongIntentInCounter(
-  intent: IntentOption,
-) {
-  if (!ENABLE_SOCIAL_PROOF) {
-    return
-  }
-
-  if (
-    intent.id !== "buy_machine" &&
-    intent.id !== "resell"
-  ) {
-    return
-  }
-
-  window.dispatchEvent(
-    new CustomEvent("social-proof", {
-      detail: {
-        message:
-          intent.id === "buy_machine"
-            ? "Um visitante decidiu aproveitar o desconto da Ton 💚"
-            : "Um visitante decidiu conhecer a oportunidade de revender Ton 🤝",
-      },
-    }),
-  )
-}
-
 export function IntentRouter() {
   const [promotionVisible, setPromotionVisible] =
     useState(false)
@@ -226,7 +199,6 @@ export function IntentRouter() {
 
     if (intent.external) {
       registerFinalIntent(intent)
-      registerStrongIntentInCounter(intent)
       return
     }
 

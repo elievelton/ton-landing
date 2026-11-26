@@ -9,7 +9,6 @@ import type {
 import confetti from "canvas-confetti"
 import {
   ENABLE_CLICK_CELEBRATION,
-  ENABLE_SOCIAL_PROOF,
 } from "@/config/feature-flags"
 
 type ConversionStrength = "weak" | "medium" | "strong"
@@ -51,19 +50,6 @@ declare global {
       push: (...args: unknown[]) => void
     }
   }
-}
-
-const socialProofMessages = [
-  "Um visitante decidiu pagar menos taxas 💚",
-  "Alguém acabou de conferir as ofertas da Ton 🔥",
-  "Um visitante está comparando as maquininhas Ton 💳",
-  "Mais um empreendedor está conhecendo uma nova forma de vender 🚀",
-]
-
-function getSocialProofMessage() {
-  return socialProofMessages[
-    Math.floor(Math.random() * socialProofMessages.length)
-  ]
 }
 
 function readIntentContext(): IntentContext | null {
@@ -296,16 +282,6 @@ export function TrackedLink({
 
       window.sessionStorage.removeItem(
         "intent_context",
-      )
-    }
-
-    if (ENABLE_SOCIAL_PROOF) {
-      window.dispatchEvent(
-        new CustomEvent("social-proof", {
-          detail: {
-            message: getSocialProofMessage(),
-          },
-        }),
       )
     }
 

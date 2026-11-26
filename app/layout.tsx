@@ -10,13 +10,10 @@ import { Footer } from "@/components/layout/Footer"
 import { Header } from "@/components/layout/Header"
 import { BackToTop } from "@/components/shared/BackToTop"
 import { CookieConsent } from "@/components/shared/CookieConsent"
-import { SocialProofToast } from "@/components/shared/SocialProofToast"
 import { StructuredData } from "@/components/shared/StructuredData"
 import { siteConfig } from "@/config/site"
 import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics"
 import { MicrosoftUET } from "@/components/analytics/MicrosoftUET"
-import { SocialProofBar } from "@/components/shared/SocialProofBar"
-import { ENABLE_SOCIAL_PROOF } from "@/config/feature-flags"
 
 import "./globals.css"
 
@@ -131,8 +128,6 @@ export default function RootLayout({
   <MicrosoftUET />
   <StructuredData />
 
-  {ENABLE_SOCIAL_PROOF && <SocialProofBar />}
-
   <Header />
 
   <main className="flex-1">
@@ -142,7 +137,6 @@ export default function RootLayout({
   <Footer />
 
   <BackToTop />
-  {ENABLE_SOCIAL_PROOF && <SocialProofToast />}
   <CookieConsent />
 </body>
     </html>
