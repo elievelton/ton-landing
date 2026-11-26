@@ -432,7 +432,7 @@ export function FAQ({ couponPercent }: { couponPercent: number }) {
   )
 }
 
-function SecondMachineCTA() {
+function SecondMachineCTA({ couponPercent }: { couponPercent: number }) {
   return (
     <div className="mt-6 overflow-hidden rounded-2xl border border-primary/20 bg-primary/[0.04] p-4 sm:p-5">
       <div className="flex items-start gap-3">
@@ -507,7 +507,7 @@ function SecondMachineCTA() {
   )
 }
 
-function PaymentLinkCTA() {
+function PaymentLinkCTA({ couponPercent }: { couponPercent: number }) {
   return (
     <div className="mt-6 overflow-hidden rounded-2xl border border-primary/20 bg-primary/[0.04] p-4 sm:p-5">
       <div className="flex items-start gap-3">
