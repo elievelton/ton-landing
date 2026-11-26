@@ -14,12 +14,10 @@ import { FadeIn } from "@/components/shared/FadeIn"
 import { TrackedLink } from "@/components/shared/TrackedLink"
 import { Button } from "@/components/ui/button"
 import { siteConfig } from "@/config/site"
-import { getCouponPercentLabel } from "@/config/coupon"
 import { formatBRL, getMachinePrice } from "@/config/machine-prices"
 
-export function Consultant() {
-  const couponPercent = getCouponPercentLabel()
-  const examplePrice = getMachinePrice("mega-t3-smart")!
+export function Consultant({ couponPercent }: { couponPercent: number }) {
+  const examplePrice = getMachinePrice("mega-t3-smart", couponPercent)!
   const originalPrice = 671.43
   const totalSavings = originalPrice - examplePrice.amount
   const totalDiscountPercent = Math.round((totalSavings / originalPrice) * 100)
